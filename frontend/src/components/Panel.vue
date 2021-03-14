@@ -25,6 +25,11 @@ export default {
             var resourceName = (this.useResourceFrequency.length > 0 ? this.useResourceFrequency : this.useResourceName);
             return this.currentUses + " / " + this.maxUses + (resourceName ? " " + this.resourceName : "");
         }
+    },
+    mounted: function() {
+        this.$nextTick(function() {
+            console.log("Panel #" + this.panelId + " is online");
+        });
     }
 }
 </script>

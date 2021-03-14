@@ -4,13 +4,13 @@
   "description": "Generate DM's modular screen in the browser.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "tester"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "nodemon": "^2.0.7",
     "vue": "^2.6.12"
   }
 }

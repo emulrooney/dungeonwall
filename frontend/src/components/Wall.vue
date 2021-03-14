@@ -10,6 +10,8 @@ export default {
   mounted: function() {
     this.$nextTick(function() {
       //Default options here.
+      
+
       new Muuri('.js--muurify', {
         dragEnabled: this.isEditMode
       });
