@@ -1,20 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Wall wallTitle="Dungeon Master"/>
+    <TopUI />
+    <Wall wallTitle="Dungeon Master" :isEditMode="true">
+      <Panel title="Unarmored Defense" :panelId="0" />
+      <Panel title="Second Panel" :panelId="1" />
+    </Wall>
   </div>
 </template>
 
 <script>
 import Wall from './components/Wall.vue'
+import Panel from './components/Panel.vue'
+import TopUI from './components/TopUI.vue'
 
 export default {
   name: 'App',
   components: {
+    TopUI,
+    Panel,
     Wall
   }
 }
 </script>
+
 
 <style>
 #app {
