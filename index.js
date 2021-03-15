@@ -1,6 +1,9 @@
 const express = require('express')
+var cors = require('cors')
 const app = express()
 const port = 3000
+
+app.use(cors()) //TODO This might not be best practices. Investigate and consider more specific routing.
 
 app.get('/debug', (req, res) => {
   res.send(debugContent)

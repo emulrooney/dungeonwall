@@ -1,17 +1,20 @@
 <script>
 import Muuri from 'muuri'
+// eslint-disable-next-line no-unused-vars
+import Panel from './Panel.vue'
 
 export default {
   name: 'Wall',
+  components: {
+    Panel
+  },
   props: {
+    wallData: Array,
     wallTitle: String,
     isEditMode: Boolean
   },
   mounted: function() {
     this.$nextTick(function() {
-      //Default options here.
-      
-
       new Muuri('.js--muurify', {
         dragEnabled: this.isEditMode
       });
@@ -24,7 +27,9 @@ export default {
   <div class="hello">
     <h1>{{ wallTitle }}</h1>
     <div class="wall js--muurify">
-      <slot></slot>
+      <Panel v-for="panel in wallData" :key="panel.id" :panelId="panel.id" :title="panel.title" :subtitle="panel.subtitle" :bottomText="panel.bottomText">
+        {{panel.body}}
+      </Panel> 
     </div>
   </div>
 </template>

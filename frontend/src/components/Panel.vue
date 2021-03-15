@@ -2,14 +2,15 @@
 export default {
     name: 'Panel',
     props: {
-        panelId: Number
+        panelId: Number,
+        body: String,
+        title: String,
+        subtitle: String,
+        bottomText: String
+
     },
     data: function() {
         return {
-            title: "Hello, Title",
-            subtitle: "Subtitle",
-            body: "",
-            bottomText: "",
             currentUses: 0,
             maxUses: 0,
             useResourceCost: 0,
@@ -40,7 +41,7 @@ export default {
             <h3>{{title}}</h3>
             <span class="panel__uses" v-if="hasUses">{{resourceUse}}</span>
             <h4>{{subtitle}}</h4>
-            <p>{{body}}</p>
+            <slot></slot>
             <h5>{{bottomText}}</h5>
         </div>
     </div>
