@@ -3,14 +3,14 @@ export default {
     name: 'Panel',
     props: {
         panelId: Number,
-        body: String,
-        title: String,
-        subtitle: String,
-        bottomText: String
-
+        panelData: Object
     },
     data: function() {
-        return {
+        return { 
+            body: "",
+            title: "",
+            subtitle: "",
+            bottomText: "",
             currentUses: 0,
             maxUses: 0,
             useResourceCost: 0,
@@ -28,8 +28,13 @@ export default {
         }
     },
     mounted: function() {
+        this.body = this.panelData.body;
+        this.title = this.panelData.title;
+        this.subtitle = this.panelData.subtitle;
+        this.bottomText = this.panelData.bottomText;
+        
         this.$nextTick(function() {
-            console.log("Panel #" + this.panelId + " is online");
+            console.log("Panel #" + this.panelId + " is mounted.");
         });
     }
 }
@@ -41,7 +46,7 @@ export default {
             <h3>{{title}}</h3>
             <span class="panel__uses" v-if="hasUses">{{resourceUse}}</span>
             <h4>{{subtitle}}</h4>
-            <slot></slot>
+            <p>{{body}}</p>
             <h5>{{bottomText}}</h5>
         </div>
     </div>

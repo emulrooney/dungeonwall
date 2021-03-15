@@ -27,9 +27,7 @@ export default {
   <div class="hello">
     <h1>{{ wallTitle }}</h1>
     <div class="wall js--muurify">
-      <Panel v-for="panel in wallData" :key="panel.id" :panelId="panel.id" :title="panel.title" :subtitle="panel.subtitle" :bottomText="panel.bottomText">
-        {{panel.body}}
-      </Panel> 
+      <Panel v-for="panel in wallData" :key="panel.id" :panelData="panel" :panelId="panel.id" />
     </div>
   </div>
 </template>
