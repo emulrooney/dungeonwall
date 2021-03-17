@@ -1,0 +1,71 @@
+$font-color: #EEEFFE;
+
+$item-color: #6da18a;
+$class-color: #546799;
+$race-color: #f0ebc0;
+$skill-color: #bf6979;
+$misc-color: #d99f82;
+
+$bg-color: #363636;
+$bg-color-transparent: #363636BB;
+
+$panel-small: 200;
+$panel-medium: 400;
+$panel-large: 600;
+
+$panel-colors: ("item": $item-color, "class": $class-color, "race": $race-color, "skill": $skill-color, "misc": $misc-color);
+$panel-sizes: ("small": $panel-small, "medium": $panel-medium, "large": $panel-large);
+
+body {
+  background-color: $bg-color;
+  color: $font-color;
+}
+
+.wall {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+}
+  
+.panel {
+  position: absolute;
+  margin: 16px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.panel__content {
+  padding: 8px 16px;
+} 
+
+.panel__full {
+  display: none;
+}
+
+@each $size, $value in $panel-sizes {
+  .width--#{$size} {
+    width: #{$value}px;
+  }
+  
+  .height--#{$size} {
+    height: #{$value}px;
+  }
+
+  .border--#{$size} {
+    border-width: #{$value/200}px;
+  }
+}
+
+@each $name, $color in $panel-colors {
+  .color--text--#{$name} {
+    color: $color;
+  };
+  
+  .color--bg--#{$name} {
+    background-color: $color;
+  };
+
+  .color--border--#{$name} {
+    border-color: $color;
+  }
+}  
