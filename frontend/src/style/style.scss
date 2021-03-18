@@ -7,7 +7,7 @@ $skill-color: #bf6979;
 $misc-color: #d99f82;
 
 $white: #FFFFFF;
-$black: #FFFFFF;
+$black: #000000;
 
 $bg-color: #363636;
 $bg-color-transparent: #363636BB;
@@ -16,7 +16,7 @@ $panel-small: 200;
 $panel-medium: 400;
 $panel-large: 600;
 
-$panel-colors: ("item": $item-color, "class": $class-color, "race": $race-color, "skill": $skill-color, "misc": $misc-color, "white": $white, "black": $black);
+$panel-colors: ("item": $item-color, "class": $class-color, "race": $race-color, "skill": $skill-color, "misc": $misc-color, "white": $white, "black": $black, "normal": $bg-color);
 $panel-sizes: ("small": $panel-small, "medium": $panel-medium, "large": $panel-large);
 
 body {

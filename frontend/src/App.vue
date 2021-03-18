@@ -41,8 +41,11 @@ export default {
     }
   },
   created: function() {
+    const vm = this;
     bus.$on('panel-opened', (panelId) => {
       console.log("Panel opened! " + panelId);
+      vm.$bvModal.show('panelModal');
+      this.activePanel = this.loaded.data[panelId];
     });
   }
 }
@@ -55,23 +58,10 @@ export default {
     <div v-else>
       <p>Loading...</p>
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+
+    <b-modal id="panelModal" :title="activePanel.title" class="color--bg--normal">
+      {{activePanel.body}}
+    </b-modal>
   </div>
+
 </template>

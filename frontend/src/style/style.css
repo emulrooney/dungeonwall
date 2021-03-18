@@ -138,15 +138,27 @@ body {
 }
 
 .color--text--black {
-  color: #FFFFFF;
+  color: #000000;
 }
 
 .color--bg--black {
-  background-color: #FFFFFF;
+  background-color: #000000;
 }
 
 .color--border--black {
-  border-color: #FFFFFF;
+  border-color: #000000;
+}
+
+.color--text--normal {
+  color: #363636;
+}
+
+.color--bg--normal {
+  background-color: #363636;
+}
+
+.color--border--normal {
+  border-color: #363636;
 }
 
 /* BOOTSTRAP OVERRIDES */
