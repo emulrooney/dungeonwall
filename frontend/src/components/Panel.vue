@@ -1,4 +1,6 @@
 <script>
+import { bus } from '../main';
+
 export default {
     name: 'Panel',
     props: {
@@ -63,12 +65,18 @@ export default {
         if (this.panelData.useResourceName) {
             this.useResourceName = this.panelData.useResourceName;
         }
+    },
+    methods: {
+        openPanel: function(panelId) {
+            console.log(panelId);
+            bus.$emit('panel-opened', [panelId]);
+        }
     }
 }
 </script>
 
 <template>
-    <div class="panel card" :class="sizeClasses">
+    <div class="panel card" :class="sizeClasses" v-on:dblclick="openPanel(panelId)">
         <div class="panel__content card-body">
             <h3>{{title}}</h3>
             <span class="panel__uses" v-if="hasUses">{{resourceUse}}</span>
