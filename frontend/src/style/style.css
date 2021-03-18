@@ -14,6 +14,11 @@ body {
   margin: 16px;
   text-align: left;
   overflow: hidden;
+  transition: background-color 0.4s;
+}
+
+.panel:hover {
+  background-color: #505050;
 }
 
 .panel__content {
@@ -118,6 +123,40 @@ body {
 
 .color--border--misc {
   border-color: #d99f82;
+}
+
+.color--text--white {
+  color: #FFFFFF;
+}
+
+.color--bg--white {
+  background-color: #FFFFFF;
+}
+
+.color--border--white {
+  border-color: #FFFFFF;
+}
+
+.color--text--black {
+  color: #FFFFFF;
+}
+
+.color--bg--black {
+  background-color: #FFFFFF;
+}
+
+.color--border--black {
+  border-color: #FFFFFF;
+}
+
+/* BOOTSTRAP OVERRIDES */
+body {
+  background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
+}
+
+.card {
+  position: absolute;
+  background-color: #363636BB;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -6,6 +6,9 @@ $race-color: #f0ebc0;
 $skill-color: #bf6979;
 $misc-color: #d99f82;
 
+$white: #FFFFFF;
+$black: #FFFFFF;
+
 $bg-color: #363636;
 $bg-color-transparent: #363636BB;
 
@@ -13,7 +16,7 @@ $panel-small: 200;
 $panel-medium: 400;
 $panel-large: 600;
 
-$panel-colors: ("item": $item-color, "class": $class-color, "race": $race-color, "skill": $skill-color, "misc": $misc-color);
+$panel-colors: ("item": $item-color, "class": $class-color, "race": $race-color, "skill": $skill-color, "misc": $misc-color, "white": $white, "black": $black);
 $panel-sizes: ("small": $panel-small, "medium": $panel-medium, "large": $panel-large);
 
 body {
@@ -32,6 +35,11 @@ body {
   margin: 16px;
   text-align: left;
   overflow: hidden;
+  transition: background-color .4s;
+}
+
+.panel:hover {
+  background-color: lighten($bg-color, 10%);
 }
 
 .panel__content {
@@ -69,3 +77,14 @@ body {
     border-color: $color;
   }
 }  
+
+/* BOOTSTRAP OVERRIDES */
+
+body {
+  background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
+}
+
+.card {
+  position: absolute;
+  background-color: $bg-color-transparent;
+}

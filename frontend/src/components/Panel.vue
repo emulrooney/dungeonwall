@@ -36,6 +36,12 @@ export default {
                 classes.push("height--" + this.panelData.panelHeight);
             }
 
+            if (this.panelData.panelType) {
+                classes.push("color--border--" + this.panelData.panelType);
+            } else {
+                classes.push("color--border--white");
+            }
+
             return classes.join(" ");
         }
     },
