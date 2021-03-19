@@ -21,11 +21,11 @@ export default {
     });
   }
 }
-</script>
+</script> 
 
 <template>
-  <div class="hello">
-    <h1>{{ wallTitle }}</h1>
+  <div>
+    <h1 class="text-center">{{ wallTitle }}</h1>
     <div class="wall js--muurify">
       <Panel v-for="panel in wallData" :key="panel.id" :width="panel.panelWidth" :height="panel.panelHeight" :panelData="panel" :panelId="panel.id" />
     </div>

@@ -15,6 +15,7 @@ export default {
             bottomText: "",
             currentUses: 0,
             maxUses: 0,
+            panelType: "",
             useResourceCost: 0,
             useResourceFrequency: "",
             useResourceName: ""
@@ -28,7 +29,7 @@ export default {
             var resourceName = (this.useResourceFrequency.length > 0 ? this.useResourceFrequency : this.useResourceName);
             return this.currentUses + " / " + this.maxUses + (resourceName ? " " + this.resourceName : "");
         },
-        sizeClasses: function() {
+        classes: function() {
             let classes = [];
             if (this.panelData.panelWidth) {
                 classes.push("width--" + this.panelData.panelWidth);
@@ -45,6 +46,21 @@ export default {
             }
 
             return classes.join(" ");
+        },
+        panelTypeClasses: function() {
+            if (this.panelData.panelType) {
+                return "panel__type color--bg--" + this.panelData.panelType;
+            } else {
+                return ""
+            }
+        },
+        panelUseClasses: function() {
+            if (this.panelData.panelType) {
+                return "panel__uses border--small color--border--" + this.panelData.panelType;
+            } else {
+                return "panel__uses border--small color--border--white"
+            }
+
         }
     },
     mounted: function() {
@@ -65,10 +81,13 @@ export default {
         if (this.panelData.useResourceName) {
             this.useResourceName = this.panelData.useResourceName;
         }
+
+        if (this.panelData.panelType) {
+            this.panelType = this.panelData.panelType;
+        }
     },
     methods: {
         openPanel: function(panelId) {
-            console.log(panelId);
             bus.$emit('panel-opened', [panelId]);
         }
     }
@@ -76,13 +95,16 @@ export default {
 </script>
 
 <template>
-    <div class="panel card" :class="sizeClasses" v-on:dblclick="openPanel(panelId)">
+    <div class="panel card" :class="classes" v-on:dblclick="openPanel(panelId)">
         <div class="panel__content card-body">
-            <h3>{{title}}</h3>
-            <span class="panel__uses" v-if="hasUses">{{resourceUse}}</span>
+            <h3 class="panel__title pt-3">{{title}}</h3>
+            <div class="justify-content-between position-absolute w-100 left--0 top--0 pt-2 pl-4 pr-4 d-flex">
+                <span :class="panelTypeClasses">{{panelType}}</span>
+                <span :class="panelUseClasses" v-if="hasUses">{{resourceUse}}</span>
+            </div>
             <h4>{{subtitle}}</h4>
             <p>{{body}}</p>
-            <h5>{{bottomText}}</h5>
+            <h5 class="position-absolute bottom--0 right--0 pr-4 pb-2 ">{{bottomText}}</h5>
         </div>
     </div>
 </template>

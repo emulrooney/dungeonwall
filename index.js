@@ -35,6 +35,7 @@ const debugContent = [
         body: "Armor is for tremendous cowards, go zoomie instead",
         bottomText: "PHP p76",
 
+        panelType: "class",
         panelWidth: "medium",
         panelHeight: "medium"
     },

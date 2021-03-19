@@ -43,7 +43,6 @@ export default {
   created: function() {
     const vm = this;
     bus.$on('panel-opened', (panelId) => {
-      console.log("Panel opened! " + panelId);
       vm.$bvModal.show('panelModal');
       this.activePanel = this.loaded.data[panelId];
     });
@@ -59,7 +58,7 @@ export default {
       <p>Loading...</p>
     </div>
 
-    <b-modal id="panelModal" :title="activePanel.title" class="color--bg--normal">
+    <b-modal id="panelModal" :title="activePanel.title">
       {{activePanel.body}}
     </b-modal>
   </div>

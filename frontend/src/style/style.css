@@ -11,7 +11,7 @@ body {
 
 .panel {
   position: absolute;
-  margin: 16px;
+  margin: 1.5rem;
   text-align: left;
   overflow: hidden;
   transition: background-color 0.4s;
@@ -21,14 +21,23 @@ body {
   background-color: #505050;
 }
 
-.panel__content {
-  padding: 8px 16px;
+.panel__title {
+  text-align: center;
+  font-style: italic;
 }
 
 .panel__full {
   display: none;
 }
 
+.panel__type, .panel__uses {
+  text-transform: lowercase;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0 8px 0 8px;
+}
+
+/* UTILITY CLASSES */
 .width--small {
   width: 200px;
 }
@@ -38,6 +47,7 @@ body {
 }
 
 .border--small {
+  border-style: solid;
   border-width: 1px;
 }
 
@@ -50,6 +60,7 @@ body {
 }
 
 .border--medium {
+  border-style: solid;
   border-width: 2px;
 }
 
@@ -62,6 +73,7 @@ body {
 }
 
 .border--large {
+  border-style: solid;
   border-width: 3px;
 }
 
@@ -161,6 +173,34 @@ body {
   border-color: #363636;
 }
 
+.color--text--neutral {
+  color: #181818;
+}
+
+.color--bg--neutral {
+  background-color: #181818;
+}
+
+.color--border--neutral {
+  border-color: #181818;
+}
+
+.bottom--0 {
+  bottom: 0;
+}
+
+.left--0 {
+  left: 0;
+}
+
+.right--0 {
+  right: 0;
+}
+
+.top--0 {
+  top: 0;
+}
+
 /* BOOTSTRAP OVERRIDES */
 body {
   background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
@@ -169,6 +209,10 @@ body {
 .card {
   position: absolute;
   background-color: #363636BB;
+}
+
+.modal-content {
+  background-color: #363636;
 }
 
 /*# sourceMappingURL=style.css.map */

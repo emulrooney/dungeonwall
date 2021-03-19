@@ -5,6 +5,7 @@ $class-color: #546799;
 $race-color: #f0ebc0;
 $skill-color: #bf6979;
 $misc-color: #d99f82;
+$neutral-color: #181818;
 
 $white: #FFFFFF;
 $black: #000000;
@@ -16,7 +17,18 @@ $panel-small: 200;
 $panel-medium: 400;
 $panel-large: 600;
 
-$panel-colors: ("item": $item-color, "class": $class-color, "race": $race-color, "skill": $skill-color, "misc": $misc-color, "white": $white, "black": $black, "normal": $bg-color);
+$panel-colors: (
+  "item": $item-color,
+  "class": $class-color,
+  "race": $race-color,
+  "skill": $skill-color,
+  "misc": $misc-color,
+  "white": $white,
+  "black": $black,
+  "normal": $bg-color,
+  "neutral": $neutral-color
+);
+
 $panel-sizes: ("small": $panel-small, "medium": $panel-medium, "large": $panel-large);
 
 body {
@@ -32,7 +44,7 @@ body {
   
 .panel {
   position: absolute;
-  margin: 16px;
+  margin: 1.5rem;
   text-align: left;
   overflow: hidden;
   transition: background-color .4s;
@@ -42,13 +54,23 @@ body {
   background-color: lighten($bg-color, 10%);
 }
 
-.panel__content {
-  padding: 8px 16px;
-} 
+.panel__title {
+  text-align: center;
+  font-style: italic;
+}
 
 .panel__full {
   display: none;
 }
+
+.panel__type, .panel__uses {
+  text-transform: lowercase;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0 8px 0 8px;
+}
+
+/* UTILITY CLASSES */
 
 @each $size, $value in $panel-sizes {
   .width--#{$size} {
@@ -60,6 +82,7 @@ body {
   }
 
   .border--#{$size} {
+    border-style: solid;
     border-width: #{$value/200}px;
   }
 }
@@ -78,6 +101,22 @@ body {
   }
 }  
 
+.bottom--0 {
+  bottom: 0;
+}
+
+.left--0 {
+  left: 0;
+}
+
+.right--0 {
+  right: 0;
+}
+
+.top--0 {
+  top: 0;
+}
+
 /* BOOTSTRAP OVERRIDES */
 
 body {
@@ -87,4 +126,8 @@ body {
 .card {
   position: absolute;
   background-color: $bg-color-transparent;
+}
+
+.modal-content {
+  background-color: $bg-color;
 }
