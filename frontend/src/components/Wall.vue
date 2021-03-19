@@ -2,6 +2,8 @@
 import Muuri from 'muuri'
 // eslint-disable-next-line no-unused-vars
 import Panel from './Panel.vue'
+import { bus } from '../main';
+
 
 export default {
   name: 'Wall',
@@ -19,13 +21,19 @@ export default {
         dragEnabled: this.isEditMode
       });
     });
+  },
+  methods: {
+    addPanel: function() {
+      console.log("Add Panel");
+      bus.$emit('add-panel', []);
+    }
   }
 }
 </script> 
 
 <template>
   <div>
-    <h1 class="text-center">{{ wallTitle }}</h1>
+    <h1 class="text-center">{{ wallTitle }} <button class="btn btn-light mb-2 ml-5" v-on:click="addPanel()">Add Panel</button></h1>
     <div class="wall js--muurify">
       <Panel v-for="panel in wallData" :key="panel.id" :width="panel.panelWidth" :height="panel.panelHeight" :panelData="panel" :panelId="panel.id" />
     </div>
