@@ -30,6 +30,19 @@ body {
   display: none;
 }
 
+.panel__text--small {
+  font-size: 0.75em;
+}
+.panel__text--small h3 {
+  font-size: 1.25em;
+}
+.panel__text--small h4 {
+  font-size: 1.1em;
+}
+.panel__text--small h5 {
+  font-size: 1.05em;
+}
+
 .panel__type, .panel__uses {
   text-transform: lowercase;
   font-weight: 700;

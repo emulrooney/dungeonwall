@@ -32,12 +32,12 @@ const debugContent = [
         id: 0,
         title: "Unarmored Movement",
         subtitle: "Monk Level 1",
-        body: "Armor is for tremendous cowards, go zoomie instead",
+        body: "AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
         bottomText: "PHP p76",
 
         panelType: "class",
-        panelWidth: "medium",
-        panelHeight: "medium"
+        panelWidth: "small",
+        panelHeight: "small"
     },
     {
         id: 1,
@@ -48,5 +48,48 @@ const debugContent = [
 
         panelWidth: "medium",
         panelHeight: "large"
+    },
+    {
+        id: 2,
+        title: "Ki",
+        subtitle: "Monk Level 2",
+        body: "Ki save DC = 8 + your proficiency bonus + your Wisdom modifier. ",
+        bottomText: "PHP p76",
+
+        currentUses: 5,
+        maxUses: 5,
+
+        panelWidth: "small",
+        panelHeight: "small"
+    },
+    {
+        id: 3,
+        title: "Ki - Flurry of Blows",
+        subtitle: "Monk Level 2",
+        body: "",
+        bottomText: "PHP p76",
+
+        panelWidth: "medium",
+        panelHeight: "small"
+    },
+    {
+        id: 4,
+        title: "Ki - Patient Defense",
+        subtitle: "Monk Level 2",
+        body: "",
+        bottomText: "PHP p76",
+
+        panelWidth: "medium",
+        panelHeight: "small"
+    },
+    {
+        id: 5,
+        title: "Ki - Step of the Wind",
+        subtitle: "Monk Level 2",
+        body: "",
+        bottomText: "PHP p76",
+
+        panelWidth: "medium",
+        panelHeight: "small"
     }
 ];

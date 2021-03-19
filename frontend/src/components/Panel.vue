@@ -39,6 +39,10 @@ export default {
                 classes.push("height--" + this.panelData.panelHeight);
             }
 
+            if (this.panelData.panelHeight == "small" || this.panelData.panelWidth == "small") {
+                classes.push("panel__text--small")
+            }
+
             if (this.panelData.panelType) {
                 classes.push("color--border--" + this.panelData.panelType);
             } else {
@@ -60,7 +64,6 @@ export default {
             } else {
                 return "panel__uses border--small color--border--white"
             }
-
         }
     },
     mounted: function() {
