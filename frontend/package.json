@@ -15,7 +15,9 @@
     "muuri": "^0.9.3",
     "sass": "^1.32.8",
     "vue": "^2.6.11",
-    "vue-showdown": "^2.4.1"
+    "vue-showdown": "^2.4.1",
+    "is-svg": ">=4.2.2",
+    "ssri": ">=8.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.12",
