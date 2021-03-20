@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueShowdown from 'vue-showdown'
 
 //Bootstrap Vue stuff
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -9,6 +10,7 @@ import "./style/style.css";
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(VueShowdown)
 
 Vue.config.productionTip = false
 

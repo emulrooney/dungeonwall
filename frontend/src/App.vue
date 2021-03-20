@@ -3,6 +3,7 @@ import { bus } from './main';
 import Wall from './components/Wall.vue'
 import TopUI from './components/TopUI.vue'
 import PanelEditor from './components/PanelEditor.vue'
+
 import axios from "axios"
 
 export default {
@@ -69,6 +70,7 @@ export default {
     });
   }
 }
+
 </script>
 
 <template>

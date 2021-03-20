@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     addPanel: function() {
-      console.log("Add Panel");
       bus.$emit('add-panel', []);
     }
   }
