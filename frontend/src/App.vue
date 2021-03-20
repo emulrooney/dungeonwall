@@ -21,7 +21,7 @@ export default {
       loaded: [],
       activePanel: {
         id: -1,
-        title: "",
+        title: "New Panel",
         subtitle: "",
         body: "Loading...",
         bottomText: ""
@@ -46,8 +46,19 @@ export default {
       bus.$emit('add-panel', []);
     },
     editPanel: function(panelId) {
+      console.log("Edit on " + panelId);
       bus.$emit('edit-panel', [panelId]);
+    },
+    resetActivePanel: function() {
+      this.activePanel = {
+        id: -1,
+        title: "New Panel",
+        subtitle: "",
+        body: "",
+        bottomText: ""
+      };
     }
+
   },
   created: function() {
     const vm = this;
@@ -58,8 +69,7 @@ export default {
     });
 
     bus.$on('add-panel', () => {
-      console.log("Got add panel event");
-
+      this.resetActivePanel();
       vm.$bvModal.hide('panelModal');
       vm.$bvModal.show('editorModal');      
     });
@@ -81,8 +91,16 @@ export default {
       <p>Loading...</p>
     </div>
 
-    <b-modal id="panelModal" :title="activePanel.title">
+    <b-modal button-size="lg" id="panelModal" :title="activePanel.title">
       {{activePanel.body}}
+      <template #modal-footer="{ ok }">
+        <b-button size="lg" variant="success" @click="ok()">
+          OK
+        </b-button>
+        <b-button size="lg" v-on:click="editPanel(activePanel.id)">
+          Edit
+        </b-button>
+      </template>
     </b-modal>
 
     <PanelEditor :panelData="activePanel" />

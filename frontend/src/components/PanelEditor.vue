@@ -25,7 +25,7 @@ export default {
 </script>
 
 <template>
-    <b-modal id="editorModal" size="xl" title="New Panel">
+    <b-modal id="editorModal" size="xl" :title="panelData.title">
         <textarea class="w-50" v-model="markdown"></textarea>
         <VueShowdown class="w-50 float-right pl-4" :markdown="renderedMarkdown" />
     </b-modal>
