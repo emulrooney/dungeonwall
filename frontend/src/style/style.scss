@@ -161,3 +161,7 @@ body {
 .modal-content {
   background-color: $bg-color;
 }
+
+.modal-footer {
+  justify-content: flex-start;
+}

@@ -24,6 +24,9 @@ export default {
 
 <template>
     <b-modal button-size="lg" id="panelModal" :title="panelData.title">
+      <template #modal-header>
+        <h5 class="modal-title">{{panelData.title}} {{panelData.subtitle.length > 0 ? "-" : ""}} {{panelData.subtitle}}</h5>
+      </template>
       <VueShowdown :markdown="panelBody" />
       <template #modal-footer="{ ok }">
         <b-button size="lg" variant="success" @click="ok()">
@@ -32,6 +35,7 @@ export default {
         <b-button size="lg" v-on:click="editPanel(panelData.id)">
           Edit
         </b-button>
+        <h5 class="position-absolute right--0 mr-3" v-if="panelData.bottomText.length > 0">{{panelData.bottomText}}</h5>
       </template>
     </b-modal>
 </template>

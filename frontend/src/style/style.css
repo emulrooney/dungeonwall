@@ -246,4 +246,10 @@ body {
 .modal-content {
   background-color: #363636;
 }
+
+.modal-footer {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
 /*# sourceMappingURL=style.css.map */
