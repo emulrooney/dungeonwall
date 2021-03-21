@@ -62,26 +62,50 @@ export default {
 <template>
     <b-modal id="editorModal" size="xl" :title="panelData.title" content-class="enforced-height--max" modal-class="backdrop--opaque">
         <template #modal-header>
-            <h5 v-if="!editTitleActive" class="modal-title">{{panelData.title}}</h5>
-            <b-form-input class="w-50" v-if="editTitleActive" v-model="panelData.title" placeholder="Panel Title"></b-form-input>
+            <div v-if="!editTitleActive">
+                <h5 class="modal-title">{{panelData.title}} {{panelData.subtitle.length > 0 ? "-" : ""}} {{panelData.subtitle}} {{panelData.bottomText.length > 0 ? "("+panelData.bottomText+")" : ""}}</h5>
+            </div>
+            <div v-else class="w-100 form-row">
+                <div class="col">
+                    <b-form-input v-model="panelData.title" placeholder="Panel Title"></b-form-input>
+                </div>
+                <div class="col">
+                    <b-form-input v-model="panelData.subtitle" placeholder="Panel Subtitle"></b-form-input>
+                </div>
+                <div class="col">
+                    <b-form-input v-model="panelData.bottomText" placeholder="Bottom Text - ie. page number, book"></b-form-input>
+                </div>
+            </div>
             <b-button v-on:click="editTitleActive = !editTitleActive" :pressed="editTitleActive">
                 {{editTitleActive ? "Save" : "Edit"}}    
             </b-button>
         </template>
 
-        <textarea class="w-50" v-model="markdown"></textarea>
+        <textarea class="w-50 enforced-height--80p" v-model="markdown"></textarea>
         <VueShowdown class="w-50 float-right pl-4" :markdown="renderedMarkdown" />
-        
-        <!-- <div class="w-100"> -->
-            <b-form-select v-model="panelData.panelWidth" :options="panelSizeSelect"></b-form-select>
-            <b-form-select v-model="panelData.panelHeight" :options="panelSizeSelect"></b-form-select>
-            <b-form-select v-model="panelData.panelType" :options="panelTypeSelect"></b-form-select>
-        <!-- </div> -->
+
+        <div class="position-absolute left--0 right--0 bottom--0 m-3">
+            <h4>Settings</h4>
+            <div class="form-row">
+                <div class="col">
+                    <label for="editorPanelWidth">Panel Width</label>
+                    <b-form-select name="editorPanelWidth" v-model="panelData.panelWidth" :options="panelSizeSelect"></b-form-select>
+                </div>
+                <div class="col">
+                    <label for="editorPanelHeight">Panel Height</label>
+                    <b-form-select v-model="panelData.panelHeight" :options="panelSizeSelect"></b-form-select>
+                </div>
+                <div class="col">
+                    <label for="editorPanelType">Type Label</label>
+                    <b-form-select v-model="panelData.panelType" :options="panelTypeSelect"></b-form-select>
+                </div>
+            </div>
+        </div>
         <template #modal-footer={close}>
-            <b-button @click="close()">
+            <b-button @click="close()" size="lg">
                 Cancel
             </b-button>
-            <b-button v-on:click="savePanel()" :pressed="awaitingSaveResponse" :disabled="awaitingSaveResponse">
+            <b-button v-on:click="savePanel()" size="lg" variant="success" :pressed="awaitingSaveResponse" :disabled="awaitingSaveResponse">
                 Save
             </b-button>
         </template>

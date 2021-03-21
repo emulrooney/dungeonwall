@@ -225,6 +225,10 @@ body {
   top: 0;
 }
 
+.enforced-height--80p {
+  height: 80%;
+}
+
 .enforced-height--max {
   min-height: calc(100vh - 56px);
 }
