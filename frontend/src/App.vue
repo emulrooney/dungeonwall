@@ -3,6 +3,7 @@ import { bus } from './main';
 import Wall from './components/Wall.vue'
 import TopUI from './components/TopUI.vue'
 import PanelEditor from './components/PanelEditor.vue'
+import PanelViewer from './components/PanelViewer.vue'
 
 import axios from "axios"
 
@@ -11,6 +12,7 @@ export default {
   components: {
     TopUI,
     Wall,
+    PanelViewer,
     PanelEditor
   },
   mounted: async function() {
@@ -51,9 +53,6 @@ export default {
     },
     newPanel: function() {
       bus.$emit('add-panel', []);
-    },
-    editPanel: function(panelId) {
-      bus.$emit('edit-panel', [panelId]);
     },
     resetActivePanel: function() {
       this.activePanel = {
@@ -138,18 +137,7 @@ export default {
       <p>Loading...</p>
     </div>
 
-    <b-modal button-size="lg" id="panelModal" :title="activePanel.title">
-      <VueShowdown :markdown="activePanel.body" />
-      <template #modal-footer="{ ok }">
-        <b-button size="lg" variant="success" @click="ok()">
-          OK
-        </b-button>
-        <b-button size="lg" v-on:click="editPanel(activePanel.id)">
-          Edit
-        </b-button>
-      </template>
-    </b-modal>
-
+    <PanelViewer :panelData="activePanel" /> 
     <PanelEditor :panelData="activePanel" />
 
   </div>
