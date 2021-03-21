@@ -26,7 +26,13 @@ export default {
         subtitle: "",
         body: "Loading...",
         bottomText: ""
-      }
+      },
+      maxPanels: 25
+    }
+  },
+  computed: {
+    currentIdList: function() {
+      return this.loaded.data.map(panel => panel.id);
     }
   },
   methods: {
@@ -67,6 +73,20 @@ export default {
         console.log("Couldn't update panel. :( ");
       }
     },
+    addPanel: function(panelData) {
+      //TODO Validate.
+      for (let i = 0; i < this.maxPanels; i++) {
+        if (!this.currentIdList.includes(i)) {
+          panelData.id = i;
+
+          this.loaded.data.push(panelData);
+          this.rerenderWall();
+          return;
+        }
+      }
+
+      console.log("Couldn't add panel... too many on the wall.");
+    },
     rerenderWall: function() {
       this.wallUpdates++;
     }
@@ -91,9 +111,19 @@ export default {
       vm.$bvModal.show('editorModal');
     });
 
-    bus.$on('save-panel', (panelData) => {
-      this.updatePanel(panelData);
+    bus.$on('save-panel', (panelData, editorMode) => {
+      console.log("Bus On Save");
+      if (editorMode == "Create") {
+        this.addPanel(panelData);
+      } else if (editorMode == "Edit") {
+        this.updatePanel(panelData);
+      }
+
       this.rerenderWall();
+    });
+
+    bus.$on('create-panel', (panelData) => {
+      this.newPanel(panelData);
     });
   }
 }

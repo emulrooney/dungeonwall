@@ -15,14 +15,34 @@ export default {
                 {value: "medium", text: "Medium"},
                 {value: "large", text: "Large"}
             ],
+            panelTypeSelect: [
+                {value: "item", text: "Item Ability or Feature"},
+                {value: "class", text: "Class Ability or Feature"},
+                {value: "race", text: "Racial Bonus"},
+                {value: "skill", text: "Skill"},
+                {value: "misc", text: "Miscellaneous"},
+                {value: "neutral", text: "None"},
+
+            ],
             editTitleActive: false,
             awaitingSaveResponse: false
+        }
+    },
+    computed: {
+        editorMode: function() {
+            return this.panelData.id < 0 ? "Create" : "Edit"; 
+        },
+        renderedMarkdown: function() {
+            if (this.markdown.length > 0)
+                return this.markdown;
+
+            return "Panel body can accept any valid markdown.";
         }
     },
     methods: {
         savePanel: function() {
             this.panelData.body = this.markdown; //Manually update; required due to use of vue-showdown
-            bus.$emit("save-panel", this.panelData);
+            bus.$emit("save-panel", this.panelData, this.editorMode);
         },
         submitPanelUpdate: async function() {
             this.awaitingSaveResponse = true;
@@ -33,14 +53,6 @@ export default {
                 console.log("Couldn't submit... try again later."); //TODO Need error posting system
             });
             this.awaitingSaveResponse = false;
-        }
-    },
-    computed: {
-        renderedMarkdown: function() {
-            if (this.markdown.length > 0)
-                return this.markdown;
-
-            return "Panel body can accept any valid markdown.";
         }
     }
 }
@@ -62,6 +74,7 @@ export default {
         <!-- <div class="w-100"> -->
             <b-form-select v-model="panelData.panelWidth" :options="panelSizeSelect"></b-form-select>
             <b-form-select v-model="panelData.panelHeight" :options="panelSizeSelect"></b-form-select>
+            <b-form-select v-model="panelData.panelType" :options="panelTypeSelect"></b-form-select>
         <!-- </div> -->
         <template #modal-footer={close}>
             <b-button @click="close()">
