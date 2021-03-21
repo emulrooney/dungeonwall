@@ -18,7 +18,8 @@ export default {
   },
   data: function() {
     return {
-      loaded: [],
+      wallUpdates: 0,
+      loaded: {},
       activePanel: {
         id: -1,
         title: "New Panel",
@@ -56,6 +57,18 @@ export default {
         body: "",
         bottomText: ""
       };
+    },
+    updatePanel: function(panelData) {
+      let updated = this.loaded.data.find(panel => panel.id == panelData.id);
+
+      if (updated != null) {
+        this.loaded.data[panelData.id] = panelData;
+      } else {
+        console.log("Couldn't update panel. :( ");
+      }
+    },
+    rerenderWall: function() {
+      this.wallUpdates++;
     }
 
   },
@@ -77,6 +90,11 @@ export default {
       vm.$bvModal.hide('panelModal');
       vm.$bvModal.show('editorModal');
     });
+
+    bus.$on('save-panel', (panelData) => {
+      this.updatePanel(panelData);
+      this.rerenderWall();
+    });
   }
 }
 
@@ -85,7 +103,7 @@ export default {
 <template>
   <div id="app">
     <TopUI />
-    <Wall v-if="this.loaded.data != undefined && this.loaded.data.length > 0" :wallData="this.loaded.data" wallTitle="Slippers, Human Monk Level 5" :isEditMode="true" />
+    <Wall v-if="this.loaded.data != undefined && this.loaded.data.length > 0" :wallData="this.loaded.data" wallTitle="Slippers, Human Monk Level 5" :isEditMode="true" :key="wallUpdates" />
     <div v-else>
       <p>Loading...</p>
     </div>
