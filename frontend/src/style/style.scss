@@ -78,6 +78,12 @@ body {
   padding: 0 8px 0 8px;
 }
 
+.backdrop--opaque {
+  background-color: lighten($bg-color, 20%);
+  background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
+  transition: background .66s;
+}
+
 // .panel__content--fade-out {
 //   box-shadow: inset 0px -32px 16px 0px $bg-color-transparent;
 // }
@@ -131,6 +137,10 @@ body {
 
 .top--0 {
   top: 0;
+}
+
+.enforced-height--max {
+  min-height: calc(100vh - 56px);
 }
 
 /* BOOTSTRAP OVERRIDES */

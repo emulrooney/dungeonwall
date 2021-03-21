@@ -112,13 +112,13 @@ export default {
     });
 
     bus.$on('save-panel', (panelData, editorMode) => {
-      console.log("Bus On Save");
       if (editorMode == "Create") {
         this.addPanel(panelData);
       } else if (editorMode == "Edit") {
         this.updatePanel(panelData);
       }
-
+      //TODO Error handling - show a msg, but don't close the modal.
+      vm.$bvModal.hide('editorModal'); 
       this.rerenderWall();
     });
 

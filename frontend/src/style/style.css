@@ -14,7 +14,8 @@ body {
   margin: 10px;
   text-align: left;
   overflow: hidden;
-  transition: background-color 0.4s;
+  -webkit-transition: background-color .4s;
+  transition: background-color .4s;
 }
 
 .panel:hover {
@@ -31,14 +32,17 @@ body {
 }
 
 .panel__text--small {
-  font-size: 0.75em;
+  font-size: .75em;
 }
+
 .panel__text--small h3 {
   font-size: 1.25em;
 }
+
 .panel__text--small h4 {
   font-size: 1.1em;
 }
+
 .panel__text--small h5 {
   font-size: 1.05em;
 }
@@ -48,6 +52,13 @@ body {
   font-weight: 700;
   border-radius: 8px;
   padding: 0 8px 0 8px;
+}
+
+.backdrop--opaque {
+  background-color: dimgray;
+  background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
+  -webkit-transition: background .66s;
+  transition: background .66s;
 }
 
 /* UTILITY CLASSES */
@@ -214,6 +225,10 @@ body {
   top: 0;
 }
 
+.enforced-height--max {
+  min-height: calc(100vh - 56px);
+}
+
 /* BOOTSTRAP OVERRIDES */
 body {
   background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
@@ -227,5 +242,4 @@ body {
 .modal-content {
   background-color: #363636;
 }
-
 /*# sourceMappingURL=style.css.map */

@@ -60,7 +60,7 @@ export default {
 </script>
 
 <template>
-    <b-modal id="editorModal" size="xl" :title="panelData.title">
+    <b-modal id="editorModal" size="xl" :title="panelData.title" content-class="enforced-height--max" modal-class="backdrop--opaque">
         <template #modal-header>
             <h5 v-if="!editTitleActive" class="modal-title">{{panelData.title}}</h5>
             <b-form-input class="w-50" v-if="editTitleActive" v-model="panelData.title" placeholder="Panel Title"></b-form-input>
@@ -71,6 +71,7 @@ export default {
 
         <textarea class="w-50" v-model="markdown"></textarea>
         <VueShowdown class="w-50 float-right pl-4" :markdown="renderedMarkdown" />
+        
         <!-- <div class="w-100"> -->
             <b-form-select v-model="panelData.panelWidth" :options="panelSizeSelect"></b-form-select>
             <b-form-select v-model="panelData.panelHeight" :options="panelSizeSelect"></b-form-select>
