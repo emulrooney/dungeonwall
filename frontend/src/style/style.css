@@ -50,14 +50,6 @@ body {
   padding: 0 8px 0 8px;
 }
 
-.panel__content--fade-out {
-  box-shadow: inset 0px -32px 16px 0px #363636BB;
-}
-
-.panel:hover .panel__content--fade-out {
-  box-shadow: inset 0px -32px 16px 0px #505050;
-}
-
 /* UTILITY CLASSES */
 .width--small {
   width: 200px;
