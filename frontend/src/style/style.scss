@@ -14,8 +14,8 @@ $bg-color: #363636;
 $bg-color-transparent: #363636BB;
 
 $panel-small: 200;
-$panel-medium: 400;
-$panel-large: 600;
+$panel-medium: 360;
+$panel-large: 540;
 
 $panel-colors: (
   "item": $item-color,
@@ -44,7 +44,7 @@ body {
   
 .panel {
   position: absolute;
-  margin: 1.5rem;
+  margin: 10px;
   text-align: left;
   overflow: hidden;
   transition: background-color .4s;

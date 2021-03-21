@@ -46,7 +46,6 @@ export default {
       bus.$emit('add-panel', []);
     },
     editPanel: function(panelId) {
-      console.log("Edit on " + panelId);
       bus.$emit('edit-panel', [panelId]);
     },
     resetActivePanel: function() {
@@ -92,7 +91,7 @@ export default {
     </div>
 
     <b-modal button-size="lg" id="panelModal" :title="activePanel.title">
-      {{activePanel.body}}
+      <VueShowdown :markdown="activePanel.body" />
       <template #modal-footer="{ ok }">
         <b-button size="lg" variant="success" @click="ok()">
           OK

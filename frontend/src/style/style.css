@@ -11,7 +11,7 @@ body {
 
 .panel {
   position: absolute;
-  margin: 1.5rem;
+  margin: 10px;
   text-align: left;
   overflow: hidden;
   transition: background-color 0.4s;
@@ -65,29 +65,29 @@ body {
 }
 
 .width--medium {
-  width: 400px;
+  width: 360px;
 }
 
 .height--medium {
-  height: 400px;
+  height: 360px;
 }
 
 .border--medium {
   border-style: solid;
-  border-width: 2px;
+  border-width: 1.8px;
 }
 
 .width--large {
-  width: 600px;
+  width: 540px;
 }
 
 .height--large {
-  height: 600px;
+  height: 540px;
 }
 
 .border--large {
   border-style: solid;
-  border-width: 3px;
+  border-width: 2.7px;
 }
 
 .color--text--item {
