@@ -1,6 +1,8 @@
+let env = require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 var cors = require('cors')
+const db = require('./database.js');
 const app = express()
 const port = 3000
 
@@ -48,7 +50,8 @@ const debugContent = [
 
         panelType: "class",
         panelWidth: "small",
-        panelHeight: "small"
+        panelHeight: "small",
+        panelType: "class"
     },
     {
         id: 1,
@@ -63,11 +66,12 @@ const debugContent = [
         bottomText: "PHP p76",
 
         panelWidth: "medium",
-        panelHeight: "large"
+        panelHeight: "large",
+        panelType: "class"
     },
     {
         id: 2,
-        title: "Ki",
+        title: "Ki (Resource)",
         subtitle: "Monk Level 2",
         body: "Ki save DC = 8 + your proficiency bonus + your Wisdom modifier. ",
         bottomText: "PHP p76",
@@ -76,36 +80,58 @@ const debugContent = [
         maxUses: 5,
 
         panelWidth: "small",
-        panelHeight: "small"
+        panelHeight: "small",
+        panelType: "misc"
     },
     {
         id: 3,
-        title: "Ki - Flurry of Blows",
-        subtitle: "Monk Level 2",
-        body: "",
+        title: "Ki Powers",
+        subtitle: "Monk Abilities",
+        body: `
+**Patient Defense**: Dodge as bonus action. 
+
+**Step of the Wind**: Disengage/dash as bonus. Dbl jump speed for turn.
+
+**Flurry of Blows**: Two unarmed atks instead of one.
+
+**Stunning Strike** (lvl 5): On hit, con save vs stunned until end of my next turn.
+        `,
         bottomText: "PHP p76",
 
         panelWidth: "medium",
-        panelHeight: "small"
+        panelHeight: "large",
+        panelType: "class"
     },
     {
         id: 4,
-        title: "Ki - Patient Defense",
-        subtitle: "Monk Level 2",
-        body: "",
-        bottomText: "PHP p76",
+        title: "Open Hand Technique",
+        subtitle: "Open Hand Subclass",
+        body: `
+Whenever you hit a creature with one of the attacks granted by your **Flurry of Blows**, you can impose one of the following effects on that target.
 
+* It must succeed on a Dexterity saving throw or be knocked prone.
+
+* It must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.
+
+* It can't take reactions until the end of your next turn.      
+`,
+        bottomText: "PHP p79",
         panelWidth: "medium",
-        panelHeight: "small"
+        panelHeight: "small",
+        panelType: "class"
     },
     {
         id: 5,
-        title: "Ki - Step of the Wind",
-        subtitle: "Monk Level 2",
-        body: "",
-        bottomText: "PHP p76",
+        title: "Cloak of Displacement",
+        subtitle: "Attuned, gift from Shannix",
+        body:
+`
+While you wear this cloak, it projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have disadvantage on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while you are **incapacitated, restrained, or otherwise unable to move.**
+`,
+        bottomText: "DMG p158",
 
-        panelWidth: "medium",
-        panelHeight: "small"
+        panelWidth: "small",
+        panelHeight: "medium",
+        panelType: "item"
     }
 ];
