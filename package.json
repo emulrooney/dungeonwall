@@ -4,7 +4,8 @@
   "description": "Generate DM's modular screen in the browser.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "seed": "nodemon seedDb.js"
   },
   "author": "",
   "license": "ISC",
