@@ -1,42 +1,53 @@
 <script>
-import Muuri from 'muuri'
+import Muuri from "muuri";
 // eslint-disable-next-line no-unused-vars
-import Panel from './Panel.vue'
-import { bus } from '../main';
-
+import Panel from "./Panel.vue";
+import { bus } from "../main";
 
 export default {
-  name: 'Wall',
-  components: {
-    Panel
-  },
-  props: {
-    wallData: Array,
-    wallTitle: String,
-    isEditMode: Boolean
-  },
-  mounted: function() {
-    this.$nextTick(function() {
-      new Muuri('.js--muurify', {
-        dragEnabled: this.isEditMode
-      });
-    });
-  },
-  methods: {
-    addPanel: function() {
-      bus.$emit('add-panel', []);
-    }
-  }
-}
+	name: "Wall",
+	components: {
+		Panel,
+	},
+	props: {
+		wallData: Array,
+		wallTitle: String,
+		isEditMode: Boolean,
+	},
+	mounted: function () {
+		this.$nextTick(function () {
+			new Muuri(".js--muurify", {
+				dragEnabled: this.isEditMode,
+			});
+		});
+	},
+	methods: {
+		addPanel: function () {
+			bus.$emit("add-panel", []);
+		},
+	},
+};
 </script> 
 
 <template>
-  <div>
-    <h1 class="text-center">{{ wallTitle }} <button class="btn btn-light mb-2 ml-5" v-on:click="addPanel()">Add Panel</button></h1>
-    <div class="wall js--muurify">
-      <Panel v-for="panel in wallData" :key="panel.id" :width="panel.panelWidth" :height="panel.panelHeight" :panelData="panel" :panelId="panel.id" />
-    </div>
-  </div>
+	<div>
+		<h1 class="text-center">
+			{{ wallTitle }}
+			<button class="btn btn-light mb-2 ml-5" v-on:click="addPanel()">
+				Add Panel
+			</button>
+		</h1>
+		<div class="wall js--muurify">
+			<Panel
+				v-for="panel in wallData"
+				:key="panel.title"
+				:width="panel.panelWidth"
+				:height="panel.panelHeight"
+				:panelData="panel"
+				:panelId="panel.id"
+			/>
+		</div>
+	</div>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

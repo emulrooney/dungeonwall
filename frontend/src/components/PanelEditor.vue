@@ -1,113 +1,162 @@
 <script>
-import { bus } from '../main';
-import axios from "axios"
+import { bus } from "../main";
+import axios from "axios";
 
 export default {
-    name: 'PanelEditor',
-    props: {
-        panelData: Object
-    },
-    data: function() {
-        return {
-            markdown: "",
-            panelSizeSelect: [
-                {value: "small", text: "Small"},
-                {value: "medium", text: "Medium"},
-                {value: "large", text: "Large"}
-            ],
-            panelTypeSelect: [
-                {value: "item", text: "Item Ability or Feature"},
-                {value: "class", text: "Class Ability or Feature"},
-                {value: "race", text: "Racial Bonus"},
-                {value: "skill", text: "Skill"},
-                {value: "misc", text: "Miscellaneous"},
-                {value: "neutral", text: "None"},
+	name: "PanelEditor",
+	props: {
+		panelData: Object,
+	},
+	data: function () {
+		return {
+			panelSizeSelect: [
+				{ value: "small", text: "Small" },
+				{ value: "medium", text: "Medium" },
+				{ value: "large", text: "Large" },
+			],
+			panelTypeSelect: [
+				{ value: "item", text: "Item Ability or Feature" },
+				{ value: "class", text: "Class Ability or Feature" },
+				{ value: "race", text: "Racial Bonus" },
+				{ value: "skill", text: "Skill" },
+				{ value: "misc", text: "Miscellaneous" },
+				{ value: "neutral", text: "None" },
+			],
+			editTitleActive: false,
+			awaitingSaveResponse: false,
+		};
+	},
+	computed: {
+		editorMode: function () {
+			return this.panelData.id < 0 ? "Create" : "Edit";
+		},
+		renderedMarkdown: function () {
+			if (this.panelData.body.length > 0) return this.panelData.body;
 
-            ],
-            editTitleActive: false,
-            awaitingSaveResponse: false
-        }
-    },
-    computed: {
-        editorMode: function() {
-            return this.panelData.id < 0 ? "Create" : "Edit"; 
-        },
-        renderedMarkdown: function() {
-            if (this.markdown.length > 0)
-                return this.markdown;
-
-            return "Panel body can accept any valid markdown.";
-        }
-    },
-    methods: {
-        savePanel: function() {
-            this.panelData.body = this.markdown; //Manually update; required due to use of vue-showdown
-            bus.$emit("save-panel", this.panelData, this.editorMode);
-        },
-        submitPanelUpdate: async function() {
-            this.awaitingSaveResponse = true;
-            await axios.post("http://localhost:3000/wall/0/" + this.panelData.id, this.panelData).then((result) => {
-                console.log("Success");
-                console.log(result);
-            }).catch(() => {
-                console.log("Couldn't submit... try again later."); //TODO Need error posting system
-            });
-            this.awaitingSaveResponse = false;
-        }
-    }
-}
-
+			return "Panel body can accept any valid markdown.";
+		},
+	},
+	methods: {
+		savePanel: function () {
+			//this.panelData.body = this.markdown; //Manually update; required due to use of vue-showdown
+			bus.$emit("save-panel", this.panelData, this.editorMode);
+		},
+		submitPanelUpdate: async function () {
+			this.awaitingSaveResponse = true;
+			await axios
+				.post(
+					"http://localhost:3000/wall/0/" + this.panelData.id,
+					this.panelData
+				)
+				.then((result) => {
+					console.log("Success");
+					console.log(result);
+				})
+				.catch(() => {
+					console.log("Couldn't submit... try again later."); //TODO Need error posting system
+				});
+			this.awaitingSaveResponse = false;
+		},
+	},
+};
 </script>
 
 <template>
-    <b-modal id="editorModal" size="xl" :title="panelData.title" content-class="enforced-height--max" modal-class="backdrop--opaque">
-        <template #modal-header>
-            <div v-if="!editTitleActive">
-                <h5 class="modal-title">{{panelData.title}} {{panelData.subtitle.length > 0 ? "-" : ""}} {{panelData.subtitle}} {{panelData.bottomText.length > 0 ? "("+panelData.bottomText+")" : ""}}</h5>
-            </div>
-            <div v-else class="w-100 form-row">
-                <div class="col">
-                    <b-form-input v-model="panelData.title" placeholder="Panel Title"></b-form-input>
-                </div>
-                <div class="col">
-                    <b-form-input v-model="panelData.subtitle" placeholder="Panel Subtitle"></b-form-input>
-                </div>
-                <div class="col">
-                    <b-form-input v-model="panelData.bottomText" placeholder="Bottom Text - ie. page number, book"></b-form-input>
-                </div>
-            </div>
-            <b-button v-on:click="editTitleActive = !editTitleActive" :pressed="editTitleActive">
-                {{editTitleActive ? "Save" : "Edit"}}    
-            </b-button>
-        </template>
+	<b-modal
+		id="editorModal"
+		size="xl"
+		:title="panelData.title"
+		content-class="enforced-height--max"
+		modal-class="backdrop--opaque"
+	>
+		<template #modal-header>
+			<div v-if="!editTitleActive">
+				<h5 class="modal-title">
+					{{ panelData.title }}
+					{{ panelData.subtitle.length > 0 ? "-" : "" }}
+					{{ panelData.subtitle }}
+					{{
+						panelData.bottomText.length > 0
+							? "(" + panelData.bottomText + ")"
+							: ""
+					}}
+				</h5>
+			</div>
+			<div v-else class="w-100 form-row">
+				<div class="col">
+					<b-form-input
+						v-model="panelData.title"
+						placeholder="Panel Title"
+					></b-form-input>
+				</div>
+				<div class="col">
+					<b-form-input
+						v-model="panelData.subtitle"
+						placeholder="Panel Subtitle"
+					></b-form-input>
+				</div>
+				<div class="col">
+					<b-form-input
+						v-model="panelData.bottomText"
+						placeholder="Bottom Text - ie. page number, book"
+					></b-form-input>
+				</div>
+			</div>
+			<b-button
+				v-on:click="editTitleActive = !editTitleActive"
+				:pressed="editTitleActive"
+			>
+				{{ editTitleActive ? "Save" : "Edit" }}
+			</b-button>
+		</template>
 
-        <textarea class="w-50 enforced-height--80p" v-model="markdown"></textarea>
-        <VueShowdown class="w-50 float-right pl-4" :markdown="renderedMarkdown" />
+		<textarea
+			class="w-50 enforced-height--80p"
+			v-model="panelData.body"
+		></textarea>
+		<VueShowdown
+			class="w-50 float-right pl-4"
+			:markdown="renderedMarkdown"
+		/>
 
-        <div class="position-absolute left--0 right--0 bottom--0 m-3">
-            <h4>Settings</h4>
-            <div class="form-row">
-                <div class="col">
-                    <label for="editorPanelWidth">Panel Width</label>
-                    <b-form-select name="editorPanelWidth" v-model="panelData.panelWidth" :options="panelSizeSelect"></b-form-select>
-                </div>
-                <div class="col">
-                    <label for="editorPanelHeight">Panel Height</label>
-                    <b-form-select v-model="panelData.panelHeight" :options="panelSizeSelect"></b-form-select>
-                </div>
-                <div class="col">
-                    <label for="editorPanelType">Type Label</label>
-                    <b-form-select v-model="panelData.panelType" :options="panelTypeSelect"></b-form-select>
-                </div>
-            </div>
-        </div>
-        <template #modal-footer={close}>
-            <b-button @click="close()" size="lg">
-                Cancel
-            </b-button>
-            <b-button v-on:click="savePanel()" size="lg" variant="success" :pressed="awaitingSaveResponse" :disabled="awaitingSaveResponse">
-                Save
-            </b-button>
-        </template>
-    </b-modal>
+		<div class="position-absolute left--0 right--0 bottom--0 m-3">
+			<h4>Settings</h4>
+			<div class="form-row">
+				<div class="col">
+					<label for="editorPanelWidth">Panel Width</label>
+					<b-form-select
+						name="editorPanelWidth"
+						v-model="panelData.width"
+						:options="panelSizeSelect"
+					></b-form-select>
+				</div>
+				<div class="col">
+					<label for="editorPanelHeight">Panel Height</label>
+					<b-form-select
+						v-model="panelData.height"
+						:options="panelSizeSelect"
+					></b-form-select>
+				</div>
+				<div class="col">
+					<label for="editorPanelType">Type Label</label>
+					<b-form-select
+						v-model="panelData.type"
+						:options="panelTypeSelect"
+					></b-form-select>
+				</div>
+			</div>
+		</div>
+		<template #modal-footer="{ close }">
+			<b-button @click="close()" size="lg"> Cancel </b-button>
+			<b-button
+				v-on:click="savePanel()"
+				size="lg"
+				variant="success"
+				:pressed="awaitingSaveResponse"
+				:disabled="awaitingSaveResponse"
+			>
+				Save
+			</b-button>
+		</template>
+	</b-modal>
 </template>
