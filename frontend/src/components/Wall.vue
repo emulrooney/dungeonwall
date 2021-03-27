@@ -12,12 +12,13 @@ export default {
 	props: {
 		wallData: Array,
 		wallTitle: String,
-		isEditMode: Boolean,
+		isEditMode: Boolean
 	},
 	data: () => {
 		return {
 			muuriObject: null,
 			initialOrder: [], //Distinct from current - set on mount.
+			wallUpdates: 0
 		};
 	},
 	computed: {
@@ -35,18 +36,32 @@ export default {
 	},
 	mounted: function () {
 		this.$nextTick(function () {
+			let that = this;
 			this.muuriObject = new Muuri(".js--muurify", {
 				dragEnabled: this.isEditMode,
 			});
 
+			//Every time we move an object, update data so that currentOrder repopulates.
+			this.muuriObject.on('move', function () {
+				that.recalculate();
+			});
+
+			//Likewise with 'send' - once we have 1+ buckets for Muuri
+			// this.muuriObject.on('send', function () {
+			// 	that.recalculate();
+			// });
+			
 			this.initialOrder = this.muuriObject.getItems().map(function (item) {
-					return item.getElement().getAttribute("data-id");
-				});
+				return item.getElement().getAttribute("data-id");
+			});
 		});
 	},
 	methods: {
 		addPanel: function () {
 			bus.$emit("add-panel", []);
+		},
+		recalculate: function () {
+			this.wallUpdates++;
 		},
 	},
 };
