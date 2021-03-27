@@ -21,7 +21,7 @@ app.get('/debug', async (req, res) => {
 
 app.get('/debug/:id', (req, res) => {
     const id = Number(req.params.id);
-    const dbc = debugContent.find(dbc => dbc.id === id);
+    //const dbc = debugContent.find(dbc => dbc.id === id);
 
     if (!dbc) {
         res.send({ "status": "Couldn't find item!" });

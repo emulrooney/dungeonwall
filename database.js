@@ -7,8 +7,8 @@ const database = process.env.DB_NAME;
 
 var Schema = mongoose.Schema;
 
-//Schemas
-const Panel = mongoose.model("Panel", Schema({
+
+const Panel = Schema({
   _id: String,
   title: String,
   subtitle: String,
@@ -17,7 +17,16 @@ const Panel = mongoose.model("Panel", Schema({
   width: String,
   height: String,
   type: String
-}), "Panels"); //Last bit is the debugCollection name - later we'll specify the actual table.
+});
+
+const Wall = mongoose.model("Wall", Schema({
+  _id: String,
+  title: String,
+  icon: String,
+  bgColor: String,
+  iconColor: String,
+  panels: [Panel]
+}), "Walls");
 
 class Database {
   constructor() {
@@ -41,12 +50,12 @@ class Database {
   }
 
   async getDebugContent() {
-    let result = Panel.find({}, (err) => {
+    let result = Wall.find({}, (err) => {
       console.log("Err.");
       return err;
     }, (success) => {
       console.log("Success!");
-      return success;
+      return success[0];
     });
 
     console.log(result);

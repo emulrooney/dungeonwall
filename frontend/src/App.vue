@@ -16,12 +16,16 @@ export default {
 		PanelEditor,
 	},
 	mounted: async function () {
-		this.loaded = await this.loadWall(0);
+		let loaded = await this.loadWall(0);
+		loaded = loaded.data[0]; //Just get the first item.
+		this.wallTitle = loaded.title;
+		this.panels = loaded.panels;
 	},
 	data: function () {
 		return {
 			wallUpdates: 0,
-			loaded: {},
+			panels: {},
+			wallTitle: "",
 			activePanel: {
 				id: -1,
 				title: "New Panel",
@@ -38,7 +42,7 @@ export default {
 	},
 	computed: {
 		currentIdList: function () {
-			return this.loaded.data.map((panel) => panel.id);
+			return this.panels.map((panel) => panel.id);
 		},
 	},
 	methods: {
@@ -49,7 +53,7 @@ export default {
 				.then(function (result) {
 					//TODO: Eventually this will be figured out on the backend instead
 					let id = 0;
-					result.data.forEach((panel) => {
+					result.data[0].panels.forEach((panel) => {
 						panel.id = id;
 						id++;
 					});
@@ -76,12 +80,10 @@ export default {
 			};
 		},
 		updatePanel: function (panelData) {
-			let updated = this.loaded.data.find(
-				(panel) => panel.id == panelData.id
-			);
+			let updated = this.panels.find((panel) => panel.id == panelData.id);
 
 			if (updated != null) {
-				this.loaded.data[panelData.id] = panelData;
+				this.panels[panelData.id] = panelData;
 			} else {
 				console.log("Couldn't update panel. :( ");
 			}
@@ -92,7 +94,7 @@ export default {
 				if (!this.currentIdList.includes(i)) {
 					panelData.id = i;
 
-					this.loaded.data.push(panelData);
+					this.panels.push(panelData);
 					this.rerenderWall();
 					return;
 				}
@@ -109,7 +111,7 @@ export default {
 		bus.$on("panel-opened", (panelId) => {
 			vm.$bvModal.hide("editorModal");
 			vm.$bvModal.show("panelModal");
-			this.activePanel = this.loaded.data[panelId];
+			this.activePanel = this.panels[panelId];
 		});
 
 		bus.$on("add-panel", () => {
@@ -145,9 +147,9 @@ export default {
 	<div id="app">
 		<!-- <TopUI /> -->
 		<Wall
-			v-if="this.loaded.data != undefined && this.loaded.data.length > 0"
-			:wallData="this.loaded.data"
-			wallTitle="Slippers, Human Monk Level 5"
+			v-if="this.panels != undefined && this.panels.length > 0"
+			:wallData="this.panels"
+			:wallTitle="this.wallTitle"
 			:isEditMode="true"
 			:key="wallUpdates"
 		/>
