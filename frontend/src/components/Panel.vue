@@ -27,15 +27,8 @@ export default {
 		},
 		resourceUse: function () {
 			var resourceName =
-				this.useResourceFrequency.length > 0
-					? this.useResourceFrequency
-					: this.useResourceName;
-			return (
-				this.currentUses +
-				" / " +
-				this.maxUses +
-				(resourceName ? " " + this.resourceName : "")
-			);
+				this.useResourceFrequency.length > 0 ? this.useResourceFrequency : this.useResourceName;
+			return this.currentUses + " / " + this.maxUses + (resourceName ? " " + this.resourceName : "");
 		},
 		classes: function () {
 			let classes = [];
@@ -47,10 +40,7 @@ export default {
 				classes.push("height--" + this.panelData.height);
 			}
 
-			if (
-				this.panelData.height == "small" ||
-				this.panelData.width == "small"
-			) {
+			if (this.panelData.height == "small" || this.panelData.width == "small") {
 				classes.push("panel__text--small");
 			}
 
@@ -71,10 +61,7 @@ export default {
 		},
 		panelUseClasses: function () {
 			if (this.panelData.type) {
-				return (
-					"panel__uses border--small color--border--" +
-					this.panelData.type
-				);
+				return "panel__uses border--small color--border--" + this.panelData.type;
 			} else {
 				return "panel__uses border--small color--border--white";
 			}
@@ -112,16 +99,12 @@ export default {
 </script>
 
 <template>
-	<div class="panel card" :class="classes" v-on:dblclick="openPanel(panelId)">
+	<div class="panel card" :class="classes" v-on:dblclick="openPanel(panelId)" :data-id="this.id">
 		<div class="panel__content card-body">
 			<h3 class="panel__title pt-3">{{ title }}</h3>
-			<div
-				class="justify-content-between position-absolute w-100 left--0 top--0 pt-2 pl-4 pr-4 d-flex"
-			>
+			<div class="justify-content-between position-absolute w-100 left--0 top--0 pt-2 pl-4 pr-4 d-flex">
 				<span :class="panelTypeClasses">{{ type }}</span>
-				<span :class="panelUseClasses" v-if="hasUses">{{
-					resourceUse
-				}}</span>
+				<span :class="panelUseClasses" v-if="hasUses">{{resourceUse}}</span>
 			</div>
 			<h4>{{ subtitle }}</h4>
 			<VueShowdown :markdown="body" />

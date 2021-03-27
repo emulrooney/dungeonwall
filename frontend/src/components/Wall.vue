@@ -14,11 +14,34 @@ export default {
 		wallTitle: String,
 		isEditMode: Boolean,
 	},
+	data: () => {
+		return {
+			muuriObject: null,
+			initialOrder: [], //Distinct from current - set on mount.
+		};
+	},
+	computed: {
+		currentOrder: function () {
+			if (this.muuriObject) {
+				//Get the current panel order (JUST THE IDs) and return as an array.
+				//When we save, we'll re-order the panels on in the subdocument collection.
+				let itemIds = this.muuriObject.getItems().map(function (item) {
+					return item.getElement().getAttribute("data-id");
+				});
+				return itemIds;
+			}
+			return [];
+		},
+	},
 	mounted: function () {
 		this.$nextTick(function () {
-			new Muuri(".js--muurify", {
+			this.muuriObject = new Muuri(".js--muurify", {
 				dragEnabled: this.isEditMode,
 			});
+
+			this.initialOrder = this.muuriObject.getItems().map(function (item) {
+					return item.getElement().getAttribute("data-id");
+				});
 		});
 	},
 	methods: {
@@ -38,8 +61,7 @@ export default {
 			</button>
 		</h1>
 		<div class="wall js--muurify">
-			<Panel
-				v-for="panel in wallData"
+			<Panel v-for="panel in wallData"
 				:key="panel.title"
 				:width="panel.panelWidth"
 				:height="panel.panelHeight"
