@@ -99,7 +99,7 @@ export default {
 </script>
 
 <template>
-	<div class="panel card" :class="classes" v-on:dblclick="openPanel(panelId)" :data-id="this.panelId">
+	<div class="panel card" :class="classes" v-on:dblclick="openPanel(panelId)" :data-id="this.panelId" :data-type="this.type">
 		<div class="panel__content card-body">
 			<h3 class="panel__title pt-3">{{ title }}</h3>
 			<div class="justify-content-between position-absolute w-100 left--0 top--0 pt-2 pl-4 pr-4 d-flex">

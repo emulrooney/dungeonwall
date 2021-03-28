@@ -17,8 +17,7 @@ $panel-small: 200;
 $panel-medium: 360;
 $panel-large: 540;
 
-$panel-colors: (
-  "item": $item-color,
+$panel-colors: ("item": $item-color,
   "class": $class-color,
   "race": $race-color,
   "skill": $skill-color,
@@ -26,8 +25,7 @@ $panel-colors: (
   "white": $white,
   "black": $black,
   "normal": $bg-color,
-  "neutral": $neutral-color
-);
+  "neutral": $neutral-color);
 
 $panel-sizes: ("small": $panel-small, "medium": $panel-medium, "large": $panel-large);
 
@@ -41,7 +39,7 @@ body {
   width: 100%;
   height: 100vh;
 }
-  
+
 .panel {
   position: absolute;
   margin: 10px;
@@ -66,12 +64,21 @@ body {
 .panel__text--small {
   font-size: .75em;
 
-  h3 {font-size: 1.25em;}
-  h4 {font-size: 1.1em;}
-  h5 {font-size: 1.05em;}
+  h3 {
+    font-size: 1.25em;
+  }
+
+  h4 {
+    font-size: 1.1em;
+  }
+
+  h5 {
+    font-size: 1.05em;
+  }
 }
 
-.panel__type, .panel__uses {
+.panel__type,
+.panel__uses {
   text-transform: lowercase;
   font-weight: 700;
   border-radius: 8px;
@@ -94,11 +101,12 @@ body {
 
 /* UTILITY CLASSES */
 
-@each $size, $value in $panel-sizes {
+@each $size,
+$value in $panel-sizes {
   .width--#{$size} {
     width: #{$value}px;
   }
-  
+
   .height--#{$size} {
     height: #{$value}px;
   }
@@ -109,19 +117,29 @@ body {
   }
 }
 
-@each $name, $color in $panel-colors {
+@each $name,
+$color in $panel-colors {
   .color--text--#{$name} {
     color: $color;
-  };
-  
+  }
+
   .color--bg--#{$name} {
     background-color: $color;
-  };
+  }
 
   .color--border--#{$name} {
     border-color: $color;
   }
-}  
+
+  .filter--#{$name} {
+    border-color: $color;
+    background-color: $color;
+
+    :hover {
+      background-color: darken($color, 10%);
+    }
+  }
+}
 
 .bottom--0 {
   bottom: 0;

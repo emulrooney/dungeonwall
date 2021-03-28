@@ -17,8 +17,16 @@ export default {
 	data: () => {
 		return {
 			muuriObject: null,
-			initialOrder: [], //Distinct from current - set on mount.
-			wallUpdates: 0
+			dirtyContent: {},
+			wallUpdates: 0,
+			enabledTypes: {
+				item: true,
+				class: true,
+				skill: true,
+				misc: true,
+				race: true,
+				neutral: true
+			}
 		};
 	},
 	computed: {
@@ -33,32 +41,57 @@ export default {
 			}
 			return [];
 		},
+		wallClean: function() {
+			//If there's anything in the dirtyContent obj we know we have stuff to save
+			return Object.keys(this.dirtyContent).length === 0;
+		}
 	},
 	mounted: function () {
 		this.$nextTick(function () {
-			let that = this;
 			this.muuriObject = new Muuri(".js--muurify", {
 				dragEnabled: this.isEditMode,
 			});
 
 			//Every time we move an object, update data so that currentOrder repopulates.
 			this.muuriObject.on('move', function () {
-				that.recalculate();
+				this.dirtyContent.currentOrder = this.currentOrder;
 			});
 
 			//Likewise with 'send' - once we have 1+ buckets for Muuri
 			// this.muuriObject.on('send', function () {
-			// 	that.recalculate();
+			// 	this.wallClean = false;
 			// });
-			
-			this.initialOrder = this.muuriObject.getItems().map(function (item) {
-				return item.getElement().getAttribute("data-id");
-			});
+		});
+	},
+	created: function() {
+		bus.$on("save-wall-success", function() {
+			this.resetDirtyContent(); 
 		});
 	},
 	methods: {
 		addPanel: function () {
 			bus.$emit("add-panel", []);
+		},
+		resetDirtyContent: function() {
+			this.dirtyContent = {};
+		},
+		saveWallChanges: function() {
+			//Emit the content we need to save
+			//Exepcting to receive 'save-wall-success' on finish
+			bus.$emit("save-wall", this.dirtyContent);
+		},
+		toggleType: function(panelType) {
+			this.enabledTypes[panelType] = !this.enabledTypes[panelType];
+			let that = this;
+			this.muuriObject.filter(function(item) {
+				let visiblePanelTypes = [];
+				Object.keys(that.enabledTypes).forEach(type => {
+					if (that.enabledTypes[type])
+						visiblePanelTypes.push(type);
+				});
+
+				return visiblePanelTypes.includes(item.getElement().getAttribute("data-type"))
+			});
 		},
 		recalculate: function () {
 			this.wallUpdates++;
@@ -74,7 +107,18 @@ export default {
 			<button class="btn btn-light mb-2 ml-5" v-on:click="addPanel()">
 				Add Panel
 			</button>
+			<button class="btn btn-secondary mb-2 ml-3" :disabled="!wallClean" v-on:click="saveWallChanges()">
+				Save Changes
+			</button>
 		</h1>
+		<div class="wall__controls form-inline">
+			<b-button :pressed="!enabledTypes['item']" pill class="filter--item mr-2" v-on:click="toggleType('item')">{{enabledTypes['item'] ? 'Hide' : 'Show'}} Item</b-button>
+			<b-button :pressed="!enabledTypes['class']" pill class="filter--class mr-2" v-on:click="toggleType('class')">{{enabledTypes['class'] ? 'Hide' : 'Show'}} Class</b-button>
+			<b-button :pressed="!enabledTypes['race']" pill class="filter--race color--text--black mr-2" v-on:click="toggleType('race')">{{enabledTypes['race'] ? 'Hide' : 'Show'}} Race</b-button>
+			<b-button :pressed="!enabledTypes['skill']" pill class="filter--skill mr-2" v-on:click="toggleType('skill')">{{enabledTypes['skill'] ? 'Hide' : 'Show'}} Skill</b-button>
+			<b-button :pressed="!enabledTypes['misc']" pill class="filter--misc mr-2" v-on:click="toggleType('misc')">{{enabledTypes['misc'] ? 'Hide' : 'Show'}} Misc</b-button>
+			<b-button :pressed="!enabledTypes['neutral']" pill class="filter--neutral mr-2" v-on:click="toggleType('neutral')">{{enabledTypes['neutral'] ? 'Hide' : 'Show'}} Unlabelled</b-button>
+		</div>
 		<div class="wall js--muurify">
 			<Panel v-for="panel in wallData"
 				:key="panel.title"
