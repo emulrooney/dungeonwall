@@ -106,3 +106,5 @@ dist
 # Don't commit CSS, just SCSS
 *.css
 *.css.map
+
+launch.json
