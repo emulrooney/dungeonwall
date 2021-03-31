@@ -8,7 +8,9 @@ const port = 3000
 
 app.use(cors()) //TODO This might not be best practices. Investigate and consider more specific routing.
 var jsonParser = bodyParser.json();
-//var urlencodedParser = bodyParser.urlencoded({ extended: false }); TODO May not need this... dig into express bodyParser docs
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
@@ -23,7 +25,7 @@ app.get('/debug', async (req, res) => {
 });
 
 /**
- * TODO Get a list of walls: title, color/icon, ID. 
+ * Get a list of walls: title, color/icon, ID. 
  */
 app.get("/wall", async (req, res) => {
     let content = await db.getWallList();
@@ -41,7 +43,7 @@ app.get("/wall/:wallId", async (req, res) => {
 });
 
 /**
- * TODO Get a particular panel from a wall. Used to reset a modified (but not yet saved) panel. 
+ * Get a particular panel from a wall. Used to reset a modified (but not yet saved) panel. 
  */
 app.get("/wall/:wallId/:panelId", async (req, res) => {
     const wallId = req.params.wallId;
@@ -51,11 +53,21 @@ app.get("/wall/:wallId/:panelId", async (req, res) => {
 });
 
 /**
- * TODO Create a new wall. Body should include wall data (title, icon, iconColor, bgColor).
+ * Create a new wall. Body should include wall data (title, icon, iconColor, bgColor).
  */
 app.post("/wall", async (req, res) => {
-    let content = console.log("Not yet implemented.");
-    res.send(content);
+    let wallData = {
+        title: "Untitled Wall",
+        icon: null,
+        iconColor: "white",
+        bgColor: "#333333"
+    };
+
+    if (req.body.title != undefined)
+        wallData.title = req.body.title;
+
+    let newWall = await db.createWall(wallData)
+    res.send(newWall);
 });
 
 /**

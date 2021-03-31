@@ -85,6 +85,26 @@ class Database {
     }
   }
 
+  async createWall(wallData) {
+    let newWall = new Wall({
+      _id: mongoose.Types.ObjectId(),
+      title: wallData.title,
+      icon: wallData.icon,
+      iconColor: wallData.iconColor,
+      bgColor: wallData.bgColor,
+      panels: []
+    });
+
+    Wall.create(newWall, function (err, createdWall) {
+      if (err) {
+        //TODO Error #
+        return { status: -1, message: "Couldn't add wall." };
+      }
+      else
+        return newWall;
+    });
+  }
+
 }
 
 module.exports = new Database()
