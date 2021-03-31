@@ -26,15 +26,16 @@ app.get('/debug', async (req, res) => {
  * TODO Get a list of walls: title, color/icon, ID. 
  */
 app.get("/wall", async (req, res) => {
-    let content = console.log("Not yet implemented.");
+    let content = await db.getWallList();
     res.send(content);
 });
 
 /**
  * Get a particular wall. Wall data (like title, bg color, icon, ID) as well as the collection of embedded panels.
+ * param :wallId should be objectId 
  */
 app.get("/wall/:wallId", async (req, res) => {
-    const wallId = Number(req.params.wallId);
+    const wallId = req.params.wallId;
     let content = await db.getWall(wallId);
     res.send(content);
 });
@@ -43,9 +44,9 @@ app.get("/wall/:wallId", async (req, res) => {
  * TODO Get a particular panel from a wall. Used to reset a modified (but not yet saved) panel. 
  */
 app.get("/wall/:wallId/:panelId", async (req, res) => {
-    const wallId = Number(req.params.wallId);
+    const wallId = req.params.wallId;
     const panelId = Number(req.params.panelId);
-    let content = console.log("Not yet implemented.");
+    let content = await db.getPanel(wallId, panelId);
     res.send(content);
 });
 
