@@ -66,6 +66,12 @@ app.post("/wall", async (req, res) => {
     if (req.body.title != undefined)
         wallData.title = req.body.title;
 
+    Object.keys(req.body).forEach((key) => {
+        if (key in wallData) {
+            wallData[key] = req.body[key];
+        }
+    });
+
     let newWall = await db.createWall(wallData)
     res.send(newWall);
 });
@@ -74,9 +80,27 @@ app.post("/wall", async (req, res) => {
  * TODO Create a new panel on wall. Body should include panel data (sizing, type, body, title/subtitle)
  */
 app.post("/wall/:wallId", async (req, res) => {
-    const wallId = Number(req.params.wallId);
-    let content = console.log("Not yet implemented.");
-    res.send(content);
+    const wallId = String(req.params.wallId);
+    let panelData = {
+        title: "New Panel",
+        subtitle: "",
+        body: "",
+        bottomText: "",
+        width: "small",
+        height: "height",
+        panelType: "neutral"
+    };
+
+    Object.keys(req.body).forEach((key) => {
+        if (key in panelData) {
+            panelData[key] = req.body[key];
+        }
+    });
+
+    console.log("WALL ID" + wallId);
+
+    let newPanel = await db.createPanel(wallId, panelData);
+    res.send(newPanel);
 });
 
 /**
@@ -84,7 +108,7 @@ app.post("/wall/:wallId", async (req, res) => {
  * as panel layouts. 
  */
 app.put("/wall/:wallId", async (req, res) => {
-    const wallId = Number(req.params.wallId);
+    const wallId = String(req.params.wallId);
     let content = console.log("Not yet implemented.");
     res.send(content);
 });
@@ -93,7 +117,7 @@ app.put("/wall/:wallId", async (req, res) => {
  * TODO Update a particular panel on a particular wall. Might have (sub)title, body text, sizing, type changes. 
  */
 app.put("/wall/:wallId/:panelId", async (req, res) => {
-    const wallId = Number(req.params.wallId);
+    const wallId = String(req.params.wallId);
     const panelId = Number(req.params.panelId);
     let content = console.log("Not yet implemented.");
     res.send(content);
@@ -103,7 +127,7 @@ app.put("/wall/:wallId/:panelId", async (req, res) => {
  * TODO Delete an entire wall.
  */
 app.delete("/wall/:wallId/", async (req, res) => {
-    const wallId = Number(req.params.wallId);
+    const wallId = String(req.params.wallId);
     let content = console.log("Not yet implemented.");
     res.send(content);
 });
@@ -112,7 +136,7 @@ app.delete("/wall/:wallId/", async (req, res) => {
  * TODO Delete a particular panel on a wall.
  */
 app.put("/wall/:wallId/:panelId", async (req, res) => {
-    const wallId = Number(req.params.wallId);
+    const wallId = String(req.params.wallId);
     const panelId = Number(req.params.panelId);
     let content = console.log("Not yet implemented.");
     res.send(content);

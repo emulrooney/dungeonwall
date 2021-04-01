@@ -6,9 +6,11 @@ const password = process.env.DB_PASSWORD;
 const server = process.env.DB_SERVER;
 const database = process.env.DB_NAME;
 
+mongoose.set('useFindAndModify', false);
+
 var Schema = mongoose.Schema;
 
-
+//TODO These should be in a models file
 const Panel = Schema({
   title: String,
   subtitle: String,
@@ -16,14 +18,14 @@ const Panel = Schema({
   bottomText: String,
   width: String,
   height: String,
-  type: String
+  panelType: String //"Type" reserved
 });
 
 const Wall = mongoose.model("Wall", Schema({
-  title: String,
-  icon: String,
-  bgColor: String,
-  iconColor: String,
+  title: { type: String, required: true },
+  icon: { type: String, required: false },
+  bgColor: { type: String, required: false },
+  iconColor: { type: String, required: false },
   panels: [Panel]
 }), "Walls");
 
@@ -59,7 +61,7 @@ class Database {
   }
 
   /**
-   * TODO Need to determine the right way to get a _specific_ wall
+   * 
    */
   async getWall(wallIndex, query) {
     if (!query) {
@@ -75,11 +77,9 @@ class Database {
     let wall = await this.getWall(wallIndex);
 
     try {
-      console.log(wall[0].panels[panelId]);
       let panel = wall[0].panels[panelId];
       return panel;
     } catch (e) {
-      console.log(e);
       //TODO review status codes and differentiate errors
       return { status: 404, message: "Couldn't load panel." };
     }
@@ -95,16 +95,35 @@ class Database {
       panels: []
     });
 
-    Wall.create(newWall, function (err, createdWall) {
+    Wall.create(newWall, function (err, success) {
       if (err) {
         //TODO Error #
+        console.log(err);
         return { status: -1, message: "Couldn't add wall." };
       }
-      else
-        return newWall;
+      else {
+        return success;
+      }
     });
   }
 
+  async createPanel(wallIndex, panelData) {
+    let wallId = new mongoose.Types.ObjectId(wallIndex);
+
+    let result = Wall.findOneAndUpdate(
+      { _id: wallId },
+      { $push: { "panels": panelData } },
+      { new: true },
+      function (err, success) {
+        if (err)
+          return err;
+        else
+          return success;
+      }
+    );
+
+    return result;
+  }
 }
 
 module.exports = new Database()
