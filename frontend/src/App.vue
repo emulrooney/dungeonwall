@@ -17,7 +17,6 @@ export default {
 	},
 	mounted: async function () {
 		let loaded = await this.loadWall(0);
-		loaded = loaded.data[0]; //Just get the first item.
 		this.wallTitle = loaded.title;
 		this.panels = loaded.panels;
 	},
@@ -48,17 +47,16 @@ export default {
 	methods: {
 		loadWall: function (wallIndex) {
 			console.log("Loading wall #" + wallIndex);
-			let wallData = axios
-				.get("http://localhost:3000/debug")
+			let wallData = axios.get("http://localhost:3000/debug")
 				.then(function (result) {
 					//TODO: Eventually this will be figured out on the backend instead
 					let id = 0;
-					result.data[0].panels.forEach((panel) => {
+					result.data.panels.forEach((panel) => {
 						panel.id = id;
 						id++;
 					});
-
-					return result;
+					
+					return result.data;
 				})
 				.catch(function (error) {
 					console.log(error);
@@ -139,7 +137,20 @@ export default {
 		bus.$on("create-panel", (panelData) => {
 			this.newPanel(panelData);
 		});
-	},
+
+		bus.$on("save-wall", (savedWallContent) => {
+			console.log("Dirty Content");
+			console.log(savedWallContent);
+			axios.post("http://localhost:3000/wall/0", savedWallContent)
+				.then(function (result) {
+					console.log(result);
+					bus.$emit("save-wall-success", []);
+				}).catch(function (err) {
+					console.log(err);
+				});
+			
+		});
+	}
 };
 </script>
 

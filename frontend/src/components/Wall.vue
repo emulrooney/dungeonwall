@@ -1,6 +1,5 @@
 <script>
 import Muuri from "muuri";
-// eslint-disable-next-line no-unused-vars
 import Panel from "./Panel.vue";
 import { bus } from "../main";
 
@@ -53,8 +52,9 @@ export default {
 			});
 
 			//Every time we move an object, update data so that currentOrder repopulates.
+			let that = this;
 			this.muuriObject.on('move', function () {
-				this.dirtyContent.currentOrder = this.currentOrder;
+				that.dirtyContent.currentOrder = that.currentOrder;
 			});
 
 			//Likewise with 'send' - once we have 1+ buckets for Muuri
@@ -64,8 +64,9 @@ export default {
 		});
 	},
 	created: function() {
+		let that = this;
 		bus.$on("save-wall-success", function() {
-			this.resetDirtyContent(); 
+			that.resetDirtyContent(); 
 		});
 	},
 	methods: {
