@@ -1,3 +1,5 @@
+/* Config */
+
 let mongoose = require('mongoose');
 let ObjectId = require('mongoose').ObjectId;
 
@@ -9,6 +11,9 @@ const database = process.env.DB_NAME;
 mongoose.set('useFindAndModify', false);
 
 var Schema = mongoose.Schema;
+
+
+/* Models */
 
 //TODO These should be in a models file
 const Panel = Schema({
@@ -26,8 +31,12 @@ const Wall = mongoose.model("Wall", Schema({
   icon: { type: String, required: false },
   bgColor: { type: String, required: false },
   iconColor: { type: String, required: false },
+  panelOrder: { type: [Number], required: true },
   panels: [Panel]
 }), "Walls");
+
+
+/* DB Class */
 
 class Database {
   constructor() {
@@ -50,18 +59,20 @@ class Database {
     var db = mongoose.connection;
     //Bind connection to error event (to get notification of connection errors)
     db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
   }
 
   /**
-   * return All wall data (but not contained panels)
+   * Return a list of all wall configs (without. panels!)
+   * @return {Array} walls in a list
    */
   async getWallList() {
     return await Wall.find({}, { panels: 0 });
   }
 
   /**
-   * 
+   * Get a single wall (including panels) with optional query.
+   * @param {String} wallIndex  
+   * @param {Object} query 
    */
   async getWall(wallIndex, query) {
     if (!query) {
@@ -73,6 +84,13 @@ class Database {
     return wall;
   }
 
+  /**
+   * Get a single panel from given wall.
+   * 
+   * @param {String} wallIndex 
+   * @param {Integer} panelId
+   * @return {Panel} panel content 
+   */
   async getPanel(wallIndex, panelId) {
     let wall = await this.getWall(wallIndex);
 
@@ -85,6 +103,11 @@ class Database {
     }
   }
 
+  /**
+   * Generate a new wall based on passed in data.
+   * 
+   * @param {Object} wallData Wall data to populate Wall document 
+   */
   async createWall(wallData) {
     let newWall = new Wall({
       _id: mongoose.Types.ObjectId(),
@@ -92,7 +115,8 @@ class Database {
       icon: wallData.icon,
       iconColor: wallData.iconColor,
       bgColor: wallData.bgColor,
-      panels: []
+      panels: [],
+      panelOrder: []
     });
 
     Wall.create(newWall, function (err, success) {
@@ -107,6 +131,12 @@ class Database {
     });
   }
 
+  /**
+   * Generate a new panel based on based in data and append to specified wall.
+   * 
+   * @param {String} wallIndex 
+   * @param {Object} panelData Object with data to populate a new panel
+   */
   async createPanel(wallIndex, panelData) {
     let wallId = new mongoose.Types.ObjectId(wallIndex);
 
@@ -123,6 +153,54 @@ class Database {
     );
 
     return result;
+  }
+
+  async updateWall(wallIndex, wallUpdateData) {
+    let wallId = mongoose.Types.ObjectId(wallIndex);
+
+    let updatedWall = {};
+    Object.keys(wallUpdateData).forEach((key) => {
+      //TODO Validation.
+      updatedWall[key] = wallUpdateData[key];
+    });
+
+    let wall = await Wall.findByIdAndUpdate(wallId, updatedWall, {}, (err, result) => {
+      if (err) {
+        console.log("Error updating: ");
+        console.log(updatedWall);
+        return err;
+      } else {
+        return result;
+      }
+    });
+
+    return wall;
+  };
+
+  async updatePanel(wallIndex, panelIndex, panelUpdateData) {
+    let wallId = mongoose.Types.ObjectId(wallIndex);
+
+    let updatedPanel = {};
+    Object.keys(panelUpdateData).forEach((key) => {
+      //TODO Validation.
+      updatedPanel[key] = panelUpdateData[key];
+    });
+
+    let updatedWall = { "panels.id": panelIndex };
+    updatedWall["panels"] = [updatedPanel];
+
+    return this.updateWall(wallIndex, updatedWall);
+  }
+
+  //todo 
+  async deletePanel() {
+    return false;
+  }
+
+  async deleteWall(wallIndex) {
+    let wallId = mongoose.Types.ObjectId(wallIndex);
+    let deletedWall = Wall.deleteOne({ "_id": wallId });
+    return deletedWall;
   }
 }
 
