@@ -12,12 +12,12 @@
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "is-svg": ">=4.2.2",
     "muuri": "^0.9.3",
     "sass": "^1.32.8",
+    "ssri": ">=8.0.1",
     "vue": "^2.6.11",
-    "vue-showdown": "^2.4.1",
-    "is-svg": ">=4.2.2",
-    "ssri": ">=8.0.1"
+    "vue-showdown": "^2.4.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.12",

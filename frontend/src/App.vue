@@ -47,10 +47,13 @@ export default {
 	methods: {
 		loadWall: function (wallIndex) {
 			console.log("Loading wall #" + wallIndex);
-			let wallData = axios.get("http://localhost:3000/debug")
+			let wallData = axios.get("http://localhost:3000/wall/605e874fee94445c5d577bd1")
 				.then(function (result) {
 					//TODO: Eventually this will be figured out on the backend instead
 					let id = 0;
+
+					console.log(result);
+
 					result.data.panels.forEach((panel) => {
 						panel.id = id;
 						id++;
