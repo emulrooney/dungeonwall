@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 var cors = require('cors')
 const db = require('./database.js');
+const { isValidObjectId } = require('mongoose');
 const app = express()
 const port = 3000
 
@@ -39,7 +40,19 @@ app.get("/wall", async (req, res) => {
 app.get("/wall/:wallId", async (req, res) => {
     const wallId = req.params.wallId;
     let content = await db.getWall(wallId);
-    res.send(content);
+
+    //Get Panels
+
+    let wallObject = content[0];
+    let sortedPanels = [];
+
+    for (let i = 0; i < wallObject.panelOrder.length; i++) {
+        let panel = wallObject.panels[wallObject.panelOrder[i]];
+        sortedPanels.push(panel);
+    }
+
+    wallObject["panels"] = sortedPanels;
+    res.send(wallObject);
 });
 
 /**
@@ -108,7 +121,16 @@ app.post("/wall/:wallId", async (req, res) => {
 app.put("/wall/:wallId", async (req, res) => {
     const wallId = String(req.params.wallId);
 
-    let result = await db.updateWall(wallId, req.body);
+    let validWallFields = ["title", "icon", "iconColor", "bgColor", "panelOrder"];
+    let wallUpdateData = {};
+    Object.keys(req.body).forEach((key) => {
+        if (validWallFields.contains(key))
+            wallUpdateData[key] = req.body[key];
+    });
+
+    let newPanelOrder = (Array.isArray(req.body.panelOrder) ? req.body.panelOrder : null);
+
+    let result = await db.updateWall(wallId, wallUpdateData, newPanelOrder);
     res.send(result);
 });
 
@@ -125,7 +147,7 @@ app.put("/wall/:wallId/:panelId", async (req, res) => {
 });
 
 /**
- * TODO Delete an entire wall.
+ * Delete an entire wall.
  */
 app.delete("/wall/:wallId/", async (req, res) => {
     const wallId = String(req.params.wallId);
@@ -138,7 +160,9 @@ app.delete("/wall/:wallId/", async (req, res) => {
  */
 app.delete("/wall/:wallId/:panelId", async (req, res) => {
     const wallId = String(req.params.wallId);
-    const panelId = Number(req.params.panelId);
-    let content = console.log("Not yet implemented.");
-    res.send(content);
+    const panelId = String(req.params.panelId);
+
+    let result = await db.deletePanel(wallId, panelId);
+
+    res.send(result);
 });

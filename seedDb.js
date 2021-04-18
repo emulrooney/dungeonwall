@@ -66,6 +66,7 @@ class Database {
                 ],
                 "panels": [
                     {
+                        "id": 0,
                         "title": "Unarmored Movement",
                         "subtitle": "Monk Level 1",
                         "body": "AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
@@ -75,6 +76,7 @@ class Database {
                         "height": "small"
                     },
                     {
+                        "id": 1,
                         "title": "Martial Arts",
                         "subtitle": "Monk Level 1",
                         "body": "You gain the following benefits while you are unarmed or wielding only monk weapons and you aren't wearing armor or wielding a shield.\n  \n  * You can roll a d4 in place of the normal damage of your unarmed strike or monk weapon. This die changes as you gain monk levels, as shown in the Martial Arts column of the Monk table.\n  \n  * When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action. For example, if you take the Attack action and attack with a quarterstaff, you can also make an unarmed strike as a bonus action, assuming you haven't already taken a bonus action this turn.",
@@ -84,6 +86,7 @@ class Database {
                         "type": "class"
                     },
                     {
+                        "id": 2,
                         "title": "Ki (Resource)",
                         "subtitle": "Monk Level 2",
                         "body": "Ki save DC = 8 + your proficiency bonus + your Wisdom modifier. ",
@@ -93,6 +96,7 @@ class Database {
                         "type": "misc"
                     },
                     {
+                        "id": 3,
                         "title": "Ki Powers",
                         "subtitle": "Monk Abilities",
                         "body": "\n  **Patient Defense**: Dodge as bonus action. \n  \n  **Step of the Wind**: Disengage/dash as bonus. Dbl jump speed for turn.\n  \n  **Flurry of Blows**: Two unarmed atks instead of one.\n  \n  **Stunning Strike** (lvl 5): On hit, con save vs stunned until end of my next turn.\n          ",
@@ -102,6 +106,7 @@ class Database {
                         "type": "class"
                     },
                     {
+                        "id": 4,
                         "title": "Open Hand Technique",
                         "subtitle": "Open Hand Subclass",
                         "body": "\n  Whenever you hit a creature with one of the attacks granted by your **Flurry of Blows**, you can impose one of the following effects on that target.\n  \n  * It must succeed on a Dexterity saving throw or be knocked prone.\n  \n  * It must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.\n  \n  * It can't take reactions until the end of your next turn.      \n  ",
@@ -111,6 +116,7 @@ class Database {
                         "type": "class"
                     },
                     {
+                        "id": 5,
                         "title": "Cloak of Displacement",
                         "subtitle": "Attuned, gift from Shannix",
                         "body": "\n  While you wear this cloak, it projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have disadvantage on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while you are **incapacitated, restrained, or otherwise unable to move.**\n  ",
