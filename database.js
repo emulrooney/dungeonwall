@@ -17,13 +17,14 @@ var Schema = mongoose.Schema;
 
 //TODO These should be in a models file
 const Panel = Schema({
-  title: String,
-  subtitle: String,
-  body: String,
-  bottomText: String,
-  width: String,
-  height: String,
-  panelType: String //"Type" reserved
+  id: { type: Number, required: true },
+  title: { type: String, required: true },
+  subtitle: { type: String, required: false },
+  body: { type: String, required: false },
+  bottomText: { type: String, required: false },
+  width: { type: String, required: false },
+  height: { type: String, required: false },
+  panelType: { type: String, required: false } //"Type" reserved
 });
 
 const Wall = mongoose.model("Wall", Schema({
@@ -69,6 +70,7 @@ class Database {
     return await Wall.find({}, { panels: 0 });
   }
 
+
   /**
    * Get a single wall (including panels) with optional query.
    * @param {String} wallIndex  
@@ -81,6 +83,7 @@ class Database {
 
     let wallId = new mongoose.Types.ObjectId(wallIndex);
     let wall = await Wall.find({ _id: wallId }, query);
+
     return wall;
   }
 
@@ -139,6 +142,9 @@ class Database {
    */
   async createPanel(wallIndex, panelData) {
     let wallId = new mongoose.Types.ObjectId(wallIndex);
+    let panelId = new mongoose.Types.ObjectId();
+
+    panelData["_id"] = panelId;
 
     let result = Wall.findOneAndUpdate(
       { _id: wallId },
@@ -192,14 +198,37 @@ class Database {
     return this.updateWall(wallIndex, updatedWall);
   }
 
-  //todo 
-  async deletePanel() {
-    return false;
+  /**
+   * Delete a single panel on a particular wall.
+   * 
+   * @param {String} wallIndex 
+   * @param {String} panelIndex
+   */
+  async deletePanel(wallIndex, panelIndex) {
+    let wallId = new mongoose.Types.ObjectId(wallIndex);
+
+    let wall = await Wall.findOne({ _id: wallId }, {});
+
+
+    let result = Wall.updateOne(
+      { "_id": wallId },
+      { "$pull": { "panels": { $elemMatch: { _id: panelIndex } } } },
+      { "multi": true },
+      function (err, result) {
+        if (err)
+          return err;
+        else
+          return result;
+      }
+    );
+
+    return { status: "success", result: result };
   }
 
   async deleteWall(wallIndex) {
     let wallId = mongoose.Types.ObjectId(wallIndex);
-    let deletedWall = Wall.deleteOne({ "_id": wallId });
+    let deletedWall = Wall.deleteOne({ "_id": wallIndex });
+
     return deletedWall;
   }
 }
