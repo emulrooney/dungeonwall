@@ -107,7 +107,7 @@ export default {
 				<span :class="panelUseClasses" v-if="hasUses">{{resourceUse}}</span>
 			</div>
 			<h4>{{ subtitle }}</h4>
-			<VueShowdown :markdown="body" />
+			<VueShowdown class="panel__body" :markdown="body" />
 			<h5 class="position-absolute bottom--0 right--0 pr-4 pb-2">
 				{{ bottomText }}
 			</h5>

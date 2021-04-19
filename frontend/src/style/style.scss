@@ -61,6 +61,12 @@ body {
   display: none;
 }
 
+.panel__body {
+  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  overflow-y: hidden;
+}
+
 .panel__text--small {
   font-size: .75em;
 
@@ -163,6 +169,25 @@ $color in $panel-colors {
 
 .enforced-height--max {
   min-height: calc(100vh - 56px);
+}
+
+/* TODO this will have to rethought to be more generic */
+.height--large {
+  .panel__body {
+    max-height: 375px;
+  }
+}
+
+.height--medium {
+  .panel__body {
+    max-height: 230px;
+  }
+}
+
+.height--small {
+  .panel__body {
+    max-height: 80px;
+  }
 }
 
 /* BOOTSTRAP OVERRIDES */
