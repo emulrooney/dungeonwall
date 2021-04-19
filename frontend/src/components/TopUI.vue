@@ -1,8 +1,27 @@
 <script>
+import { bus } from "../main";
 export default {
-  name: 'TopUI',
-  props: {
-  }
+    name: 'TopUI',
+    data: () => {
+        return {
+            previousSearchTerm: "",
+            searchTerm: "",
+            minimumSearchLength: 2
+        };
+    },
+    methods: {
+        updateSearchTerm: function() {
+            if (this.searchTerm.length === 0) {
+                bus.$emit("search-wall", "");
+            }
+
+            if (this.searchTerm.length >= this.minimumSearchLength && this.searchTerm != this.previousSearchTerm) {
+                this.previousSearchTerm = this.searchTerm;
+                bus.$emit("search-wall", this.searchTerm);
+            }
+        }
+    }
+
 }
 </script>
 
@@ -19,7 +38,8 @@ export default {
                 <a class="nav-link active" href="#">Load Page</a>
             </li>
             <li class="nav-item mr-2">
-                <input class="input-group-text" type="text" placeholder="Search on Page" />
+                <input class="input-group-text" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
+                <b-button v-if="this.searchTerm.length > 0">X</b-button>
             </li>
         </ul>
     </nav>

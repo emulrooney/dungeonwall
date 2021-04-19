@@ -18,6 +18,8 @@ export default {
 			muuriObject: null,
 			dirtyContent: {},
 			wallUpdates: 0,
+			currentSearchTerm: "",
+			visiblePanels: [],
 			enabledTypes: {
 				item: true,
 				class: true,
@@ -68,6 +70,22 @@ export default {
 		bus.$on("save-wall-success", function() {
 			that.resetDirtyContent(); 
 		});
+		bus.$on("search-wall", function(searchTerm) {
+			that.visiblePanels = that.wallData.filter((panel) => {
+				return panel.title.toLowerCase().includes(searchTerm.toLowerCase());
+			});
+
+			//TODO Get search term & filters to play nice
+			that.muuriObject.filter(function(item) {
+				if (that.visiblePanels.length === 0)
+					return true;
+
+				let itemId = item.getElement().getAttribute("data-id");
+				let panel = that.wallData[itemId];
+				return that.visiblePanels.includes(panel);
+			});
+
+		});
 	},
 	methods: {
 		addPanel: function () {
@@ -91,12 +109,12 @@ export default {
 						visiblePanelTypes.push(type);
 				});
 
-				return visiblePanelTypes.includes(item.getElement().getAttribute("data-type"))
+				return visiblePanelTypes.includes(item.getElement().getAttribute("data-type"));
 			});
 		},
 		recalculate: function () {
 			this.wallUpdates++;
-		},
+		}
 	},
 };
 </script> 
