@@ -20,6 +20,7 @@ export default {
 			wallUpdates: 0,
 			currentSearchTerm: "",
 			visiblePanels: [],
+			visiblePanelTypes: [],
 			enabledTypes: {
 				item: true,
 				class: true,
@@ -70,8 +71,9 @@ export default {
 		bus.$on("save-wall-success", function() {
 			that.resetDirtyContent(); 
 		});
-		bus.$on("search-wall", function(searchTerm) {
-			that.searchByTerm(searchTerm);
+		bus.$on("search-wall", function(term) {
+			that.currentSearchTerm = term;
+			that.updateFilters();
 		});
 	},
 	methods: {
@@ -88,27 +90,19 @@ export default {
 		},
 		toggleType: function(panelType) {
 			this.enabledTypes[panelType] = !this.enabledTypes[panelType];
-			let that = this;
-			this.muuriObject.filter(function(item) {
-				let visiblePanelTypes = [];
-				Object.keys(that.enabledTypes).forEach(type => {
-					if (that.enabledTypes[type])
-						visiblePanelTypes.push(type);
-				});
 
-				return visiblePanelTypes.includes(item.getElement().getAttribute("data-type"));
-			});
+			this.updateFilters();
 		},
-		searchByTerm: function(searchTerm) {
-			this.visiblePanels = this.wallData.filter((panel) => {
-				return panel.title.toLowerCase().includes(searchTerm.toLowerCase());
-			});
-
-			//TODO Get search term & filters to play nice
+		updateFilters: function() {
 			let that = this;
+			this.visiblePanels = this.wallData.filter((panel) => {
+				//TODO Search on more than just title? Config for this???
+				return (that.enabledTypes[panel.type] //If match, not filtered out.
+					&&  panel.title.toLowerCase().includes(that.currentSearchTerm.toLowerCase())); //Contains search term
+			});
 			this.muuriObject.filter(function(item) {
-				if (that.visiblePanels.length === 0)
-					return true;
+				// if (enabledPanels.length === 0)
+				// 	return true;
 
 				let itemId = item.getElement().getAttribute("data-id");
 				let panel = that.wallData[itemId];
