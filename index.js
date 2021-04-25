@@ -43,7 +43,6 @@ app.get("/wall/:wallId", async (req, res) => {
     let content = await db.getWall(wallId);
 
     //Get Panels
-
     let wallObject = content[0];
     let sortedPanels = [];
 

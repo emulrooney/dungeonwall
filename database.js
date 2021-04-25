@@ -200,24 +200,6 @@ class Database {
       console.log(err);
     });
 
-    // Object.keys(panelUpdateData).forEach((key) => {
-    //   //TODO Validation.
-    //   updatedPanel["panels.$." + key] = panelUpdateData[key];
-    // });
-
-    // let updatedPanelFilter = { "panels.id": panelIndex };
-
-    // let result = Wall.updateOne(updatedPanelFilter, { "$set": updatedPanel }, (err, result) => {
-    //   if (err) {
-    //     console.log("Error updating: ");
-    //     console.log(updatedPanel);
-    //     return err;
-    //   } else {
-    //     console.log(result);
-    //     return result;
-    //   }
-    // });
-
     return result;
   }
 
