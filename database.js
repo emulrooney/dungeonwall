@@ -144,7 +144,7 @@ class Database {
     let wallId = new mongoose.Types.ObjectId(wallIndex);
     let panelId = new mongoose.Types.ObjectId();
 
-    panelData["_id"] = panelId;
+    panelData["id"] = panelId;
 
     let result = Wall.findOneAndUpdate(
       { _id: wallId },
@@ -187,15 +187,38 @@ class Database {
     let wallId = mongoose.Types.ObjectId(wallIndex);
 
     let updatedPanel = {};
-    Object.keys(panelUpdateData).forEach((key) => {
-      //TODO Validation.
-      updatedPanel[key] = panelUpdateData[key];
+
+    let result = Wall.findOne({ _id: wallId }).then((wall) => {
+      let panel = wall.panels[panelIndex];
+      Object.keys(panelUpdateData).forEach((key) => {
+        //TODO Validation.
+        panel[key] = panelUpdateData[key];
+      });
+      wall.save();
+    }).catch(err => {
+      console.log("lol");
+      console.log(err);
     });
 
-    let updatedWall = { "panels.id": panelIndex };
-    updatedWall["panels"] = [updatedPanel];
+    // Object.keys(panelUpdateData).forEach((key) => {
+    //   //TODO Validation.
+    //   updatedPanel["panels.$." + key] = panelUpdateData[key];
+    // });
 
-    return this.updateWall(wallIndex, updatedWall);
+    // let updatedPanelFilter = { "panels.id": panelIndex };
+
+    // let result = Wall.updateOne(updatedPanelFilter, { "$set": updatedPanel }, (err, result) => {
+    //   if (err) {
+    //     console.log("Error updating: ");
+    //     console.log(updatedPanel);
+    //     return err;
+    //   } else {
+    //     console.log(result);
+    //     return result;
+    //   }
+    // });
+
+    return result;
   }
 
   /**
@@ -212,7 +235,7 @@ class Database {
 
     let result = Wall.updateOne(
       { "_id": wallId },
-      { "$pull": { "panels": { $elemMatch: { _id: panelIndex } } } },
+      { "$pull": { "panels": { $elemMatch: { id: panelIndex } } } },
       { "multi": true },
       function (err, result) {
         if (err)

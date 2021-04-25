@@ -39,13 +39,16 @@ export default {
 	methods: {
 		savePanel: function () {
 			//this.panelData.body = this.markdown; //Manually update; required due to use of vue-showdown
+			console.log("Save panel...");
 			bus.$emit("save-panel", this.panelData, this.editorMode);
+			this.submitPanelUpdate();
 		},
 		submitPanelUpdate: async function () {
+			console.log("Submitting...");
 			this.awaitingSaveResponse = true;
 			await axios
-				.post(
-					"http://localhost:3000/wall/0/" + this.panelData.id,
+				.put(
+					"http://localhost:3000/wall/605e874fee94445c5d577bd1/" + this.panelData.id,
 					this.panelData
 				)
 				.then((result) => {

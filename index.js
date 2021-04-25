@@ -12,6 +12,7 @@ var jsonParser = bodyParser.json();
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(jsonParser);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
@@ -119,12 +120,12 @@ app.post("/wall/:wallId", async (req, res) => {
  * as panel layouts. 
  */
 app.put("/wall/:wallId", async (req, res) => {
+    const validWallFields = ["title", "icon", "iconColor", "bgColor", "panelOrder"];
     const wallId = String(req.params.wallId);
 
-    let validWallFields = ["title", "icon", "iconColor", "bgColor", "panelOrder"];
     let wallUpdateData = {};
     Object.keys(req.body).forEach((key) => {
-        if (validWallFields.contains(key))
+        if (validWallFields.includes(key))
             wallUpdateData[key] = req.body[key];
     });
 
@@ -138,11 +139,17 @@ app.put("/wall/:wallId", async (req, res) => {
  * TODO Update a particular panel on a particular wall. Might have (sub)title, body text, sizing, type changes. 
  */
 app.put("/wall/:wallId/:panelId", async (req, res) => {
+    const validPanelFields = ["id", "title", "subtitle", "body", "bottomText", "width", "height", "panelType"];
     const wallId = String(req.params.wallId);
     const panelId = Number(req.params.panelId);
 
-    let result = await db.updatePanel(wallId, panelId, req.body);
+    let panelUpdateData = {};
+    Object.keys(req.body).forEach((key) => {
+        if (validPanelFields.includes(key))
+            panelUpdateData[key] = req.body[key];
+    });
 
+    let result = await db.updatePanel(wallId, panelId, panelUpdateData);
     res.send(result);
 });
 
