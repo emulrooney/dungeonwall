@@ -38,26 +38,27 @@ export default {
 	},
 	methods: {
 		savePanel: function () {
-			//this.panelData.body = this.markdown; //Manually update; required due to use of vue-showdown
 			console.log("Save panel...");
+			this.submitPanelUpdate(this.editorMode);
 			bus.$emit("save-panel", this.panelData, this.editorMode);
-			this.submitPanelUpdate();
 		},
-		submitPanelUpdate: async function () {
+		submitPanelUpdate: async function (mode) {
 			console.log("Submitting...");
 			this.awaitingSaveResponse = true;
-			await axios
-				.put(
-					"http://localhost:3000/wall/605e874fee94445c5d577bd1/" + this.panelData.id,
-					this.panelData
-				)
-				.then((result) => {
-					console.log("Success");
-					console.log(result);
-				})
-				.catch(() => {
-					console.log("Couldn't submit... try again later."); //TODO Need error posting system
-				});
+
+			let axiosMethod = (mode == "Create" ? "post" : "put");
+
+			await axios({
+				method: axiosMethod,
+				url: "http://localhost:3000/wall/605e874fee94445c5d577bd1/" + (this.panelData.id >= 0 ? this.panelData.id : ""),
+				responseType: "json"
+			}).then((result) => {
+				console.log("Success");
+				console.log(result);
+			}).catch(() => {
+				console.log("Couldn't submit... try again later."); //TODO Need error posting system
+			});
+
 			this.awaitingSaveResponse = false;
 		},
 	},

@@ -27,18 +27,18 @@ export default {
 
 <template>
     <nav>
-        <ul class="nav">
-            <li class="nav-item mr-2">
-                <a class="nav-link">DungeonWall</a>
+        <ul class="nav nav__main">
+            <li class="nav-item mr-2 nav__title">
+                DungeonWall
             </li>
             <li class="nav-item mr-2">
-                <a class="nav-link active" href="#">Create New Page</a>
+                <a class="btn btn-lg btn-info" href="#">Create New Page</a>
             </li>
             <li class="nav-item mr-2">
-                <a class="nav-link active" href="#">Load Page</a>
+                <a class="btn btn-lg btn-info" href="#">Load Page</a>
             </li>
             <li class="nav-item mr-2">
-                <input class="input-group-text" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
+                <input class="input-group-text nav__search" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
                 <b-button v-if="this.searchTerm.length > 0">X</b-button>
             </li>
         </ul>

@@ -40,10 +40,9 @@ app.get("/wall", async (req, res) => {
  */
 app.get("/wall/:wallId", async (req, res) => {
     const wallId = req.params.wallId;
-    let content = await db.getWall(wallId);
+    let wallObject = await db.getWall(wallId);
 
     //Get Panels
-    let wallObject = content[0];
     let sortedPanels = [];
 
     for (let i = 0; i < wallObject.panelOrder.length; i++) {
@@ -101,7 +100,7 @@ app.post("/wall/:wallId", async (req, res) => {
         bottomText: "",
         width: "small",
         height: "height",
-        panelType: "neutral"
+        type: "neutral"
     };
 
     Object.keys(req.body).forEach((key) => {
@@ -138,7 +137,7 @@ app.put("/wall/:wallId", async (req, res) => {
  * TODO Update a particular panel on a particular wall. Might have (sub)title, body text, sizing, type changes. 
  */
 app.put("/wall/:wallId/:panelId", async (req, res) => {
-    const validPanelFields = ["id", "title", "subtitle", "body", "bottomText", "width", "height", "panelType"];
+    const validPanelFields = ["id", "title", "subtitle", "body", "bottomText", "width", "height", "type"];
     const wallId = String(req.params.wallId);
     const panelId = Number(req.params.panelId);
 

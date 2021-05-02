@@ -24,7 +24,7 @@ const Panel = Schema({
   bottomText: { type: String, required: false },
   width: { type: String, required: false },
   height: { type: String, required: false },
-  panelType: { type: String, required: false } //"Type" reserved
+  type: { type: String, required: false } //"Type" reserved
 });
 
 const Wall = mongoose.model("Wall", Schema({
@@ -82,7 +82,8 @@ class Database {
     }
 
     let wallId = new mongoose.Types.ObjectId(wallIndex);
-    let wall = await Wall.find({ _id: wallId }, query);
+    //    let wall = await Wall.find({ _id: wallId }, query);
+    let wall = await Wall.findById(wallIndex);
 
     return wall;
   }
@@ -142,9 +143,8 @@ class Database {
    */
   async createPanel(wallIndex, panelData) {
     let wallId = new mongoose.Types.ObjectId(wallIndex);
-    let panelId = new mongoose.Types.ObjectId();
-
-    panelData["id"] = panelId;
+    let wall = await Wall.findById(wallId, "panelOrder").exec();
+    panelData["id"] = Math.max(...wall.panelOrder) + 1;
 
     let result = Wall.findOneAndUpdate(
       { _id: wallId },

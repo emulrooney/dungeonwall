@@ -97,13 +97,18 @@ body {
   transition: background .66s;
 }
 
-// .panel__content--fade-out {
-//   box-shadow: inset 0px -32px 16px 0px $bg-color-transparent;
-// }
+.nav__main {
+  font-size: 1.25em;
 
-// .panel:hover .panel__content--fade-out {
-//   box-shadow: inset 0px -32px 16px 0px lighten($bg-color, 10%);
-// }
+  .nav__search {
+    height: 100%;
+  }
+}
+
+.nav__title {
+  font-size: 1.5em;
+}
+
 
 /* UTILITY CLASSES */
 
