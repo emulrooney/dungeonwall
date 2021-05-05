@@ -32,10 +32,16 @@ export default {
                 DungeonWall
             </li>
             <li class="nav-item mr-2">
-                <a class="btn btn-lg btn-info" href="#">Create New Page</a>
+                <button aria-label="Create New Page" class="btn btn-lg btn-info">
+                    <i class="fas fa-plus"></i>
+                    Create New Page
+                </button>
             </li>
             <li class="nav-item mr-2">
-                <a class="btn btn-lg btn-info" href="#">Load Page</a>
+                <button aria-label="Load Page" class="btn btn-lg btn-info">
+                    <i class="fas fa-folder-open"></i>
+                    Load Page
+                </button>
             </li>
             <li class="nav-item mr-2">
                 <input class="input-group-text nav__search" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
