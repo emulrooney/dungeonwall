@@ -36,7 +36,7 @@ app.get("/wall", async (req, res) => {
 
 /**
  * Get a particular wall. Wall data (like title, bg color, icon, ID) as well as the collection of embedded panels.
- * param :wallId should be objectId 
+ * param :wallId should be string of the ObjectID used 
  */
 app.get("/wall/:wallId", async (req, res) => {
     const wallId = req.params.wallId;

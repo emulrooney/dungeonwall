@@ -57,7 +57,7 @@ class Database {
 
     async seedDebugPanels() {
         let result = await Wall.create({
-            "_id": "605e874fee94445c5d577bd1",
+            "_id": ObjectId("605e874fee94445c5d577bd1"),
             "title": "Slippers, Level 5 Monk",
             "icon": "fist",
             "bgColor": null,

@@ -51,7 +51,8 @@ export default {
 			await axios({
 				method: axiosMethod,
 				url: "http://localhost:3000/wall/605e874fee94445c5d577bd1/" + (this.panelData.id >= 0 ? this.panelData.id : ""),
-				responseType: "json"
+				responseType: "json",
+				data: this.panelData
 			}).then((result) => {
 				console.log("Success");
 				console.log(result);

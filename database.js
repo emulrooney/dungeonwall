@@ -63,7 +63,7 @@ class Database {
   }
 
   /**
-   * Return a list of all wall configs (without. panels!)
+   * Return a list of all wall configs (without panels!)
    * @return {Array} walls in a list
    */
   async getWallList() {
@@ -73,17 +73,15 @@ class Database {
 
   /**
    * Get a single wall (including panels) with optional query.
-   * @param {String} wallIndex  
+   * @param {String} wallId Will be used as ObjectId via findById to get the wall.  
    * @param {Object} query 
    */
-  async getWall(wallIndex, query) {
+  async getWall(wallId, query) {
     if (!query) {
       query = {};
     }
 
-    let wallId = new mongoose.Types.ObjectId(wallIndex);
-    //    let wall = await Wall.find({ _id: wallId }, query);
-    let wall = await Wall.findById(wallIndex);
+    let wall = await Wall.findById(wallId);
 
     return wall;
   }
@@ -91,15 +89,15 @@ class Database {
   /**
    * Get a single panel from given wall.
    * 
-   * @param {String} wallIndex 
-   * @param {Integer} panelId
-   * @return {Panel} panel content 
+   * @param {String} wallId Will be used as ObjectId via findById to get the wall.  
+   * @param {Integer} panelIndex Index in array 
+   * @return {Panel} Content of single panel - see schema
    */
-  async getPanel(wallIndex, panelId) {
-    let wall = await this.getWall(wallIndex);
+  async getPanel(wallId, panelIndex) {
+    let wall = await this.getWall(wallId);
 
     try {
-      let panel = wall[0].panels[panelId];
+      let panel = wall[0].panels[panelIndex];
       return panel;
     } catch (e) {
       //TODO review status codes and differentiate errors
@@ -138,39 +136,36 @@ class Database {
   /**
    * Generate a new panel based on based in data and append to specified wall.
    * 
-   * @param {String} wallIndex 
+   * @param {String} wallId Object ID to append with new panel 
    * @param {Object} panelData Object with data to populate a new panel
    */
-  async createPanel(wallIndex, panelData) {
-    let wallId = new mongoose.Types.ObjectId(wallIndex);
+  async createPanel(wallId, panelData) {
     let wall = await Wall.findById(wallId, "panelOrder").exec();
     panelData["id"] = Math.max(...wall.panelOrder) + 1;
 
     let result = Wall.findOneAndUpdate(
       { _id: wallId },
-      { $push: { "panels": panelData } },
-      { new: true },
-      function (err, success) {
-        if (err)
-          return err;
-        else
-          return success;
-      }
+      { $push: { "panels": panelData, "panelOrder": panelData["id"] } },
+      { new: true }
     );
 
     return result;
   }
 
-  async updateWall(wallIndex, wallUpdateData) {
-    let wallId = mongoose.Types.ObjectId(wallIndex);
-
+  /**
+   * Update a wall
+   * @param {String} wallId String representation of wall ID to be turned into object ID
+   * @param {Object} wallUpdateData JSON object of data to use to update the wall 
+   */
+  async updateWall(wallId, wallUpdateData) {
     let updatedWall = {};
     Object.keys(wallUpdateData).forEach((key) => {
       //TODO Validation.
       updatedWall[key] = wallUpdateData[key];
     });
 
-    let wall = await Wall.findByIdAndUpdate(wallId, updatedWall, {}, (err, result) => {
+    //TODO Test - might be able to just send wallId w/o conversion
+    let wall = await Wall.findByIdAndUpdate(wallObjectId, updatedWall, {}, (err, result) => {
       if (err) {
         console.log("Error updating: ");
         console.log(updatedWall);
@@ -183,9 +178,14 @@ class Database {
     return wall;
   };
 
-  async updatePanel(wallIndex, panelIndex, panelUpdateData) {
-    let wallId = mongoose.Types.ObjectId(wallIndex);
 
+  /**
+   * Update an existing panel based on based in data and append to specified wall.
+   * 
+   * @param {String} wallId Object ID for wall containing panel to update 
+   * @param {Object} panelData JSON object with update data for panel
+   */
+  async updatePanel(wallId, panelIndex, panelUpdateData) {
     let updatedPanel = {};
 
     let result = Wall.findOne({ _id: wallId }).then((wall) => {
@@ -206,14 +206,11 @@ class Database {
   /**
    * Delete a single panel on a particular wall.
    * 
-   * @param {String} wallIndex 
+   * @param {String} wallId 
    * @param {String} panelIndex
    */
-  async deletePanel(wallIndex, panelIndex) {
-    let wallId = new mongoose.Types.ObjectId(wallIndex);
-
+  async deletePanel(wallId, panelIndex) {
     let wall = await Wall.findOne({ _id: wallId }, {});
-
 
     let result = Wall.updateOne(
       { "_id": wallId },
@@ -230,10 +227,8 @@ class Database {
     return { status: "success", result: result };
   }
 
-  async deleteWall(wallIndex) {
-    let wallId = mongoose.Types.ObjectId(wallIndex);
-    let deletedWall = Wall.deleteOne({ "_id": wallIndex });
-
+  async deleteWall(wallId) {
+    let deletedWall = Wall.deleteOne({ "_id": wallId });
     return deletedWall;
   }
 }
