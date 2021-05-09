@@ -2,6 +2,9 @@
 import { bus } from "../main";
 export default {
     name: 'OuterUI',
+    props: {
+        wallTitle: String
+    },
     data: () => {
         return {
             previousSearchTerm: "",
@@ -27,25 +30,20 @@ export default {
 
 <template>
     <nav>
-        <ul class="nav nav__main">
-            <li class="nav-item mr-2 nav__title">
+        <ul class="nav__main nav display--flex">
+            <li class="nav__title">
                 DungeonWall
+                <!-- TODO: Logo can go here. -->
             </li>
-            <li class="nav-item mr-2">
-                <button aria-label="Create New Page" class="btn btn-lg btn-info">
-                    <i class="fas fa-plus"></i>
-                    Create New Page
-                </button>
+            <li class="nav__wall-info text-center">
+                <h1>
+                    {{this.wallTitle}}
+                </h1>
             </li>
-            <li class="nav-item mr-2">
-                <button aria-label="Load Page" class="btn btn-lg btn-info">
-                    <i class="fas fa-folder-open"></i>
-                    Load Page
-                </button>
-            </li>
-            <li class="nav-item mr-2">
-                <input class="input-group-text nav__search" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
-                <b-button v-if="this.searchTerm.length > 0">X</b-button>
+            <li class="nav__wall-search">
+                <input class="input-group-text" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
+                <b-button>X</b-button>
+                <b-button>X</b-button>
             </li>
         </ul>
     </nav>

@@ -10,7 +10,6 @@ export default {
 	},
 	props: {
 		wallData: Array,
-		wallTitle: String,
 		isEditMode: Boolean
 	},
 	data: () => {
@@ -90,7 +89,6 @@ export default {
 		},
 		toggleType: function(panelType) {
 			this.enabledTypes[panelType] = !this.enabledTypes[panelType];
-
 			this.updateFilters();
 		},
 		updateFilters: function() {
@@ -101,9 +99,6 @@ export default {
 					&&  panel.title.toLowerCase().includes(that.currentSearchTerm.toLowerCase())); //Contains search term
 			});
 			this.muuriObject.filter(function(item) {
-				// if (enabledPanels.length === 0)
-				// 	return true;
-
 				let itemId = item.getElement().getAttribute("data-id");
 				let panel = that.wallData[itemId];
 				return that.visiblePanels.includes(panel);
@@ -119,7 +114,6 @@ export default {
 <template>
 	<div>
 		<h1 class="text-center">
-			{{ wallTitle }}
 			<button class="btn btn-light mb-2 ml-5" v-on:click="addPanel()">
 				Add Panel
 			</button>

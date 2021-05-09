@@ -159,11 +159,10 @@ export default {
 
 <template>
 	<div id="app">
-		<OuterUI />
+		<OuterUI :wallTitle="this.wallTitle" />
 		<Wall
 			v-if="this.panels != undefined && this.panels.length > 0"
 			:wallData="this.panels"
-			:wallTitle="this.wallTitle"
 			:isEditMode="true"
 			:key="wallUpdates"
 		/>
