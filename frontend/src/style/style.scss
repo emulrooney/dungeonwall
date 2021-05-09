@@ -120,8 +120,6 @@ body {
 }
 
 .nav__wall-search {
-  display: flex;
-  justify-content: center;
   width: 100%;
   margin: auto;
   padding: 0;
@@ -133,7 +131,7 @@ body {
     display: inline-block;
   }
 
-  button {
+  .nav__wall-search__button {
     padding: 0;
     height: 2em;
     width: 2em;

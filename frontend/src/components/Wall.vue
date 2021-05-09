@@ -67,11 +67,18 @@ export default {
 	},
 	created: function() {
 		let that = this;
+		
 		bus.$on("save-wall-success", function() {
 			that.resetDirtyContent(); 
 		});
+		
 		bus.$on("search-wall", function(term) {
 			that.currentSearchTerm = term;
+			that.updateFilters();
+		});
+
+		bus.$on("update-filters", function(enabledTypes) {
+			that.enabledTypes = enabledTypes
 			that.updateFilters();
 		});
 	},
@@ -86,10 +93,6 @@ export default {
 			//Emit the content we need to save
 			//Exepcting to receive 'save-wall-success' on finish
 			bus.$emit("save-wall", this.dirtyContent);
-		},
-		toggleType: function(panelType) {
-			this.enabledTypes[panelType] = !this.enabledTypes[panelType];
-			this.updateFilters();
 		},
 		updateFilters: function() {
 			let that = this;
@@ -121,14 +124,6 @@ export default {
 				Save Changes
 			</button>
 		</h1>
-		<div class="wall__controls form-inline">
-			<b-button :pressed="!enabledTypes['item']" pill class="filter--item mr-2" v-on:click="toggleType('item')">{{enabledTypes['item'] ? 'Hide' : 'Show'}} Item</b-button>
-			<b-button :pressed="!enabledTypes['class']" pill class="filter--class mr-2" v-on:click="toggleType('class')">{{enabledTypes['class'] ? 'Hide' : 'Show'}} Class</b-button>
-			<b-button :pressed="!enabledTypes['race']" pill class="filter--race color--text--black mr-2" v-on:click="toggleType('race')">{{enabledTypes['race'] ? 'Hide' : 'Show'}} Race</b-button>
-			<b-button :pressed="!enabledTypes['skill']" pill class="filter--skill mr-2" v-on:click="toggleType('skill')">{{enabledTypes['skill'] ? 'Hide' : 'Show'}} Skill</b-button>
-			<b-button :pressed="!enabledTypes['misc']" pill class="filter--misc mr-2" v-on:click="toggleType('misc')">{{enabledTypes['misc'] ? 'Hide' : 'Show'}} Misc</b-button>
-			<b-button :pressed="!enabledTypes['neutral']" pill class="filter--neutral mr-2" v-on:click="toggleType('neutral')">{{enabledTypes['neutral'] ? 'Hide' : 'Show'}} Unlabelled</b-button>
-		</div>
 		<div class="wall js--muurify">
 			<Panel v-for="panel in wallData"
 				:key="panel.title"

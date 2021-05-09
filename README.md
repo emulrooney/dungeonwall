@@ -13,4 +13,15 @@ View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/w
 * Run 'npm run sass' in the dungeonwall/frontend directory to make sure styles are up to date.
 * Run the front-end from the dungeonwall/frontend directory with 'npm run start'
 * Navigate to localhost:8080 to view the frontend. If everything went well, you should have the demo panels loaded.
-* There's a seedDB file you can run with 'npm run seed' to create a new wall with panels. **This is broken right now; working on a solution.**
+* There's a seedDB file you can run with 'npm run seed' to create a new wall with panels. **This is broken right now; working on a solution. Best to just copy the JSON object into a mongo DB instance**
+
+### Next steps
+
+* Adding some control over the wall itself (naming, color, etc)
+* Add controls for multiple walls (including having multiple pages on a wall)
+* Renameable panel types (esp to allow for other types of note pages)
+* Reconsider spacing of panels - would be 
+* Clean up the sass files, split them up a bit
+* Refactor to use Vuex 
+* Multiple users
+* Better backend validation, authentication
