@@ -1,7 +1,7 @@
 <script>
 import { bus } from "../main";
 export default {
-    name: 'TopUI',
+    name: 'OuterUI',
     data: () => {
         return {
             previousSearchTerm: "",

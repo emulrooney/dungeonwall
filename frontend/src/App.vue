@@ -1,7 +1,7 @@
 <script>
 import { bus } from "./main";
 import Wall from "./components/Wall.vue";
-import TopUI from './components/TopUI.vue'
+import OuterUI from './components/OuterUI.vue'
 import PanelEditor from "./components/PanelEditor.vue";
 import PanelViewer from "./components/PanelViewer.vue";
 
@@ -10,7 +10,7 @@ import axios from "axios";
 export default {
 	name: "App",
 	components: {
-		TopUI,
+		OuterUI,
 		Wall,
 		PanelViewer,
 		PanelEditor,
@@ -159,7 +159,7 @@ export default {
 
 <template>
 	<div id="app">
-		<TopUI />
+		<OuterUI />
 		<Wall
 			v-if="this.panels != undefined && this.panels.length > 0"
 			:wallData="this.panels"
