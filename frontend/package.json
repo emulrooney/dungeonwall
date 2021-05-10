@@ -1,6 +1,6 @@
 {
   "name": "dungeonwall",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",
@@ -11,18 +11,19 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.6.5",
+    "core-js": "^3.12.1",
     "is-svg": ">=4.2.2",
     "muuri": "^0.9.3",
-    "sass": "^1.32.8",
+    "sass": "^1.32.12",
     "ssri": ">=8.0.1",
     "vue": "^2.6.11",
-    "vue-showdown": "^2.4.1"
+    "vue-showdown": "^2.4.1",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.12",
-    "@vue/cli-plugin-eslint": "^4.5.12",
-    "@vue/cli-service": "^4.5.12",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
