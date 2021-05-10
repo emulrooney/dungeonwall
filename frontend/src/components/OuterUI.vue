@@ -59,7 +59,8 @@ export default {
                     <button class="btn btn-light" v-on:click="addPanel()">
                         Add Panel
                     </button>
-                    <button class="btn btn-secondary" :disabled="!wallClean" v-on:click="saveWallChanges()">
+                    <!-- <button class="btn btn-secondary" :disabled="!wallClean" v-on:click="saveWallChanges()"> -->
+                    <button class="btn btn-secondary" v-on:click="saveWallChanges()">
                         Save Changes
                     </button>
                 </div>

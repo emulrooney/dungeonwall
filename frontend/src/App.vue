@@ -16,15 +16,11 @@ export default {
 		PanelEditor,
 	},
 	mounted: async function () {
-		let loaded = await this.loadWall(0);
-		this.wallTitle = loaded.title;
-		this.panels = loaded.panels;
+		await this.loadWall(0);
 	},
 	data: function () {
 		return {
 			wallUpdates: 0,
-			panels: {},
-			wallTitle: "",
 			activePanel: {
 				id: -1,
 				title: "New Panel",
@@ -40,14 +36,14 @@ export default {
 		};
 	},
 	computed: {
-		currentIdList: function () {
-			return this.panels.map((panel) => panel.id);
-		},
+		wallTitle: function () { return this.$store.state.wallTitle }, //alias
+		panels: function () { return this.$store.state.panels }, //alias
+		currentIdList: function () { return this.$store.state.panels.map((panel) => panel.id); }
 	},
 	methods: {
-		loadWall: function (wallIndex) {
+		loadWall: async function (wallIndex) {
 			console.log("Loading wall #" + wallIndex);
-			let wallData = axios.get("http://localhost:3000/wall/605e874fee94445c5d577bd1")
+			let wallData = await axios.get("http://localhost:3000/wall/605e874fee94445c5d577bd1")
 				.then(function (result) {
 					//TODO: Eventually this will be figured out on the backend instead
 					let id = 0;
@@ -66,7 +62,7 @@ export default {
 					return { data: [] };
 				});
 
-			return wallData;
+			this.$store.commit("updateActiveWall", wallData);
 		},
 		newPanel: function () {
 			bus.$emit("add-panel", []);
