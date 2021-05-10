@@ -83,9 +83,6 @@ export default {
 		});
 	},
 	methods: {
-		addPanel: function () {
-			bus.$emit("add-panel", []);
-		},
 		resetDirtyContent: function() {
 			this.dirtyContent = {};
 		},
@@ -115,24 +112,14 @@ export default {
 </script> 
 
 <template>
-	<div>
-		<h1 class="text-center">
-			<button class="btn btn-light mb-2 ml-5" v-on:click="addPanel()">
-				Add Panel
-			</button>
-			<button class="btn btn-secondary mb-2 ml-3" :disabled="!wallClean" v-on:click="saveWallChanges()">
-				Save Changes
-			</button>
-		</h1>
-		<div class="wall js--muurify">
-			<Panel v-for="panel in wallData"
-				:key="panel.title"
-				:width="panel.panelWidth"
-				:height="panel.panelHeight"
-				:panelData="panel"
-				:panelId="panel.id"
-			/>
-		</div>
+	<div class="wall js--muurify">
+		<Panel v-for="panel in wallData"
+			:key="panel.title"
+			:width="panel.panelWidth"
+			:height="panel.panelHeight"
+			:panelData="panel"
+			:panelId="panel.id"
+		/>
 	</div>
 </template>
 

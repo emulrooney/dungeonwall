@@ -34,6 +34,9 @@ export default {
         toggleType: function(panelType) {
             this.enabledTypes[panelType] = !this.enabledTypes[panelType];
             bus.$emit("update-filters", this.enabledTypes);
+        },
+        addPanel: function () {
+			bus.$emit("add-panel", []);
 		}
     }
 
@@ -42,7 +45,7 @@ export default {
 
 <template>
     <nav>
-        <ul class="nav__main nav display--flex">
+        <ul class="nav__main nav d-flex">
             <li class="nav__title">
                 DungeonWall
                 <!-- TODO: Logo can go here. -->
@@ -51,9 +54,18 @@ export default {
                 <h1>
                     {{this.wallTitle}}
                 </h1>
+                <div class="d-flex">
+                    <h2>Subtitle?</h2>
+                    <button class="btn btn-light" v-on:click="addPanel()">
+                        Add Panel
+                    </button>
+                    <button class="btn btn-secondary" :disabled="!wallClean" v-on:click="saveWallChanges()">
+                        Save Changes
+                    </button>
+                </div>
             </li>
             <li class="nav__wall-search">
-                <div class="display--flex">
+                <div class="d-flex">
                     <input class="input-group-text" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
                     <b-button class="nav__wall-search__button">X</b-button>
                     <b-button class="nav__wall-search__button">X</b-button>
