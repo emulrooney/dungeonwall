@@ -41,10 +41,6 @@ export default {
 				return itemIds;
 			}
 			return [];
-		},
-		wallClean: function() {
-			//If there's anything in the dirtyContent obj we know we have stuff to save
-			return Object.keys(this.dirtyContent).length === 0;
 		}
 	},
 	mounted: function () {
@@ -58,21 +54,10 @@ export default {
 			this.muuriObject.on('move', function () {
 				that.$store.commit("updateDirtyContent", {"panelOrder": that.panelOrder});
 			});
-
-			//Likewise with 'send' - once we have 1+ buckets for Muuri
-			// this.muuriObject.on('send', function () {
-			// 	this.wallClean = false;
-			// });
 		});
 	},
 	created: function() {
-		let that = this;
-		
-		bus.$on("save-wall-success", function() {
-			console.log("Save wall success");
-			// that.$store.commit("resetDirtyContent(); 
-		});
-		
+		let that = this;		
 		bus.$on("search-wall", function(term) {
 			that.currentSearchTerm = term;
 			that.updateFilters();
@@ -96,9 +81,6 @@ export default {
 				let panel = that.wallData[itemId];
 				return that.visiblePanels.includes(panel);
 			});
-		},
-		recalculate: function () {
-			this.wallUpdates++;
 		}
 	},
 };

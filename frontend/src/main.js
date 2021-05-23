@@ -26,6 +26,7 @@ export const bus = new Vue(); //TODO dump this
 
 const store = new Vuex.Store({
   state: {
+    elementUpdates: { "ui": 0, "wall": 0.1 },
     wallTitle: "Untitled Wall",
     panels: {},
     dirtyContent: {}
@@ -40,6 +41,8 @@ const store = new Vuex.Store({
       for (const [key, value] of Object.entries(dirtyData)) {
         state.dirtyContent[key] = value;
         console.log(state.dirtyContent);
+
+        state.elementUpdates["ui"]++; //Force update for sake of 'Save Changes' button.
       }
     },
     clearDirtyContent(state) {

@@ -10,6 +10,7 @@ export default {
             previousSearchTerm: "",
             searchTerm: "",
             minimumSearchLength: 2,
+            uiUpdates: 0, //Used to force visual update. See elementUpdates in vuex store
             enabledTypes: {
 				item: true,
 				character: true,
@@ -17,8 +18,13 @@ export default {
 				misc: true,
 				lore: true,
 				neutral: true
-			}
+            }
         };
+    },
+    computed: {
+        wallClean: function() {
+            return Object.keys(this.$store.state.dirtyContent).length == 0;
+        }
     },
     methods: {
         updateSearchTerm: function() {
@@ -64,8 +70,7 @@ export default {
                     <button class="btn btn-light" v-on:click="addPanel()">
                         Add Panel
                     </button>
-                    <!-- <button class="btn btn-secondary" :disabled="!wallClean" v-on:click="saveWallChanges()"> -->
-                    <button class="btn btn-secondary" v-on:click="saveWallChanges()">
+                    <button class="btn btn-secondary" :disabled="wallClean" v-on:click="saveWallChanges()">
                         Save Changes
                     </button>
                 </div>

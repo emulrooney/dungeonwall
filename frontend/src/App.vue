@@ -20,7 +20,6 @@ export default {
 	},
 	data: function () {
 		return {
-			wallUpdates: 0,
 			activePanel: {
 				id: -1,
 				title: "New Panel",
@@ -38,7 +37,9 @@ export default {
 	computed: {
 		wallTitle: function () { return this.$store.state.wallTitle }, //alias
 		panels: function () { return this.$store.state.panels }, //alias
-		currentIdList: function () { return this.$store.state.panels.map((panel) => panel.id); }
+		uiUpdates: function() { return this.$store.state.elementUpdates["ui"] }, //alias
+		wallUpdates: function() { return this.$store.state.elementUpdates["wall"] }, //alias
+		currentIdList: function () { return this.$store.state.panels.map((panel) => panel.id); },
 	},
 	methods: {
 		loadWall: async function (wallIndex) {
@@ -92,16 +93,11 @@ export default {
 					panelData.id = i;
 
 					this.panels.push(panelData);
-					this.rerenderWall();
 					return;
 				}
 			}
-
 			console.log("Couldn't add panel... too many on the wall.");
-		},
-		rerenderWall: function () {
-			this.wallUpdates++;
-		},
+		}
 	},
 	created: function () {
 		const vm = this;
@@ -130,7 +126,6 @@ export default {
 			}
 			//TODO Error handling - show a msg, but don't close the modal.
 			vm.$bvModal.hide("editorModal");
-			this.rerenderWall();
 		});
 
 		bus.$on("create-panel", (panelData) => {
@@ -142,7 +137,7 @@ export default {
 
 <template>
 	<div id="app">
-		<OuterUI :wallTitle="this.wallTitle" />
+		<OuterUI :wallTitle="this.wallTitle" :key="uiUpdates" />
 		<Wall
 			v-if="this.panels != undefined && this.panels.length > 0"
 			:wallData="this.panels"
