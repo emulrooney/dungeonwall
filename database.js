@@ -1,7 +1,6 @@
 /* Config */
 
 let mongoose = require('mongoose');
-let ObjectId = require('mongoose').ObjectId;
 
 const username = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
@@ -11,7 +10,6 @@ const database = process.env.DB_NAME;
 mongoose.set('useFindAndModify', false);
 
 var Schema = mongoose.Schema;
-
 
 /* Models */
 
