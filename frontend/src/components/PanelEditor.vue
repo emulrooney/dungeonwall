@@ -1,4 +1,5 @@
 <script>
+import Vue from 'vue';
 import { bus } from "../main";
 import axios from "axios";
 
@@ -38,26 +39,25 @@ export default {
 	},
 	methods: {
 		savePanel: function () {
-			console.log("Save panel...");
 			this.submitPanelUpdate(this.editorMode);
 			bus.$emit("save-panel", this.panelData, this.editorMode);
 		},
 		submitPanelUpdate: async function (mode) {
-			console.log("Submitting...");
+			Vue.$toast.default("Please wait...");
 			this.awaitingSaveResponse = true;
 
 			let axiosMethod = (mode == "Create" ? "post" : "put");
+			let toastMessage = (mode == "Create" ? " created." : " updated.")
 
 			await axios({
 				method: axiosMethod,
 				url: "http://localhost:3000/wall/605e874fee94445c5d577bd1/" + (this.panelData.id >= 0 ? this.panelData.id : ""),
 				responseType: "json",
 				data: this.panelData
-			}).then((result) => {
-				console.log("Success");
-				console.log(result);
+			}).then(() => {
+				Vue.$toast.success("'" + this.panelData.title + "'" + toastMessage);
 			}).catch(() => {
-				console.log("Couldn't submit... try again later."); //TODO Need error posting system
+				Vue.$toast.error("'" + this.panelData.title + "' couldn't be " + toastMessage);
 			});
 
 			this.awaitingSaveResponse = false;

@@ -37,16 +37,12 @@ const store = new Vuex.Store({
       state.panels = wallData.panels ?? state.panels
     },
     updateDirtyContent(state, dirtyData) {
-      console.log(dirtyData);
       for (const [key, value] of Object.entries(dirtyData)) {
         state.dirtyContent[key] = value;
-        console.log(state.dirtyContent);
-
         state.elementUpdates["ui"]++; //Force update for sake of 'Save Changes' button.
       }
     },
     clearDirtyContent(state) {
-      console.log("Clearing...");
       state.dirtyContent = {};
     },
     async saveWallContent(state) {
@@ -55,8 +51,9 @@ const store = new Vuex.Store({
       await axios.put("http://localhost:3000/wall/605e874fee94445c5d577bd1", state.dirtyContent)
         .then(function () {
           that.commit("clearDirtyContent");
-        }).catch(function (err) {
-          console.log(err);
+          Vue.$toast.success("Wall successfully updated.");
+        }).catch(function () {
+          Vue.$toast.error("Couldn't update wall.");
         });
     }
   }

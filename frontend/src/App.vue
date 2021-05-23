@@ -1,9 +1,16 @@
 <script>
+import Vue from 'vue'
 import { bus } from "./main";
 import Wall from "./components/Wall.vue";
 import OuterUI from './components/OuterUI.vue'
 import PanelEditor from "./components/PanelEditor.vue";
 import PanelViewer from "./components/PanelViewer.vue";
+
+//Vue Toast Notifications
+import VueToast from 'vue-toast-notification';
+//import 'vue-toast-notification/dist/theme-default.css';
+import 'vue-toast-notification/dist/theme-sugar.css';
+Vue.use(VueToast);
 
 import axios from "axios";
 
@@ -42,24 +49,22 @@ export default {
 		currentIdList: function () { return this.$store.state.panels.map((panel) => panel.id); },
 	},
 	methods: {
-		loadWall: async function (wallIndex) {
-			console.log("Loading wall #" + wallIndex);
+		loadWall: async function (wallIndex, showToast) {
 			let wallData = await axios.get("http://localhost:3000/wall/605e874fee94445c5d577bd1")
 				.then(function (result) {
 					//TODO: Eventually this will be figured out on the backend instead
 					let id = 0;
-
-					console.log(result);
-
 					result.data.panels.forEach((panel) => {
 						panel.id = id;
 						id++;
 					});
-					
+
+					if (showToast)
+						Vue.$toast.success("Wall loaded.");
 					return result.data;
 				})
-				.catch(function (error) {
-					console.log(error);
+				.catch(function () {
+					Vue.$toast.error("Couldn't connect to server.");
 					return { data: [] };
 				});
 
@@ -83,7 +88,7 @@ export default {
 			if (updated != null) {
 				this.panels[panelData.id] = panelData;
 			} else {
-				console.log("Couldn't update panel. :( ");
+				Vue.$toast.error("Couldn't update panel.");
 			}
 		},
 		addPanel: function (panelData) {
@@ -96,7 +101,8 @@ export default {
 					return;
 				}
 			}
-			console.log("Couldn't add panel... too many on the wall.");
+			
+			Vue.$toast.error("Too many panels. Delete some and try again.");
 		}
 	},
 	created: function () {
