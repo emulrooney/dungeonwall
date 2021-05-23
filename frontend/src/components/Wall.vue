@@ -15,7 +15,6 @@ export default {
 	data: () => {
 		return {
 			muuriObject: null,
-			dirtyContent: {},
 			wallUpdates: 0,
 			currentSearchTerm: "",
 			visiblePanels: [],
@@ -31,7 +30,8 @@ export default {
 		};
 	},
 	computed: {
-		currentOrder: function () {
+		dirtyContent: function() { return this.$store.state.dirtyContent },
+		panelOrder: function () {
 			if (this.muuriObject) {
 				//Get the current panel order (JUST THE IDs) and return as an array.
 				//When we save, we'll re-order the panels on in the subdocument collection.
@@ -53,10 +53,10 @@ export default {
 				dragEnabled: this.isEditMode,
 			});
 
-			//Every time we move an object, update data so that currentOrder repopulates.
+			//Every time we move an object, update data so that panelOrder repopulates.
 			let that = this;
 			this.muuriObject.on('move', function () {
-				that.dirtyContent.currentOrder = that.currentOrder;
+				that.$store.commit("updateDirtyContent", {"panelOrder": that.panelOrder});
 			});
 
 			//Likewise with 'send' - once we have 1+ buckets for Muuri
@@ -69,7 +69,8 @@ export default {
 		let that = this;
 		
 		bus.$on("save-wall-success", function() {
-			that.resetDirtyContent(); 
+			console.log("Save wall success");
+			// that.$store.commit("resetDirtyContent(); 
 		});
 		
 		bus.$on("search-wall", function(term) {
@@ -83,14 +84,6 @@ export default {
 		});
 	},
 	methods: {
-		resetDirtyContent: function() {
-			this.dirtyContent = {};
-		},
-		saveWallChanges: function() {
-			//Emit the content we need to save
-			//Exepcting to receive 'save-wall-success' on finish
-			bus.$emit("save-wall", this.dirtyContent);
-		},
 		updateFilters: function() {
 			let that = this;
 			this.visiblePanels = this.wallData.filter((panel) => {

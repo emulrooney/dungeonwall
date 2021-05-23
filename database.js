@@ -163,7 +163,7 @@ class Database {
     });
 
     //TODO Test - might be able to just send wallId w/o conversion
-    let wall = await Wall.findByIdAndUpdate(wallObjectId, updatedWall, {}, (err, result) => {
+    let wall = await Wall.findByIdAndUpdate(wallId, updatedWall, {}, (err, result) => {
       if (err) {
         console.log("Error updating: ");
         console.log(updatedWall);

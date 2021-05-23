@@ -5,6 +5,9 @@ import App from './App.vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+//Axios
+import axios from "axios";
+
 //Bootstrap Vue stuff
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -24,12 +27,34 @@ export const bus = new Vue(); //TODO dump this
 const store = new Vuex.Store({
   state: {
     wallTitle: "Untitled Wall",
-    panels: {}
+    panels: {},
+    dirtyContent: {}
   },
   mutations: {
     updateActiveWall(state, wallData) {
       state.wallTitle = wallData.title ?? state.wallTitle
       state.panels = wallData.panels ?? state.panels
+    },
+    updateDirtyContent(state, dirtyData) {
+      console.log(dirtyData);
+      for (const [key, value] of Object.entries(dirtyData)) {
+        state.dirtyContent[key] = value;
+        console.log(state.dirtyContent);
+      }
+    },
+    clearDirtyContent(state) {
+      console.log("Clearing...");
+      state.dirtyContent = {};
+    },
+    async saveWallContent(state) {
+      let that = this;
+      console.log("Saving...")
+      await axios.put("http://localhost:3000/wall/605e874fee94445c5d577bd1", state.dirtyContent)
+        .then(function () {
+          that.commit("clearDirtyContent");
+        }).catch(function (err) {
+          console.log(err);
+        });
     }
   }
 });

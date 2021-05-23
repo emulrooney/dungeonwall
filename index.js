@@ -127,9 +127,7 @@ app.put("/wall/:wallId", async (req, res) => {
             wallUpdateData[key] = req.body[key];
     });
 
-    let newPanelOrder = (Array.isArray(req.body.panelOrder) ? req.body.panelOrder : null);
-
-    let result = await db.updateWall(wallId, wallUpdateData, newPanelOrder);
+    let result = await db.updateWall(wallId, wallUpdateData);
     res.send(result);
 });
 

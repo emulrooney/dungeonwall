@@ -27,12 +27,12 @@ export default {
 				subtitle: "",
 				body: "Loading...",
 				bottomText: "",
-
 				height: "medium",
 				width: "medium",
 				type: "neutral",
 			},
 			maxPanels: 25,
+			dirtyContent: {}
 		};
 	},
 	computed: {
@@ -135,18 +135,6 @@ export default {
 
 		bus.$on("create-panel", (panelData) => {
 			this.newPanel(panelData);
-		});
-
-		bus.$on("save-wall", (savedWallContent) => {
-			console.log(savedWallContent);
-			axios.post("http://localhost:3000/wall/0", savedWallContent)
-				.then(function (result) {
-					console.log(result);
-					bus.$emit("save-wall-success", []);
-				}).catch(function (err) {
-					console.log(err);
-				});
-			
 		});
 	}
 };

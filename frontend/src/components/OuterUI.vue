@@ -37,7 +37,12 @@ export default {
         },
         addPanel: function () {
 			bus.$emit("add-panel", []);
-		}
+        },
+        saveWallChanges: function() {
+			//Emit the content we need to save
+			//Exepcting to receive 'save-wall-success' on finish
+			this.$store.commit("saveWallContent");
+		},
     }
 
 }
