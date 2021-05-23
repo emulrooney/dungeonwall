@@ -23,9 +23,9 @@ export default {
 			enabledTypes: {
 				item: true,
 				class: true,
-				skill: true,
+				story: true,
 				misc: true,
-				race: true,
+				lore: true,
 				neutral: true
 			}
 		};

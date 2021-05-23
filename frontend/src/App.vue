@@ -138,7 +138,6 @@ export default {
 		});
 
 		bus.$on("save-wall", (savedWallContent) => {
-			console.log("Dirty Content");
 			console.log(savedWallContent);
 			axios.post("http://localhost:3000/wall/0", savedWallContent)
 				.then(function (result) {

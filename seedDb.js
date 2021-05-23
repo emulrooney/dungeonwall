@@ -77,7 +77,7 @@ class Database {
                     "subtitle": "Monk Level 1",
                     "body": "AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
                     "bottomText": "PHP p76",
-                    "type": "class",
+                    "type": "character",
                     "width": "small",
                     "height": "small"
                 },
@@ -89,7 +89,7 @@ class Database {
                     "bottomText": "PHP p76",
                     "width": "medium",
                     "height": "large",
-                    "type": "class"
+                    "type": "character"
                 },
                 {
                     "id": 2,
@@ -109,7 +109,7 @@ class Database {
                     "bottomText": "PHP p76",
                     "width": "medium",
                     "height": "large",
-                    "type": "class"
+                    "type": "character"
                 },
                 {
                     "id": 4,
@@ -119,7 +119,7 @@ class Database {
                     "bottomText": "PHP p79",
                     "width": "medium",
                     "height": "small",
-                    "type": "class"
+                    "type": "character"
                 },
                 {
                     "id": 5,

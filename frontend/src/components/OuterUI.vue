@@ -12,10 +12,10 @@ export default {
             minimumSearchLength: 2,
             enabledTypes: {
 				item: true,
-				class: true,
-				skill: true,
+				character: true,
+				story: true,
 				misc: true,
-				race: true,
+				lore: true,
 				neutral: true
 			}
         };
@@ -73,9 +73,9 @@ export default {
                 </div>
                 <div class="wall__controls form-inline">
                     <b-button :pressed="!this.enabledTypes['item']" pill class="filter--item btn-sm mr-2" v-on:click="toggleType('item')">{{this.enabledTypes['item'] ? 'Hide' : 'Show'}} Item</b-button>
-                    <b-button :pressed="!this.enabledTypes['class']" pill class="filter--class btn-sm mr-2" v-on:click="toggleType('class')">{{this.enabledTypes['class'] ? 'Hide' : 'Show'}} Class</b-button>
-                    <b-button :pressed="!this.enabledTypes['race']" pill class="filter--race color--text--black btn-sm mr-2" v-on:click="toggleType('race')">{{this.enabledTypes['race'] ? 'Hide' : 'Show'}} Race</b-button>
-                    <b-button :pressed="!this.enabledTypes['skill']" pill class="filter--skill btn-sm mr-2" v-on:click="toggleType('skill')">{{this.enabledTypes['skill'] ? 'Hide' : 'Show'}} Skill</b-button>
+                    <b-button :pressed="!this.enabledTypes['character']" pill class="filter--character btn-sm mr-2" v-on:click="toggleType('character')">{{this.enabledTypes['character'] ? 'Hide' : 'Show'}} Character</b-button>
+                    <b-button :pressed="!this.enabledTypes['lore']" pill class="filter--lore color--text--black btn-sm mr-2" v-on:click="toggleType('lore')">{{this.enabledTypes['lore'] ? 'Hide' : 'Show'}} Lore</b-button>
+                    <b-button :pressed="!this.enabledTypes['story']" pill class="filter--story btn-sm mr-2" v-on:click="toggleType('story')">{{this.enabledTypes['story'] ? 'Hide' : 'Show'}} Story</b-button>
                     <b-button :pressed="!this.enabledTypes['misc']" pill class="filter--misc btn-sm mr-2" v-on:click="toggleType('misc')">{{this.enabledTypes['misc'] ? 'Hide' : 'Show'}} Misc</b-button>
                     <b-button :pressed="!this.enabledTypes['neutral']" pill class="filter--neutral btn-sm mr-2" v-on:click="toggleType('neutral')">{{this.enabledTypes['neutral'] ? 'Hide' : 'Show'}} Unlabelled</b-button>
                 </div>

@@ -1,9 +1,9 @@
 $font-color: #EEEFFE;
 
 $item-color: #6da18a;
-$class-color: #546799;
-$race-color: #f0ebc0;
-$skill-color: #bf6979;
+$character-color: #546799;
+$lore-color: #f0ebc0;
+$story-color: #bf6979;
 $misc-color: #d99f82;
 $neutral-color: #181818;
 
@@ -18,9 +18,9 @@ $panel-medium: 360;
 $panel-large: 540;
 
 $panel-colors: ("item": $item-color,
-  "class": $class-color,
-  "race": $race-color,
-  "skill": $skill-color,
+  "character": $character-color,
+  "lore": $lore-color,
+  "story": $story-color,
   "misc": $misc-color,
   "white": $white,
   "black": $black,
