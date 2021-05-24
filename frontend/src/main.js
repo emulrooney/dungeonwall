@@ -55,6 +55,12 @@ const store = new Vuex.Store({
         }).catch(function () {
           Vue.$toast.error("Couldn't update wall.");
         });
+    },
+    forceComponentUpdate(state, components) {
+      components.forEach((key) => {
+        if (key in state.elementUpdates)
+          state.elementUpdates[key]++;
+      });
     }
   }
 });

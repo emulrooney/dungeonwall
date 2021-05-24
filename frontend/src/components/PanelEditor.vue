@@ -60,6 +60,7 @@ export default {
 				Vue.$toast.error("'" + this.panelData.title + "' couldn't be " + toastMessage);
 			});
 
+			this.$store.commit("forceComponentUpdate", ["wall"]);
 			this.awaitingSaveResponse = false;
 		},
 	},

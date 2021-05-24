@@ -89,7 +89,7 @@ export default {
 <template>
 	<div class="wall js--muurify">
 		<Panel v-for="panel in wallData"
-			:key="panel.title"
+			:key="panel.id"
 			:width="panel.panelWidth"
 			:height="panel.panelHeight"
 			:panelData="panel"
