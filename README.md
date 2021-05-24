@@ -1,4 +1,4 @@
-# Dungeonwall
+# Dungeonwall (v0.5)
 ## Build DM screens or layout player info in a nice masonry-style grid.
 
 **Demo**:
@@ -25,6 +25,6 @@ View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/w
 * Renameable panel types (esp to allow for other types of note pages)
 * Reconsider spacing of panels - would be nice to have these align better.
 * Clean up the sass files, split them up a bit
-* Refactor to use Vuex **In Progress**
+* Refactor to use Vuex **In Progress - still using bus for modals but maybe moving to vuex later.**
 * Multiple users
 * Better backend validation, authentication
