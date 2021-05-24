@@ -56,8 +56,9 @@ export default {
 				data: this.panelData
 			}).then(() => {
 				Vue.$toast.success("'" + this.panelData.title + "'" + toastMessage);
-			}).catch(() => {
+			}).catch((err) => {
 				Vue.$toast.error("'" + this.panelData.title + "' couldn't be " + toastMessage);
+				console.log(err);
 			});
 
 			this.$store.commit("forceComponentUpdate", ["wall"]);

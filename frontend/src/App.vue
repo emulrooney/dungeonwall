@@ -8,8 +8,8 @@ import PanelViewer from "./components/PanelViewer.vue";
 
 //Vue Toast Notifications
 import VueToast from 'vue-toast-notification';
-//import 'vue-toast-notification/dist/theme-default.css';
-import 'vue-toast-notification/dist/theme-sugar.css';
+import 'vue-toast-notification/dist/theme-default.css';
+// import 'vue-toast-notification/dist/theme-sugar.css';
 Vue.use(VueToast);
 
 import axios from "axios";
@@ -103,6 +103,25 @@ export default {
 			}
 			
 			Vue.$toast.error("Too many panels. Delete some and try again.");
+		},
+		deletePanel: async function() {
+			if (this.activePanel.id == undefined) {
+				console.log("Need panel ID;")
+				return;
+			}
+
+			const vm = this;
+			await axios.delete("http://localhost:3000/wall/605e874fee94445c5d577bd1/" + this.activePanel.id)
+			.then(function (result) {
+				console.log("Deleted " + vm.activePanel.id);
+				console.log(result);
+
+				Vue.$toast.success(result.data);
+				//Close modals
+				vm.$bvModal.hide("panelModal");
+				vm.$bvModal.hide("deletePanelModal");
+				vm.$store.commit("deletePanel", vm.activePanel.id);
+			});
 		}
 	},
 	created: function () {
@@ -164,7 +183,7 @@ export default {
 			Are you sure you want to delete this panel?
 			<template #modal-footer="{ close }">
 				<b-button @click="close()" size="lg">Cancel</b-button>
-				<b-button v-on:click="console.log(1)" size="lg" variant="warning">Delete</b-button>
+				<b-button v-on:click="deletePanel()" size="lg" variant="warning">Delete</b-button>
 			</template>
 		</b-modal>
 	</div>

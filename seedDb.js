@@ -87,6 +87,7 @@ class Database {
             panelOrder: [0, 1, 2, 3, 4, 5],
             panels: [
                 {
+                    "_id": new mongoose.Types.ObjectId(),
                     "id": 0,
                     "title": "Unarmored Movement",
                     "subtitle": "Monk Level 1",
@@ -97,6 +98,7 @@ class Database {
                     "height": "small"
                 },
                 {
+                    "_id": new mongoose.Types.ObjectId(),
                     "id": 1,
                     "title": "Martial Arts",
                     "subtitle": "Monk Level 1",
@@ -107,6 +109,7 @@ class Database {
                     "type": "character"
                 },
                 {
+                    "_id": new mongoose.Types.ObjectId(),
                     "id": 2,
                     "title": "Ki (Resource)",
                     "subtitle": "Monk Level 2",
@@ -117,6 +120,7 @@ class Database {
                     "type": "misc"
                 },
                 {
+                    "_id": new mongoose.Types.ObjectId(),
                     "id": 3,
                     "title": "Ki Powers",
                     "subtitle": "Monk Abilities",
@@ -127,6 +131,7 @@ class Database {
                     "type": "character"
                 },
                 {
+                    "_id": new mongoose.Types.ObjectId(),
                     "id": 4,
                     "title": "Open Hand Technique",
                     "subtitle": "Open Hand Subclass",
@@ -137,6 +142,7 @@ class Database {
                     "type": "character"
                 },
                 {
+                    "_id": new mongoose.Types.ObjectId(),
                     "id": 5,
                     "title": "Cloak of Displacement",
                     "subtitle": "Attuned, gift from Shannix",

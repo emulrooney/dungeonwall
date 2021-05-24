@@ -208,21 +208,18 @@ class Database {
    * @param {String} panelIndex
    */
   async deletePanel(wallId, panelIndex) {
-    let wall = await Wall.findOne({ _id: wallId }, {});
-
-    let result = Wall.updateOne(
-      { "_id": wallId },
-      { "$pull": { "panels": { $elemMatch: { id: panelIndex } } } },
-      { "multi": true },
-      function (err, result) {
-        if (err)
-          return err;
-        else
-          return result;
-      }
-    );
-
-    return { status: "success", result: result };
+    return await Wall.findOne({ _id: wallId }).then((wall) => {
+      let panel = wall.panels.filter((panel) => { return panel.id == panelIndex });
+      wall.panelOrder.splice(wall.panelOrder.indexOf(panelIndex), 1);
+      wall.panels.pull({ _id: panel._id });
+      return wall.save().then(function (doc) {
+        if (doc) {
+          return "Successfully deleted panel.";
+        } else {
+          return "Couldn't delete panel... try again later!";
+        }
+      });
+    });
   }
 
   async deleteWall(wallId) {

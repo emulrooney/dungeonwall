@@ -56,6 +56,11 @@ const store = new Vuex.Store({
           Vue.$toast.error("Couldn't update wall.");
         });
     },
+    deletePanel(state, panelId) {
+      let panelIndex = state.panels.map(function (p) { return p.id; }).indexOf(panelId);
+      state.panels.splice(panelIndex, 1);
+      state.elementUpdates["wall"]++;
+    },
     forceComponentUpdate(state, components) {
       components.forEach((key) => {
         if (key in state.elementUpdates)

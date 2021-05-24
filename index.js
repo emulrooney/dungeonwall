@@ -166,6 +166,5 @@ app.delete("/wall/:wallId/:panelId", async (req, res) => {
     const panelId = String(req.params.panelId);
 
     let result = await db.deletePanel(wallId, panelId);
-
-    res.send(result);
+    return res.json(result);
 });
