@@ -65,8 +65,7 @@ export default {
                 <h1>
                     {{this.wallTitle}}
                 </h1>
-                <div class="d-flex">
-                    <h2>Subtitle?</h2>
+                <div>
                     <button class="btn btn-light" v-on:click="addPanel()">
                         Add Panel
                     </button>

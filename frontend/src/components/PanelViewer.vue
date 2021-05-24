@@ -1,5 +1,7 @@
 <script>
 import { bus } from '../main';
+import axios from "axios";
+
 
 export default {
     name: "PanelViewer",
@@ -16,8 +18,30 @@ export default {
     },
     methods: {
         editPanel: function(panelId) {
-            bus.$emit('edit-panel', [panelId]);
+          bus.$emit('edit-panel', [panelId]);
+        },
+        showDeletePrompt: function(panelId) {
+          console.log("Prompt to delete" + panelId);
+          bus.$emit("delete-panel", []);
+        },
+        deletePanel: async function(panelId) {
+          if (!panelId) {
+            console.log("Need panel ID;")
+            return;
+          }
+
+          await axios.delete("http://localhost:3000/wall/605e874fee94445c5d577bd1" + panelId)
+            .then(function (result) {
+              console.log("Deleted " + panelId);
+              console.log(result);
+          });
+
+          //Axios.delete for this panel.
+
+          //Remove panel from panel order
+          //Remove panel from panel data
         }
+
     }
 }
 </script>
@@ -26,6 +50,9 @@ export default {
     <b-modal button-size="lg" id="panelModal" :title="panelData.title">
       <template #modal-header>
         <h5 class="modal-title">{{panelData.title}} {{panelData.subtitle.length > 0 ? "-" : ""}} {{panelData.subtitle}}</h5>
+        <b-button aria-label="Delete Panel" variant="outline-light" v-on:click="showDeletePrompt(panelData.id)">
+          <i class="fas fa-trash-alt"></i>          
+        </b-button>
       </template>
       <VueShowdown :markdown="panelBody" />
       <template #modal-footer="{ ok }">

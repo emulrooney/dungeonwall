@@ -124,6 +124,10 @@ export default {
 			vm.$bvModal.show("editorModal");
 		});
 
+		bus.$on("delete-panel", () => {
+			vm.$bvModal.show("deletePanelModal");
+		});
+
 		bus.$on("save-panel", (panelData, editorMode) => {
 			if (editorMode == "Create") {
 				this.addPanel(panelData);
@@ -156,5 +160,12 @@ export default {
 
 		<PanelViewer :panelData="activePanel" />
 		<PanelEditor :panelData="activePanel" />
+		<b-modal id="deletePanelModal" size="m" :title='"Delete \"" + this.activePanel.title + "\""'>
+			Are you sure you want to delete this panel?
+			<template #modal-footer="{ close }">
+				<b-button @click="close()" size="lg">Cancel</b-button>
+				<b-button v-on:click="console.log(1)" size="lg" variant="warning">Delete</b-button>
+			</template>
+		</b-modal>
 	</div>
 </template>
