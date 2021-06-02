@@ -30,7 +30,6 @@ $panel-colors: ("item": $item-color,
 $panel-sizes: ("small": $panel-small, "medium": $panel-medium, "large": $panel-large);
 
 body {
-  background-color: $bg-color;
   color: $font-color;
 }
 
@@ -38,6 +37,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100vh;
+  background-image: url("../assets/60-lines.png");
 }
 
 .panel {
@@ -235,8 +235,8 @@ $color in $panel-colors {
 
 /* BOOTSTRAP OVERRIDES */
 
-body {
-  background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
+nav {
+  background-color: $bg-color;
 }
 
 .card {

@@ -28,6 +28,7 @@ const store = new Vuex.Store({
   state: {
     elementUpdates: { "ui": 0, "wall": 0.1 },
     wallTitle: "Untitled Wall",
+    wallColor: "#363636",
     panels: {},
     dirtyContent: {}
   },

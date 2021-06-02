@@ -46,6 +46,11 @@ export default {
 		panels: function () { return this.$store.state.panels }, //alias
 		uiUpdates: function() { return this.$store.state.elementUpdates["ui"] }, //alias
 		wallUpdates: function() { return this.$store.state.elementUpdates["wall"] }, //alias
+		wallStyle: function() {
+			return {
+				backgroundColor: this.$store.state.wallColor
+			};
+		},
 		currentIdList: function () { return this.$store.state.panels.map((panel) => panel.id); },
 	},
 	methods: {
@@ -171,6 +176,7 @@ export default {
 			v-if="this.panels != undefined && this.panels.length > 0"
 			:wallData="this.panels"
 			:isEditMode="true"
+			:style="this.wallStyle"
 			:key="wallUpdates"
 		/>
 		<div v-else>
