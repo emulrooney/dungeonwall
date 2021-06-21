@@ -16,9 +16,9 @@ export default {
 				{ value: "large", text: "Large" },
 			],
 			panelTypeSelect: [
-				{ value: "item", text: "Item" },
+				{ value: "item", text: "Inventory Item" },
 				{ value: "character", text: "Character Ability/Feature" },
-				{ value: "lore", text: "Racial Bonus" },
+				{ value: "lore", text: "Campaign Lore" },
 				{ value: "story", text: "Story Note" },
 				{ value: "misc", text: "Miscellaneous" },
 				{ value: "neutral", text: "None" },
