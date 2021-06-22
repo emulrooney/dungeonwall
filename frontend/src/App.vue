@@ -58,11 +58,11 @@ export default {
 			let wallData = await axios.get("http://localhost:3000/wall/605e874fee94445c5d577bd1")
 				.then(function (result) {
 					//TODO: Eventually this will be figured out on the backend instead
-					let id = 0;
-					result.data.panels.forEach((panel) => {
-						panel.id = id;
-						id++;
-					});
+					// let id = 0;
+					// result.data.panels.forEach((panel) => {
+					// 	panel.id = id;
+					// 	id++;
+					// });
 
 					if (showToast)
 						Vue.$toast.success("Wall loaded.");
@@ -89,7 +89,6 @@ export default {
 		},
 		updatePanel: function (panelData) {
 			let updated = this.panels.find((panel) => panel.id == panelData.id);
-
 			if (updated != null) {
 				this.panels[panelData.id] = panelData;
 			} else {

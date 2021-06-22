@@ -53,6 +53,7 @@ export default {
 			let that = this;
 			this.muuriObject.on('move', function () {
 				that.$store.commit("updateDirtyContent", {"panelOrder": that.panelOrder});
+				that.muuriObject.synchronize();
 			});
 		});
 	},

@@ -33,7 +33,6 @@ export default {
 		},
 		renderedMarkdown: function () {
 			if (this.panelData.body.length > 0) return this.panelData.body;
-
 			return "Panel body can accept any valid markdown.";
 		},
 	},
@@ -63,7 +62,7 @@ export default {
 
 			this.$store.commit("forceComponentUpdate", ["wall"]);
 			this.awaitingSaveResponse = false;
-		},
+		}
 	},
 };
 </script>
