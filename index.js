@@ -1,5 +1,6 @@
 let env = require('dotenv').config()
 const express = require('express')
+const { check, validationResult } = require('express-validator');
 const bodyParser = require('body-parser')
 var cors = require('cors')
 const db = require('./database.js');
@@ -67,51 +68,67 @@ app.get("/wall/:wallId/:panelId", async (req, res) => {
 /**
  * Create a new wall. Body should include wall data (title, icon, iconColor, bgColor).
  */
-app.post("/wall", async (req, res) => {
-    let wallData = {
-        title: "Untitled Wall",
-        icon: null,
-        iconColor: "white",
-        bgColor: "#333333"
-    };
+app.post("/wall",
+    check("title").isLength({ min: 10 }).trim().escape(),
+    async (req, res) => {
 
-    if (req.body.title != undefined)
-        wallData.title = req.body.title;
-
-    Object.keys(req.body).forEach((key) => {
-        if (key in wallData) {
-            wallData[key] = req.body[key];
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
-    });
 
-    let newWall = await db.createWall(wallData)
-    res.send(newWall);
-});
+        let wallData = {
+            title: "Untitled Wall",
+            icon: null,
+            iconColor: "white",
+            bgColor: "#333333"
+        };
+
+        if (req.body.title != undefined)
+            wallData.title = req.body.title;
+
+        Object.keys(req.body).forEach((key) => {
+            if (key in wallData) {
+                wallData[key] = req.body[key];
+            }
+        });
+
+        let newWall = await db.createWall(wallData)
+        res.send(newWall);
+    });
 
 /**
  * Create a new panel on wall. Body should include panel data (sizing, type, body, title/subtitle)
  */
-app.post("/wall/:wallId", async (req, res) => {
-    const wallId = String(req.params.wallId);
-    let panelData = {
-        title: "New Panel",
-        subtitle: "",
-        body: "",
-        bottomText: "",
-        width: "small",
-        height: "height",
-        type: "neutral"
-    };
+app.post("/wall/:wallId",
+    check("title").isLength({ min: 1 }).trim().escape(),
+    async (req, res) => {
 
-    Object.keys(req.body).forEach((key) => {
-        if (key in panelData) {
-            panelData[key] = req.body[key];
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
-    });
 
-    let newPanel = await db.createPanel(wallId, panelData);
-    res.send(newPanel);
-});
+        const wallId = String(req.params.wallId);
+        let panelData = {
+            title: "New Panel",
+            subtitle: "",
+            body: "",
+            bottomText: "",
+            width: "small",
+            height: "height",
+            type: "neutral"
+        };
+
+        Object.keys(req.body).forEach((key) => {
+            if (key in panelData) {
+                panelData[key] = req.body[key];
+            }
+        });
+
+        let newPanel = await db.createPanel(wallId, panelData);
+        res.send(newPanel);
+    });
 
 /**
  * TODO Update the wall data. May be called in two spots (wall editor and on the general wall view page) to handle wall data as well 
@@ -152,7 +169,7 @@ app.put("/wall/:wallId/:panelId", async (req, res) => {
 /**
  * Delete an entire wall.
  */
-app.delete("/wall/:wallId/", async (req, res) => {
+app.delete("/wall/:wallId", async (req, res) => {
     const wallId = String(req.params.wallId);
     let result = await db.deleteWall(wallId);
     res.send(result);
