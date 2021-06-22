@@ -3,9 +3,8 @@
 
 **Demo**:
 ![Screenshot of Dungeonwall Video](https://emulrooney.github.io/images/project-Dungeonwall.png)
-
-
 View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/watch?v=fxwmahfIVFE)
+
 
 ### Running this Software
 
@@ -17,14 +16,25 @@ View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/w
 * Navigate to localhost:8080 to view the frontend. If everything went well, you should have the demo panels loaded.
 * There's a seedDB file you can run with 'npm run seed' to create a new wall with panels. _You'll need to delete the wall if you need to reseed!_
 
-### Next steps
 
-* Docker to set up mongoDB.
+### Near Future Extensions
+
 * Adding some control over the wall itself (naming, color, etc)
-* Add controls for multiple walls (including having multiple pages on a wall)
-* Renameable panel types (esp to allow for other types of note pages)
 * Reconsider spacing of panels - would be nice to have these align better.
-* Clean up the sass files, split them up a bit
 * Refactor to use Vuex **In Progress - still using bus for modals but maybe moving to vuex later.**
 * Multiple users
 * Better backend validation, authentication
+
+
+### Future Extensions
+
+* Add controls for multiple walls (including having multiple pages on a wall)
+* Renameable panel types (esp to allow for other types of note pages)
+
+
+#### Tech Debt Inventory
+
+* 'bus' still exists... it has it's uses for UI, but probably could be rolled into Vuex.
+* PanelOrder is duplicated in state - it exists as an attribute but _also_ in dirtyContent. Yuck.
+* SeedDB still lackluster when I need to start again from scratch. Really need to prioritize using a  docker file 
+* Clean up the sass files, split them up a bit

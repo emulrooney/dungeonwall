@@ -30,14 +30,20 @@ const store = new Vuex.Store({
     wallTitle: "Untitled Wall",
     wallColor: "#363636",
     panels: {},
+    panelOrder: [],
     dirtyContent: {}
   },
   mutations: {
     updateActiveWall(state, wallData) {
       state.wallTitle = wallData.title ?? state.wallTitle
       state.panels = wallData.panels ?? state.panels
+      state.panelOrder = wallData.panelOrder ?? state.panelOrder
     },
     updateDirtyContent(state, dirtyData) {
+      if (dirtyData.panelOrder) {
+        state.panelOrder = dirtyData.panelOrder;
+      }
+
       for (const [key, value] of Object.entries(dirtyData)) {
         state.dirtyContent[key] = value;
         state.elementUpdates["ui"]++; //Force update for sake of 'Save Changes' button.

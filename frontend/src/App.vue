@@ -44,6 +44,7 @@ export default {
 	computed: {
 		wallTitle: function () { return this.$store.state.wallTitle }, //alias
 		panels: function () { return this.$store.state.panels }, //alias
+		panelOrder: function () { return this.$store.state.panelOrder }, //alias
 		uiUpdates: function() { return this.$store.state.elementUpdates["ui"] }, //alias
 		wallUpdates: function() { return this.$store.state.elementUpdates["wall"] }, //alias
 		wallStyle: function() {
@@ -126,14 +127,22 @@ export default {
 				vm.$bvModal.hide("deletePanelModal");
 				vm.$store.commit("deletePanel", vm.activePanel.id);
 			});
+		},
+		getPanelById: function(panelId) {
+			console.log("get panel");
+			for (let i = 0; i < this.panels.length; i++) {
+				if (this.panels[i].id == panelId)
+					return i;
+			}
 		}
 	},
 	created: function () {
 		const vm = this;
 		bus.$on("panel-opened", (panelId) => {
+			console.log("Should open: " + this.getPanelById(panelId));
 			vm.$bvModal.hide("editorModal");
 			vm.$bvModal.show("panelModal");
-			this.activePanel = this.panels[panelId];
+			this.activePanel = this.panels[this.getPanelById(panelId)];
 		});
 
 		bus.$on("add-panel", () => {
