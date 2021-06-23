@@ -22,20 +22,20 @@ export default {
     },
     mounted: async function () {
         const keycodeEvents = {
-            "\\" : "searchTerm",
-            "!" : "toggleItem",
-            "@" : "toggleCharacter",
-            "#" : "toggleLore",
-            "$" : "toggleStory",
-            "%" : "toggleMisc",
-            "^" : "toggleNeutral"
+            "Backslash" : "searchTerm",
+            "Digit1" : "toggleItem",
+            "Digit2" : "toggleCharacter",
+            "Digit3" : "toggleLore",
+            "Digit4" : "toggleStory",
+            "Digit5" : "toggleMisc",
+            "Digit6" : "toggleNeutral",
+            "Digit0" : "toggleAllOn"
         };
 
-        //TODO Rewrite. Scrap the switch, do something more programmatic to get toggle+Type.
-        
-
+        //TODO Rewrite. Scrap the switch, do something more programmatic to get toggle+Type.        
         this.$root.$on("ui-keyboard", (uiEvent) => {
-            switch (keycodeEvents[uiEvent.key]) {
+            console.log(uiEvent);
+            switch (keycodeEvents[uiEvent.code]) {
                 case "searchTerm":
                     if (document.activeElement != this.$refs.searchTerm) {
                         uiEvent.preventDefault();
@@ -43,9 +43,26 @@ export default {
                     }
                     break;
                 case "toggleItem":
+                case "toggleCharacter":
+                case "toggleLore":
+                case "toggleStory":
+                case "toggleMisc":
+                case "toggleNeutral":
+                    if (uiEvent.ctrlKey && uiEvent.shiftKey) {
+                        uiEvent.preventDefault();
+                        this.toggleAllTypes(false);
+                        this.$refs[keycodeEvents[uiEvent.code]].focus();
+                        this.$refs[keycodeEvents[uiEvent.code]].click();
+                    } else if (uiEvent.shiftKey) {
+                        uiEvent.preventDefault();
+                        this.$refs[keycodeEvents[uiEvent.code]].focus();
+                        this.$refs[keycodeEvents[uiEvent.code]].click();
+                    }
+                    break;
+                case "toggleAllOn":
                     uiEvent.preventDefault();
-                    this.$refs.toggleItem.focus();
-                    this.$refs.toggleItem.click();
+                    console.log("A");
+                    this.toggleAllTypes(true);
                     break;
                 default:
                     break;
@@ -71,6 +88,11 @@ export default {
         toggleType: function(panelType) {
             this.enabledTypes[panelType] = !this.enabledTypes[panelType];
             this.$root.$emit("update-filters", this.enabledTypes);
+        },
+        toggleAllTypes: function(setTo) {
+            Object.keys(this.enabledTypes).forEach((key) => {
+                this.enabledTypes[key] = setTo;
+            });
         },
         addPanel: function () {
 			this.$root.$emit("add-panel", []);
@@ -109,15 +131,14 @@ export default {
                 <div class="d-flex">
                     <input ref="searchTerm" class="input-group-text" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
                     <b-button class="nav__wall-search__button">X</b-button>
-                    <b-button class="nav__wall-search__button">X</b-button>
                 </div>
                 <div class="wall__controls form-inline">
                     <b-button ref="toggleItem" :pressed="!this.enabledTypes['item']" pill class="filter--item btn-sm mr-2" v-on:click="toggleType('item')">{{this.enabledTypes['item'] ? 'Hide' : 'Show'}} Item</b-button>
-                    <b-button ref="toggleCharacter"  :pressed="!this.enabledTypes['character']" pill class="filter--character btn-sm mr-2" v-on:click="toggleType('character')">{{this.enabledTypes['character'] ? 'Hide' : 'Show'}} Character</b-button>
-                    <b-button ref="toggleLore"  :pressed="!this.enabledTypes['lore']" pill class="filter--lore color--text--black btn-sm mr-2" v-on:click="toggleType('lore')">{{this.enabledTypes['lore'] ? 'Hide' : 'Show'}} Lore</b-button>
-                    <b-button ref="toggleStory"  :pressed="!this.enabledTypes['story']" pill class="filter--story btn-sm mr-2" v-on:click="toggleType('story')">{{this.enabledTypes['story'] ? 'Hide' : 'Show'}} Story</b-button>
-                    <b-button ref="toggleMisc"  :pressed="!this.enabledTypes['misc']" pill class="filter--misc btn-sm mr-2" v-on:click="toggleType('misc')">{{this.enabledTypes['misc'] ? 'Hide' : 'Show'}} Misc</b-button>
-                    <b-button ref="toggleNeutral"  :pressed="!this.enabledTypes['neutral']" pill class="filter--neutral btn-sm mr-2" v-on:click="toggleType('neutral')">{{this.enabledTypes['neutral'] ? 'Hide' : 'Show'}} Unlabelled</b-button>
+                    <b-button ref="toggleCharacter" :pressed="!this.enabledTypes['character']" pill class="filter--character btn-sm mr-2" v-on:click="toggleType('character')">{{this.enabledTypes['character'] ? 'Hide' : 'Show'}} Character</b-button>
+                    <b-button ref="toggleLore" :pressed="!this.enabledTypes['lore']" pill class="filter--lore color--text--black btn-sm mr-2" v-on:click="toggleType('lore')">{{this.enabledTypes['lore'] ? 'Hide' : 'Show'}} Lore</b-button>
+                    <b-button ref="toggleStory" :pressed="!this.enabledTypes['story']" pill class="filter--story btn-sm mr-2" v-on:click="toggleType('story')">{{this.enabledTypes['story'] ? 'Hide' : 'Show'}} Story</b-button>
+                    <b-button ref="toggleMisc" :pressed="!this.enabledTypes['misc']" pill class="filter--misc btn-sm mr-2" v-on:click="toggleType('misc')">{{this.enabledTypes['misc'] ? 'Hide' : 'Show'}} Misc</b-button>
+                    <b-button ref="toggleNeutral" :pressed="!this.enabledTypes['neutral']" pill class="filter--neutral btn-sm mr-2" v-on:click="toggleType('neutral')">{{this.enabledTypes['neutral'] ? 'Hide' : 'Show'}} Unlabelled</b-button>
                 </div>
             </li>
         </ul>

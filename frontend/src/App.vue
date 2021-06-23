@@ -28,7 +28,7 @@ export default {
 			//todo If PanelViewer/PanelEditor are open, return early. 
 			
 			//NOTE - We'll pass the whole event so we can do e.preventDefault at the source (if we need it)
-            if (["\\", "!", "@", "#", "$", "%", "^"].includes(e.key)) {
+            if (["Backslash", "Digit0", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6"].includes(e.code)) {
 				this.$root.$emit("ui-keyboard", e);
             }
         };
