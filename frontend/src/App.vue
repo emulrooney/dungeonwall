@@ -25,9 +25,10 @@ export default {
 		await this.loadWall(0);
 
 		this._keyListener = function(e) {
-			//TODO - We'll pass the whole event so we can do e.preventDefault at the source (if we need it)
-			//This 'if' should expand to e.code.contains(whatever keys) 
-            if (e.code == 'Backslash') {
+			//todo If PanelViewer/PanelEditor are open, return early. 
+			
+			//NOTE - We'll pass the whole event so we can do e.preventDefault at the source (if we need it)
+            if (["\\", "!", "@", "#", "$", "%", "^"].includes(e.key)) {
 				this.$root.$emit("ui-keyboard", e);
             }
         };

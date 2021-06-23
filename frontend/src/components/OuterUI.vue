@@ -22,16 +22,30 @@ export default {
     },
     mounted: async function () {
         const keycodeEvents = {
-            "Backslash" : "searchTerm"
+            "\\" : "searchTerm",
+            "!" : "toggleItem",
+            "@" : "toggleCharacter",
+            "#" : "toggleLore",
+            "$" : "toggleStory",
+            "%" : "toggleMisc",
+            "^" : "toggleNeutral"
         };
 
+        //TODO Rewrite. Scrap the switch, do something more programmatic to get toggle+Type.
+        
+
         this.$root.$on("ui-keyboard", (uiEvent) => {
-            switch (keycodeEvents[uiEvent.code]) {
+            switch (keycodeEvents[uiEvent.key]) {
                 case "searchTerm":
                     if (document.activeElement != this.$refs.searchTerm) {
                         uiEvent.preventDefault();
                         this.$refs.searchTerm.focus();
                     }
+                    break;
+                case "toggleItem":
+                    uiEvent.preventDefault();
+                    this.$refs.toggleItem.focus();
+                    this.$refs.toggleItem.click();
                     break;
                 default:
                     break;

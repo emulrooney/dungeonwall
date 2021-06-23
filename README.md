@@ -17,12 +17,20 @@ View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/w
 * There's a seedDB file you can run with 'npm run seed' to create a new wall with panels. _You'll need to delete the wall if you need to reseed!_
 
 
+### Known Bugs
+
+* Filters currently pointing at wrong things.
+* issues when saving an edit (not new panel)
+
+
 ### Near Future Extensions
 
 * Adding some control over the wall itself (naming, color, etc)
 * Reconsider spacing of panels - would be nice to have these align better.
 * Multiple users
 * Better backend validation, authentication
+* UI should indicate keyboard controls!
+* Weird issue with screen height not filling BG
 
 
 ### Future Extensions
@@ -36,3 +44,4 @@ View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/w
 * PanelOrder is duplicated in state - it exists as an attribute but _also_ in dirtyContent. Yuck.
 * SeedDB still lackluster when I need to start again from scratch. Really need to prioritize using a  docker file 
 * Clean up the sass files, split them up a bit
+* Hardcoded keyboard controls... also, they would break on a non-QWERTY layout. Fix.
