@@ -1,5 +1,4 @@
 <script>
-import { bus } from "../main";
 export default {
     name: 'OuterUI',
     props: {
@@ -21,6 +20,24 @@ export default {
             }
         };
     },
+    mounted: async function () {
+        const keycodeEvents = {
+            "Backslash" : "searchTerm"
+        };
+
+        this.$root.$on("ui-keyboard", (uiEvent) => {
+            switch (keycodeEvents[uiEvent.code]) {
+                case "searchTerm":
+                    if (document.activeElement != this.$refs.searchTerm) {
+                        uiEvent.preventDefault();
+                        this.$refs.searchTerm.focus();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+    },
     computed: {
         wallClean: function() {
             return Object.keys(this.$store.state.dirtyContent).length == 0;
@@ -29,20 +46,20 @@ export default {
     methods: {
         updateSearchTerm: function() {
             if (this.searchTerm.length === 0) {
-                bus.$emit("search-wall", "");
+                this.$root.$emit("search-wall", "");
             }
 
             if (this.searchTerm.length >= this.minimumSearchLength && this.searchTerm != this.previousSearchTerm) {
                 this.previousSearchTerm = this.searchTerm;
-                bus.$emit("search-wall", this.searchTerm);
+                this.$root.$emit("search-wall", this.searchTerm);
             }
         },
         toggleType: function(panelType) {
             this.enabledTypes[panelType] = !this.enabledTypes[panelType];
-            bus.$emit("update-filters", this.enabledTypes);
+            this.$root.$emit("update-filters", this.enabledTypes);
         },
         addPanel: function () {
-			bus.$emit("add-panel", []);
+			this.$root.$emit("add-panel", []);
         },
         saveWallChanges: function() {
 			//Emit the content we need to save
@@ -76,17 +93,17 @@ export default {
             </li>
             <li class="nav__wall-search">
                 <div class="d-flex">
-                    <input class="input-group-text" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
+                    <input ref="searchTerm" class="input-group-text" type="text" placeholder="Search on Page" v-model="searchTerm" @keyup="updateSearchTerm" />
                     <b-button class="nav__wall-search__button">X</b-button>
                     <b-button class="nav__wall-search__button">X</b-button>
                 </div>
                 <div class="wall__controls form-inline">
-                    <b-button :pressed="!this.enabledTypes['item']" pill class="filter--item btn-sm mr-2" v-on:click="toggleType('item')">{{this.enabledTypes['item'] ? 'Hide' : 'Show'}} Item</b-button>
-                    <b-button :pressed="!this.enabledTypes['character']" pill class="filter--character btn-sm mr-2" v-on:click="toggleType('character')">{{this.enabledTypes['character'] ? 'Hide' : 'Show'}} Character</b-button>
-                    <b-button :pressed="!this.enabledTypes['lore']" pill class="filter--lore color--text--black btn-sm mr-2" v-on:click="toggleType('lore')">{{this.enabledTypes['lore'] ? 'Hide' : 'Show'}} Lore</b-button>
-                    <b-button :pressed="!this.enabledTypes['story']" pill class="filter--story btn-sm mr-2" v-on:click="toggleType('story')">{{this.enabledTypes['story'] ? 'Hide' : 'Show'}} Story</b-button>
-                    <b-button :pressed="!this.enabledTypes['misc']" pill class="filter--misc btn-sm mr-2" v-on:click="toggleType('misc')">{{this.enabledTypes['misc'] ? 'Hide' : 'Show'}} Misc</b-button>
-                    <b-button :pressed="!this.enabledTypes['neutral']" pill class="filter--neutral btn-sm mr-2" v-on:click="toggleType('neutral')">{{this.enabledTypes['neutral'] ? 'Hide' : 'Show'}} Unlabelled</b-button>
+                    <b-button ref="toggleItem" :pressed="!this.enabledTypes['item']" pill class="filter--item btn-sm mr-2" v-on:click="toggleType('item')">{{this.enabledTypes['item'] ? 'Hide' : 'Show'}} Item</b-button>
+                    <b-button ref="toggleCharacter"  :pressed="!this.enabledTypes['character']" pill class="filter--character btn-sm mr-2" v-on:click="toggleType('character')">{{this.enabledTypes['character'] ? 'Hide' : 'Show'}} Character</b-button>
+                    <b-button ref="toggleLore"  :pressed="!this.enabledTypes['lore']" pill class="filter--lore color--text--black btn-sm mr-2" v-on:click="toggleType('lore')">{{this.enabledTypes['lore'] ? 'Hide' : 'Show'}} Lore</b-button>
+                    <b-button ref="toggleStory"  :pressed="!this.enabledTypes['story']" pill class="filter--story btn-sm mr-2" v-on:click="toggleType('story')">{{this.enabledTypes['story'] ? 'Hide' : 'Show'}} Story</b-button>
+                    <b-button ref="toggleMisc"  :pressed="!this.enabledTypes['misc']" pill class="filter--misc btn-sm mr-2" v-on:click="toggleType('misc')">{{this.enabledTypes['misc'] ? 'Hide' : 'Show'}} Misc</b-button>
+                    <b-button ref="toggleNeutral"  :pressed="!this.enabledTypes['neutral']" pill class="filter--neutral btn-sm mr-2" v-on:click="toggleType('neutral')">{{this.enabledTypes['neutral'] ? 'Hide' : 'Show'}} Unlabelled</b-button>
                 </div>
             </li>
         </ul>

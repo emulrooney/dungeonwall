@@ -1,6 +1,5 @@
 <script>
 import Vue from 'vue';
-import { bus } from "../main";
 import axios from "axios";
 
 export default {
@@ -39,7 +38,7 @@ export default {
 	methods: {
 		savePanel: function () {
 			this.submitPanelUpdate(this.editorMode);
-			bus.$emit("save-panel", this.panelData, this.editorMode);
+			this.$root.$emit("save-panel", this.panelData, this.editorMode);
 		},
 		submitPanelUpdate: async function (mode) {
 			Vue.$toast.default("Please wait...");
@@ -55,9 +54,8 @@ export default {
 				data: this.panelData
 			}).then(() => {
 				Vue.$toast.success("'" + this.panelData.title + "'" + toastMessage);
-			}).catch((err) => {
+			}).catch(() => {
 				Vue.$toast.error("'" + this.panelData.title + "' couldn't be " + toastMessage);
-				console.log(err);
 			});
 
 			this.$store.commit("forceComponentUpdate", ["wall"]);

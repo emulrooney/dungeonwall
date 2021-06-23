@@ -1,7 +1,6 @@
 <script>
 import Muuri from "muuri";
 import Panel from "./Panel.vue";
-import { bus } from "../main";
 
 export default {
 	name: "Wall",
@@ -59,12 +58,12 @@ export default {
 	},
 	created: function() {
 		let that = this;		
-		bus.$on("search-wall", function(term) {
+		this.$root.$on("search-wall", function(term) {
 			that.currentSearchTerm = term;
 			that.updateFilters();
 		});
 
-		bus.$on("update-filters", function(enabledTypes) {
+		this.$root.$on("update-filters", function(enabledTypes) {
 			that.enabledTypes = enabledTypes
 			that.updateFilters();
 		});

@@ -22,8 +22,6 @@ Vue.use(VueShowdown)
 
 Vue.config.productionTip = false
 
-export const bus = new Vue(); //TODO dump this
-
 const store = new Vuex.Store({
   state: {
     elementUpdates: { "ui": 0, "wall": 0.1 },
@@ -54,7 +52,6 @@ const store = new Vuex.Store({
     },
     async saveWallContent(state) {
       let that = this;
-      console.log("Saving...")
       await axios.put("http://localhost:3000/wall/605e874fee94445c5d577bd1", state.dirtyContent)
         .then(function () {
           that.commit("clearDirtyContent");

@@ -1,6 +1,4 @@
 <script>
-import { bus } from '../main';
-
 export default {
     name: "PanelViewer",
     props: {
@@ -16,10 +14,10 @@ export default {
     },
     methods: {
         editPanel: function(panelId) {
-          bus.$emit('edit-panel', [panelId]);
+          this.$root.$emit('edit-panel', [panelId]);
         },
         showDeletePrompt: function() {
-          bus.$emit("delete-panel", []);
+          this.$root.$emit("delete-panel", []);
         }
 
     }

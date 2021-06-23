@@ -1,6 +1,5 @@
 <script>
 import Vue from 'vue'
-import { bus } from "./main";
 import Wall from "./components/Wall.vue";
 import OuterUI from './components/OuterUI.vue'
 import PanelEditor from "./components/PanelEditor.vue";
@@ -24,6 +23,17 @@ export default {
 	},
 	mounted: async function () {
 		await this.loadWall(0);
+
+		this._keyListener = function(e) {
+			//TODO - We'll pass the whole event so we can do e.preventDefault at the source (if we need it)
+			//This 'if' should expand to e.code.contains(whatever keys) 
+            if (e.code == 'Backslash') {
+				this.$root.$emit("ui-keyboard", e);
+            }
+        };
+
+        document.addEventListener('keydown', this._keyListener.bind(this));
+
 	},
 	data: function () {
 		return {
@@ -77,7 +87,7 @@ export default {
 			this.$store.commit("updateActiveWall", wallData);
 		},
 		newPanel: function () {
-			bus.$emit("add-panel", []);
+			this.$root.$emit("add-panel", []);
 		},
 		resetActivePanel: function () {
 			this.activePanel = {
@@ -111,16 +121,13 @@ export default {
 		},
 		deletePanel: async function() {
 			if (this.activePanel.id == undefined) {
-				console.log("Need panel ID;")
+				Vue.$toast.error("Missing panel ID!");
 				return;
 			}
 
 			const vm = this;
 			await axios.delete("http://localhost:3000/wall/605e874fee94445c5d577bd1/" + this.activePanel.id)
 			.then(function (result) {
-				console.log("Deleted " + vm.activePanel.id);
-				console.log(result);
-
 				Vue.$toast.success(result.data);
 				//Close modals
 				vm.$bvModal.hide("panelModal");
@@ -129,7 +136,6 @@ export default {
 			});
 		},
 		getPanelById: function(panelId) {
-			console.log("get panel");
 			for (let i = 0; i < this.panels.length; i++) {
 				if (this.panels[i].id == panelId)
 					return i;
@@ -138,29 +144,28 @@ export default {
 	},
 	created: function () {
 		const vm = this;
-		bus.$on("panel-opened", (panelId) => {
-			console.log("Should open: " + this.getPanelById(panelId));
+		this.$root.$on("panel-opened", (panelId) => {
 			vm.$bvModal.hide("editorModal");
 			vm.$bvModal.show("panelModal");
 			this.activePanel = this.panels[this.getPanelById(panelId)];
 		});
 
-		bus.$on("add-panel", () => {
+		this.$root.$on("add-panel", () => {
 			this.resetActivePanel();
 			vm.$bvModal.hide("panelModal");
 			vm.$bvModal.show("editorModal");
 		});
 
-		bus.$on("edit-panel", () => {
+		this.$root.$on("edit-panel", () => {
 			vm.$bvModal.hide("panelModal");
 			vm.$bvModal.show("editorModal");
 		});
 
-		bus.$on("delete-panel", () => {
+		this.$root.$on("delete-panel", () => {
 			vm.$bvModal.show("deletePanelModal");
 		});
 
-		bus.$on("save-panel", (panelData, editorMode) => {
+		this.$root.$on("save-panel", (panelData, editorMode) => {
 			if (editorMode == "Create") {
 				this.addPanel(panelData);
 			} else if (editorMode == "Edit") {
@@ -170,7 +175,7 @@ export default {
 			vm.$bvModal.hide("editorModal");
 		});
 
-		bus.$on("create-panel", (panelData) => {
+		this.$root.$on("create-panel", (panelData) => {
 			this.newPanel(panelData);
 		});
 	}

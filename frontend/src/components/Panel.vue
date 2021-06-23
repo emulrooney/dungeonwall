@@ -1,5 +1,4 @@
 <script>
-import { bus } from "../main";
 
 export default {
 	name: "Panel",
@@ -92,7 +91,7 @@ export default {
 	},
 	methods: {
 		openPanel: function (panelId) {
-			bus.$emit("panel-opened", [panelId]);
+			this.$root.$emit("panel-opened", [panelId]);
 		},
 	},
 };

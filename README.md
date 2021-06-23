@@ -21,7 +21,6 @@ View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/w
 
 * Adding some control over the wall itself (naming, color, etc)
 * Reconsider spacing of panels - would be nice to have these align better.
-* Refactor to use Vuex **In Progress - still using bus for modals but maybe moving to vuex later.**
 * Multiple users
 * Better backend validation, authentication
 
@@ -34,7 +33,6 @@ View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/w
 
 #### Tech Debt Inventory
 
-* 'bus' still exists... it has it's uses for UI, but probably could be rolled into Vuex.
 * PanelOrder is duplicated in state - it exists as an attribute but _also_ in dirtyContent. Yuck.
 * SeedDB still lackluster when I need to start again from scratch. Really need to prioritize using a  docker file 
 * Clean up the sass files, split them up a bit
