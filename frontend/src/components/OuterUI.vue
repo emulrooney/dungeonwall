@@ -34,7 +34,6 @@ export default {
 
         //TODO Rewrite. Scrap the switch, do something more programmatic to get toggle+Type.        
         this.$root.$on("ui-keyboard", (uiEvent) => {
-            console.log(uiEvent);
             switch (keycodeEvents[uiEvent.code]) {
                 case "searchTerm":
                     if (document.activeElement != this.$refs.searchTerm) {
@@ -61,7 +60,6 @@ export default {
                     break;
                 case "toggleAllOn":
                     uiEvent.preventDefault();
-                    console.log("A");
                     this.toggleAllTypes(true);
                     break;
                 default:

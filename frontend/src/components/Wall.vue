@@ -76,9 +76,7 @@ export default {
 				return (that.enabledTypes[panel.type] //If match, not filtered out.
 					&&  panel.title.toLowerCase().includes(that.currentSearchTerm.toLowerCase())); //Contains search term
 			});
-
-			console.log(this.visiblePanels);
-
+			
 			//TODO Feels like this could be refactored. 
 			//Get the ID and where it appears. We'll use this to shut off the correct panel below 
 			let orderedPanelIds = {};
