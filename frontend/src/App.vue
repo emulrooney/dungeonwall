@@ -69,13 +69,6 @@ export default {
 		loadWall: async function (wallIndex, showToast) {
 			let wallData = await axios.get("http://localhost:3000/wall/605e874fee94445c5d577bd1")
 				.then(function (result) {
-					//TODO: Eventually this will be figured out on the backend instead
-					// let id = 0;
-					// result.data.panels.forEach((panel) => {
-					// 	panel.id = id;
-					// 	id++;
-					// });
-
 					if (showToast)
 						Vue.$toast.success("Wall loaded.");
 					return result.data;

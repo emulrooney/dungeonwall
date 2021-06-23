@@ -64,7 +64,7 @@ export default {
 		});
 
 		this.$root.$on("update-filters", function(enabledTypes) {
-			that.enabledTypes = enabledTypes
+			that.enabledTypes = enabledTypes;
 			that.updateFilters();
 		});
 	},
@@ -76,9 +76,19 @@ export default {
 				return (that.enabledTypes[panel.type] //If match, not filtered out.
 					&&  panel.title.toLowerCase().includes(that.currentSearchTerm.toLowerCase())); //Contains search term
 			});
+
+			console.log(this.visiblePanels);
+
+			//TODO Feels like this could be refactored. 
+			//Get the ID and where it appears. We'll use this to shut off the correct panel below 
+			let orderedPanelIds = {};
+			for (let i = 0; i < this.wallData.length; i++) {
+				orderedPanelIds[this.wallData[i].id] = i;
+			}
+
 			this.muuriObject.filter(function(item) {
 				let itemId = item.getElement().getAttribute("data-id");
-				let panel = that.wallData[itemId];
+				let panel = that.wallData[orderedPanelIds[itemId]];
 				return that.visiblePanels.includes(panel);
 			});
 		}
