@@ -84,7 +84,7 @@ class Database {
             icon: "fist",
             iconColor: "blue",
             bgColor: null,
-            panelOrder: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+            panelOrder: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             panels: [
                 {
                     "_id": ObjectId("60ac16b3f494425080ccd0cf"),
@@ -98,19 +98,8 @@ class Database {
                     "height": "small"
                 },
                 {
-                    "_id": ObjectId("60ac16b3f494425080ccd0d0"),
-                    "id": 1,
-                    "title": "Ki (Resource)",
-                    "subtitle": "Monk Level 2",
-                    "body": "Ki save DC = 8 + your proficiency bonus + your Wisdom modifier. ",
-                    "bottomText": "PHP p76",
-                    "width": "medium",
-                    "height": "small",
-                    "type": "misc"
-                },
-                {
                     "_id": ObjectId("60ac16b3f494425080ccd0d1"),
-                    "id": 2,
+                    "id": 1,
                     "title": "Ki (Resource)",
                     "subtitle": "Monk Level 2",
                     "body": "Ki save DC = 8 + your proficiency bonus + your Wisdom modifier. ",
@@ -121,7 +110,7 @@ class Database {
                 },
                 {
                     "_id": ObjectId("60ac16b3f494425080ccd0d2"),
-                    "id": 3,
+                    "id": 2,
                     "title": "Ki Powers",
                     "subtitle": "Monk Abilities",
                     "body": "\n  **Patient Defense**: Dodge as bonus action. \n  \n  **Step of the Wind**: Disengage/dash as bonus. Dbl jump speed for turn.\n  \n  **Flurry of Blows**: Two unarmed atks instead of one.\n  \n  **Stunning Strike** (lvl 5): On hit, con save vs stunned until end of my next turn.\n          ",
@@ -132,7 +121,7 @@ class Database {
                 },
                 {
                     "_id": ObjectId("60ac16b3f494425080ccd0d3"),
-                    "id": 4,
+                    "id": 3,
                     "title": "Cloak of Displacement",
                     "subtitle": "Attuned, gift from Shannix",
                     "body": "\n  While you wear this cloak, it projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have disadvantage on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while you are **incapacitated, restrained, or otherwise unable to move.**\n  ",
@@ -143,7 +132,7 @@ class Database {
                 },
                 {
                     "_id": ObjectId("60ac16b3f494425080ccd0d4"),
-                    "id": 5,
+                    "id": 4,
                     "title": "Deflect Missiles",
                     "subtitle": "Monk Level 3",
                     "body": "Use reaction to deflect/catch missile when you are hit by a ranged weapon attack. Damage taken is reduced by 1d10 + your Dexterity modifier + your monk level.\n\nIf you reduce the damage to 0, you atch the missile if it is small enough for you to hold in one hand and you have at least one hand free. If you catch a missile in this way, you can spend 1 ki point to make a ranged attack (range 20/60 feet) with the weapon or piece of ammunition you just caught, as part of the same reaction. You make this attack with proficiency, regardless of your weapon proficiencies, and the missile counts as a monk weapon for the attack.",
@@ -161,7 +150,7 @@ class Database {
                     "width": "medium",
                     "height": "small",
                     "type": "item",
-                    "id": 6
+                    "id": 5
                 },
                 {
                     "_id": ObjectId("60acd930e26436426c449919"),
@@ -172,18 +161,7 @@ class Database {
                     "width": "medium",
                     "height": "medium",
                     "type": "lore",
-                    "id": 7
-                },
-                {
-                    "_id": ObjectId("60acda04e26436426c44991a"),
-                    "title": "Important Characters",
-                    "subtitle": "",
-                    "body": "[Saint Helene d'Orville](https://www.worldanvil.com/w/amastris-thefridler/a/saint-helene-d-orville--person-1) - Mentor from before cold-con process, basically started the Monk class, formed Condat Abbey",
-                    "bottomText": "",
-                    "width": "small",
-                    "height": "large",
-                    "type": "lore",
-                    "id": 8
+                    "id": 6
                 },
                 {
                     "_id": ObjectId("60acdaaae26436426c44991b"),
@@ -194,7 +172,7 @@ class Database {
                     "width": "medium",
                     "height": "small",
                     "type": "character",
-                    "id": 8
+                    "id": 7
                 },
                 {
                     "_id": ObjectId("60acdb1be26436426c44991c"),
@@ -205,7 +183,7 @@ class Database {
                     "width": "medium",
                     "height": "small",
                     "type": "story",
-                    "id": 9
+                    "id": 8
                 },
                 {
                     "_id": ObjectId("60acdba6e26436426c44991d"),
@@ -216,7 +194,7 @@ class Database {
                     "width": "medium",
                     "height": "small",
                     "type": "misc",
-                    "id": 10
+                    "id": 9
                 },
                 {
                     "_id": ObjectId("60acdc2de26436426c44991e"),
@@ -227,7 +205,7 @@ class Database {
                     "width": "medium",
                     "height": "small",
                     "type": "character",
-                    "id": 11
+                    "id": 10
                 },
                 {
                     "_id": ObjectId("60acdc88e26436426c44991f"),
@@ -238,7 +216,7 @@ class Database {
                     "width": "medium",
                     "height": "small",
                     "type": "story",
-                    "id": 12
+                    "id": 11
                 },
                 {
                     "_id": ObjectId("60b9735456bcc45af0a4c0e4"),
@@ -249,7 +227,7 @@ class Database {
                     "width": "medium",
                     "height": "small",
                     "type": "character",
-                    "id": 13
+                    "id": 12
                 }
             ]
         });

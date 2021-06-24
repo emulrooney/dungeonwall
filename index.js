@@ -131,7 +131,7 @@ app.post("/wall/:wallId",
     });
 
 /**
- * TODO Update the wall data. May be called in two spots (wall editor and on the general wall view page) to handle wall data as well 
+ * Update the wall data. May be called in two spots (wall editor and on the general wall view page) to handle wall data as well 
  * as panel layouts. 
  */
 app.put("/wall/:wallId", async (req, res) => {
@@ -149,7 +149,7 @@ app.put("/wall/:wallId", async (req, res) => {
 });
 
 /**
- * TODO Update a particular panel on a particular wall. Might have (sub)title, body text, sizing, type changes. 
+ * Update a particular panel on a particular wall. Might have (sub)title, body text, sizing, type changes. 
  */
 app.put("/wall/:wallId/:panelId", async (req, res) => {
     const validPanelFields = ["id", "title", "subtitle", "body", "bottomText", "width", "height", "type"];
@@ -176,7 +176,7 @@ app.delete("/wall/:wallId", async (req, res) => {
 });
 
 /**
- * TODO Delete a particular panel on a wall.
+ * Delete a particular panel on a wall.
  */
 app.delete("/wall/:wallId/:panelId", async (req, res) => {
     const wallId = String(req.params.wallId);

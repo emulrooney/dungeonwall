@@ -31,8 +31,7 @@ export default {
             "Digit6" : "toggleNeutral",
             "Digit0" : "toggleAllOn"
         };
-
-        //TODO Rewrite. Scrap the switch, do something more programmatic to get toggle+Type.        
+      
         this.$root.$on("ui-keyboard", (uiEvent) => {
             switch (keycodeEvents[uiEvent.code]) {
                 case "searchTerm":
