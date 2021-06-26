@@ -33,6 +33,10 @@ export default {
         };
       
         this.$root.$on("ui-keyboard", (uiEvent) => {
+            //No keys if a modal is open, bail.
+            if (document.getElementById("body").dataset.modalOpenCount > 0)
+                return;
+
             switch (keycodeEvents[uiEvent.code]) {
                 case "searchTerm":
                     if (document.activeElement != this.$refs.searchTerm) {
