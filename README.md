@@ -1,7 +1,9 @@
-# Dungeonwall (v0.5)
+# Dungeonwall (v0.6)
 ## Build DM screens or layout player info in a nice masonry-style grid.
+### WIP; and on-hold while I get settled at a new job!
 
 **Demo**:
+Demo is of version v0.2 - significant changes have gone in since this version.
 ![Screenshot of Dungeonwall Video](https://emulrooney.github.io/images/project-Dungeonwall.png)
 View at: [https://www.youtube.com/watch?v=fxwmahfIVFE](https://www.youtube.com/watch?v=fxwmahfIVFE)
 
